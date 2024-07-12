@@ -19,11 +19,8 @@ jobs:
         context: .
         push: true
         tags: rmag17/goodloc24back:latest
-        login-username: ${{ secrets.DOCKERHUB_USERNAME }}
-        login-password: ${{ secrets.DOCKERHUB_PASSWORD }}
-        cache-from: 'rmag17/goodloc24back:latest'
-        cache-to: 'rmag17/goodloc24back-cache'
-        labels: 'version=1.0.0,app=goodloc24,builder=github-actions'
+        secrets: ${{ secrets.DOCKERHUB_CREDENTIALS }}
+        driver: containerd
 
 
 
