@@ -16,11 +16,12 @@ jobs:
     - name: Build and push Docker image
       uses: docker/build-push-action@v2
       with:
-        context: ./target
+        context: .
         push: true
         tags: rmag17/goodloc24back:latest
         secrets: ${{ secrets.DOCKERHUB_CREDENTIALS }}
-        driver: containerd
+        no-cache: true
+
 
 
 
