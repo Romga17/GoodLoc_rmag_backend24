@@ -21,7 +21,6 @@ jobs:
         tags: rmag17/goodloc24back:latest
         login-username: ${{ secrets.DOCKERHUB_USERNAME }}
         login-password: ${{ secrets.DOCKERHUB_PASSWORD }}
-        builder: '--platform=linux/amd64'
         cache-from: 'rmag17/goodloc24back:latest'
         cache-to: 'rmag17/goodloc24back-cache'
         labels: 'version=1.0.0,app=goodloc24,builder=github-actions'
