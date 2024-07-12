@@ -19,8 +19,11 @@ jobs:
         context: .
         push: true
         tags: rmag17/goodloc24back:latest
-        login-username: ${{ secrets.DOCKERHUB_USERNAME }}
-        login-password: ${{ secrets.DOCKERHUB_PASSWORD }}
+    secrets: |
+      {
+        "DOCKERHUB_USERNAME": "${{ secrets.DOCKERHUB_USERNAME }}",
+        "DOCKERHUB_PASSWORD": "${{ secrets.DOCKERHUB_PASSWORD }}"
+      }
         no-cache: true
 
   deploy:
