@@ -1,0 +1,40 @@
+name: goodloc24-CI/CD
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v2
+      with:
+        context: .
+        push: true
+        tags: rmag17/goodLoc24back:latest
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+    - name: SSH login to server
+      uses: appleboy/ssh-action@master
+      with:
+        host: 185.97.144.183
+        username: root
+        password: nMgieRVOrW5JnsZ#GoliC
+        port: 22
+        script: |
+          docker login -u rmag17 -p LWvijD5IXcCBU3qAbaK?R
+          docker pull user/app:latest
+          docker stop app || true
+          docker rm app || true
+          docker run -d -p 8080:8080 --name app user/app:latest
