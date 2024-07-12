@@ -32,6 +32,9 @@ jobs:
     needs: build
 
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
       - name: SSH login to server
         uses: appleboy/ssh-action@master
         with:
@@ -40,8 +43,18 @@ jobs:
           password: ${{ secrets.VPS_PASSWORD }}
           port: ${{ secrets.VPS_PORT }}
           script: |
+            # Assurez-vous que Docker et Docker Compose sont installés sur le VPS
+            docker --version
+            docker-compose --version
+
+            # Connectez-vous à Docker Hub
             docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
+
+            # Téléchargez la dernière image Docker
             docker pull rmag17/goodloc24back:latest
-            docker stop app || true
-            docker rm app || true
-            docker run -d -p 8080:8080 --name app rmag17/goodloc24back:latest
+
+            # Arrêtez et supprimez les anciens conteneurs
+            docker-compose -f /path/to/docker-compose.prod.yml down || true
+
+            # Démarrez les services définis dans le fichier docker-compose.prod.yml
+            docker-compose -f /path/to/docker-compose.prod.yml up -d
