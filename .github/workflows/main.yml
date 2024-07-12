@@ -18,7 +18,7 @@ jobs:
       with:
         context: .
         push: true
-        tags: rmag17/goodLoc24back:latest
+        tags: rmag17/goodloc24back:latest
 
   deploy:
     runs-on: ubuntu-latest
