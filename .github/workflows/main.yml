@@ -43,6 +43,10 @@ jobs:
           password: ${{ secrets.VPS_PASSWORD }}
           port: ${{ secrets.VPS_PORT }}
           script: |
+            
+            # Naviguez vers le répertoire de votre projet
+            cd /GoodLoc_backDev24
+            
             # Assurez-vous que Docker et Docker Compose sont installés sur le VPS
             docker --version
             docker-compose --version
