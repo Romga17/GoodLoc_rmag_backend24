@@ -54,7 +54,7 @@ jobs:
             docker pull rmag17/goodloc24back:latest
 
             # Arrêtez et supprimez les anciens conteneurs
-            docker-compose -f /path/to/docker-compose.prod.yml down || true
+            docker-compose -f . down || true
 
             # Démarrez les services définis dans le fichier docker-compose.prod.yml
-            docker-compose -f /path/to/docker-compose.prod.yml up -d
+            docker-compose -f . up -d
