@@ -42,6 +42,15 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.VPS_HOST }} >> ~/.ssh/known_hosts
 
+      - name: Debug SSH setup
+        run: |
+          echo "Listing .ssh directory contents"
+          ls -l ~/.ssh
+          echo "Displaying contents of id_rsa"
+          cat ~/.ssh/id_rsa
+          echo "Displaying known_hosts"
+          cat ~/.ssh/known_hosts
+
       - name: Copy docker-compose file to server
         uses: appleboy/scp-action@v0.1.1
         with:
