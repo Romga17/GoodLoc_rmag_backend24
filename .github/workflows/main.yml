@@ -92,5 +92,4 @@ jobs:
             docker pull rmag17/goodloc24back:latest
             docker-compose -f docker-compose.prod.yml down || true
             docker-compose -f docker-compose.prod.yml up -d
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+
