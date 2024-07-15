@@ -55,6 +55,9 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa -p ${{ secrets.VPS_PORT }} ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_HOST }} "echo 'SSH connection successful'"
 
+      - name: Ping server
+        run: ping -c 4 ${{ secrets.VPS_HOST }}
+
       - name: Copy docker-compose file to server
         uses: appleboy/scp-action@v0.1.1
         with:
