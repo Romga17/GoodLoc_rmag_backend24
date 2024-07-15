@@ -35,50 +35,27 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up SSH key
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H 185.97.144.183 >> ~/.ssh/known_hosts
-
-      - name: Debug SSH setup
-        run: |
-          echo "Listing .ssh directory contents"
-          ls -l ~/.ssh
-          echo "Displaying contents of id_rsa"
-          cat ~/.ssh/id_rsa
-          echo "Displaying known_hosts"
-          cat ~/.ssh/known_hosts
-
-      - name: Verify SSH connectivity
-        run: |
-          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa -p ${{ secrets.VPS_PORT }} ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_HOST }} "echo 'SSH connection successful'"
-
-      - name: Ping server
-        run: ping -c 4 185.97.144.183
-
       - name: Copy docker-compose file to server
         uses: appleboy/scp-action@v0.1.1
         with:
           source: "docker-compose.prod.yml"
-          target: "root@185.97.144.183:/GoodLoc24_backDev/docker-compose.prod.yml"
-          port: 22
+          target: "${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_HOST }}:/GoodLoc24_backDev/docker-compose.prod.yml"
+          port: ${{ secrets.VPS_PORT }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           debug: true
 
       - name: SSH login to server and deploy
         uses: appleboy/ssh-action@v0.1.1
         with:
-          host: 185.97.144.183
+          host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USERNAME }}
-          port: 22
+          port: ${{ secrets.VPS_PORT }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             # Créez le répertoire s'il n'existe pas
             mkdir -p /GoodLoc24_backDev
             cd /GoodLoc24_backDev
-            
+
             # Assurez-vous que Docker et Docker Compose sont installés sur le VPS
             docker --version
             docker-compose --version
