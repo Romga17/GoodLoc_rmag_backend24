@@ -42,6 +42,8 @@ jobs:
           target: "${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_HOST }}:/GoodLoc24_backDev/docker-compose.prod.yml"
           port: ${{ secrets.VPS_PORT }}
           password: ${{ secrets.VPS_PASSWORD }}
+          script: |
+            echo "INPUT_HOST: ${{ env.INPUT_HOST }}"
 
       - name: SSH login to server and deploy
         uses: appleboy/ssh-action@master
