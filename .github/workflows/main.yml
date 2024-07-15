@@ -50,16 +50,18 @@ jobs:
           echo "VPS_HOST: ${{ secrets.VPS_HOST }}"
           echo "VPS_PORT: ${{ secrets.VPS_PORT }}"
           echo "VPS_USERNAME: ${{ secrets.VPS_USERNAME }}"
+          echo "$SSH_PRIVATE_KEY" | head -c 20  # Affiche les 20 premiers caractères de la clé privée
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: Verify SSH connectivity
         run: |
           ssh -vvv -i ~/.ssh/id_rsa -p ${{ secrets.VPS_PORT }} ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_HOST }} "echo SSH connection successful"
-
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: Copy docker-compose file to server
-        if: success() # Ensure this step runs only if the previous steps succeeded
+        if: success()
         uses: appleboy/scp-action@v0.1.3
         with:
           source: "docker-compose.prod.yml"
@@ -69,7 +71,7 @@ jobs:
           debug: true
 
       - name: SSH login to server and deploy
-        if: success() # Ensure this step runs only if the previous steps succeeded
+        if: success()
         uses: appleboy/ssh-action@v0.1.5
         with:
           host: ${{ secrets.VPS_HOST }}
@@ -85,6 +87,5 @@ jobs:
             docker pull rmag17/goodloc24back:latest
             docker-compose -f docker-compose.prod.yml down || true
             docker-compose -f docker-compose.prod.yml up -d
-
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
