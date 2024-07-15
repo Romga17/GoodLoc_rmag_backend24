@@ -54,7 +54,7 @@ jobs:
 
       - name: Copy docker-compose file to server
         if: success() # Ensure this step runs only if the previous steps succeeded
-        uses: appleboy/scp-action@master
+        uses: appleboy/scp-action@v0.1.3
         with:
           source: "docker-compose.prod.yml"
           target: "${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_HOST }}:/GoodLoc24_backDev/docker-compose.prod.yml"
@@ -64,7 +64,7 @@ jobs:
 
       - name: SSH login to server and deploy
         if: success() # Ensure this step runs only if the previous steps succeeded
-        uses: appleboy/ssh-action@master
+        uses: appleboy/ssh-action@v0.1.5
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USERNAME }}
