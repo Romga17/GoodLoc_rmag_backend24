@@ -35,19 +35,26 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Verify SSH connectivity
+      - name: Set up SSH
         run: |
           mkdir -p ~/.ssh
           echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.VPS_HOST }} >> ~/.ssh/known_hosts
+
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Verify SSH connectivity
+        run: |
           ssh -i ~/.ssh/id_rsa -p ${{ secrets.VPS_PORT }} ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_HOST }} "echo SSH connection successful"
 
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: Copy docker-compose file to server
-        uses: appleboy/scp-action@v0.1.1
+        if: success() # Ensure this step runs only if the previous steps succeeded
+        uses: appleboy/scp-action@master
         with:
           source: "docker-compose.prod.yml"
           target: "${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_HOST }}:/GoodLoc24_backDev/docker-compose.prod.yml"
@@ -56,7 +63,8 @@ jobs:
           debug: true
 
       - name: SSH login to server and deploy
-        uses: appleboy/ssh-action@v0.1.1
+        if: success() # Ensure this step runs only if the previous steps succeeded
+        uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USERNAME }}
