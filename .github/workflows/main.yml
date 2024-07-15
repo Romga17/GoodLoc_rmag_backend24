@@ -1,4 +1,4 @@
-name: Deploy
+name: goodloc24-CI/CD
 
 on:
   push:
@@ -6,19 +6,34 @@ on:
       - main
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up SSH key
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H ${{ secrets.VPS_HOST }} >> ~/.ssh/known_hosts
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+          tags: rmag17/goodloc24back:latest
+          no-cache: true
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
       - name: Copy docker-compose file to server
         uses: appleboy/scp-action@v0.1.1
@@ -26,7 +41,7 @@ jobs:
           source: "docker-compose.prod.yml"
           target: "${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_HOST }}:/GoodLoc24_backDev/docker-compose.prod.yml"
           port: ${{ secrets.VPS_PORT }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }} # Assurez-vous que la clé est bien passée ici
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
           debug: true
 
       - name: SSH login to server and deploy
@@ -35,13 +50,24 @@ jobs:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USERNAME }}
           port: ${{ secrets.VPS_PORT }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }} # Assurez-vous que la clé est bien passée ici
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
+            # Créez le répertoire s'il n'existe pas
             mkdir -p /GoodLoc24_backDev
             cd /GoodLoc24_backDev
+            
+            # Assurez-vous que Docker et Docker Compose sont installés sur le VPS
             docker --version
             docker-compose --version
+
+            # Connectez-vous à Docker Hub
             docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
+
+            # Téléchargez la dernière image Docker
             docker pull rmag17/goodloc24back:latest
+
+            # Arrêtez et supprimez les anciens conteneurs
             docker-compose -f docker-compose.prod.yml down || true
+
+            # Démarrez les services définis dans le fichier docker-compose.prod.yml
             docker-compose -f docker-compose.prod.yml up -d
