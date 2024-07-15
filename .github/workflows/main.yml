@@ -45,6 +45,12 @@ jobs:
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 
+      - name: Verify secrets
+        run: |
+          echo "VPS_HOST: ${{ secrets.VPS_HOST }}"
+          echo "VPS_PORT: ${{ secrets.VPS_PORT }}"
+          echo "VPS_USERNAME: ${{ secrets.VPS_USERNAME }}"
+
       - name: Verify SSH connectivity
         run: |
           ssh -i ~/.ssh/id_rsa -p ${{ secrets.VPS_PORT }} ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_HOST }} "echo SSH connection successful"
