@@ -26,7 +26,7 @@ jobs:
           echo "VPS_PORT=${{ secrets.VPS_PORT }}"
 
       - name: Copy docker-compose file to server
-        uses: appleboy/scp-action@v1.0.2
+        uses: appleboy/ssh-action@v1.0.2
         with:
           source: "docker-compose.prod.yml"
           target: "${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_HOST }}:/GoodLoc24_backDev/docker-compose.prod.yml"
