@@ -47,7 +47,7 @@ jobs:
 
       - name: Verify SSH connectivity
         run: |
-          ssh -i ~/.ssh/id_rsa -p 22 root@$185.97.144.183 "echo SSH connection successful"
+          ssh -i ~/.ssh/id_rsa -p 22 root@185.97.144.183 "echo SSH connection successful"
 
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
