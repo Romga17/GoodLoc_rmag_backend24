@@ -1,4 +1,4 @@
-name: Deploy Java Application
+name: goodloc24-CI/CD
 
 on:
   push:
@@ -24,14 +24,46 @@ jobs:
         with:
           context: .
           push: true
-          tags: your-dockerhub-username/myapp:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/goodloc24back:latest
+          no-cache: true
 
   deploy:
     runs-on: ubuntu-latest
     needs: build
 
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.VPS_HOST }} >> ~/.ssh/known_hosts
+
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Verify SSH connectivity
+        run: |
+          ssh -i ~/.ssh/id_rsa -p ${{ secrets.VPS_PORT }} ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_HOST }} "echo SSH connection successful"
+
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Copy docker-compose file to server
+        if: success()
+        uses: appleboy/scp-action@master
+        with:
+          source: "docker-compose.prod.yml"
+          target: "${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_HOST }}:/GoodLoc24_backDev/docker-compose.prod.yml"
+          port: ${{ secrets.VPS_PORT }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          debug: true
+
       - name: SSH login to server and deploy
+        if: success()
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.VPS_HOST }}
@@ -39,7 +71,14 @@ jobs:
           port: ${{ secrets.VPS_PORT }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            docker pull your-dockerhub-username/myapp:latest
-            docker stop myapp || true
-            docker rm myapp || true
-            docker run -d -p 8080:8080 --name myapp your-dockerhub-username/myapp:latest
+            mkdir -p /GoodLoc24_backDev
+            cd /GoodLoc24_backDev
+            docker --version
+            docker-compose --version
+            docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
+            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/goodloc24back:latest
+            docker-compose -f docker-compose.prod.yml down || true
+            docker-compose -f docker-compose.prod.yml up -d
+
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
