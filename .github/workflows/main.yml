@@ -58,6 +58,7 @@ jobs:
         with:
           source: "docker-compose.prod.yml"
           target: "root@185.97.144.183:/GoodLoc24_backDev/docker-compose.prod.yml"
+          host: 185.97.144.183
           port: 22
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           debug: true
