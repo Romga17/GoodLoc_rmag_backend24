@@ -54,7 +54,7 @@ jobs:
 
       - name: Copy docker-compose file to server
         if: success()
-        uses: appleboy/scp-action@master
+        uses: appleboy/scp-action@v0.1.7
         with:
           source: "docker-compose.prod.yml"
           target: "root@185.97.144.183:/GoodLoc24_backDev/docker-compose.prod.yml"
@@ -65,7 +65,7 @@ jobs:
 
       - name: SSH login to server and deploy
         if: success()
-        uses: appleboy/ssh-action@master
+        uses: appleboy/ssh-action@v0.1.7
         with:
           host: 185.97.144.183
           username: root
