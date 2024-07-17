@@ -38,17 +38,15 @@ jobs:
       - name: Set up SSH
         run: |
           mkdir -p ~/.ssh
-          echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
+          echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsagoodlocbck
+          chmod 600 ~/.ssh/id_rsagoodlocbck
           ssh-keyscan -H 185.97.144.183 >> ~/.ssh/known_hosts
-
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: Verify SSH connectivity
         run: |
-          ssh -i ~/.ssh/id_rsa -p 22 root@185.97.144.183 "echo SSH connection successful"
-
+          ssh -i ~/.ssh/id_rsagoodlocbck -p 22 root@185.97.144.183 "echo SSH connection successful"
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 
@@ -80,6 +78,5 @@ jobs:
             docker pull ${{ secrets.DOCKERHUB_USERNAME }}/goodloc24back:latest
             docker-compose -f docker-compose.prod.yml down || true
             docker-compose -f docker-compose.prod.yml up -d
-
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
