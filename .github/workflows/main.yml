@@ -40,13 +40,13 @@ jobs:
           mkdir -p ~/.ssh
           echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsagoodlocbck
           chmod 600 ~/.ssh/id_rsagoodlocbck
-          ssh-keyscan -H 185.97.144.183 >> ~/.ssh/known_hosts
+          ssh-keyscan -H VPSHOSTIP >> ~/.ssh/known_hosts
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: Verify SSH connectivity
         run: |
-          ssh -i ~/.ssh/id_rsagoodlocbck -p 22 root@185.97.144.183 "echo SSH connection successful"
+          ssh -i ~/.ssh/id_rsagoodlocbck -p 22 root@VPSHOSTIP "echo SSH connection successful"
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 
@@ -55,17 +55,19 @@ jobs:
         uses: appleboy/scp-action@v0.1.7
         with:
           source: "docker-compose.prod.yml"
-          target: "root@185.97.144.183:/GoodLoc24_backDev/docker-compose.prod.yml"
-          host: 185.97.144.183
+          target: "root@VPSHOSTIP:/GoodLoc24_backDev/docker-compose.prod.yml"
+          host: VPSHOSTIP
           port: 22
           key: ${{ secrets.SSH_PRIVATE_KEY }}
+          strip_components: 0
+          overwrite: true
           debug: true
 
       - name: SSH login to server and deploy
         if: success()
         uses: appleboy/ssh-action@v0.1.7
         with:
-          host: 185.97.144.183
+          host: VPSHOSTIP
           username: root
           port: 22
           key: ${{ secrets.SSH_PRIVATE_KEY }}
