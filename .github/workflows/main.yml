@@ -52,7 +52,7 @@ jobs:
 
       - name: Copy docker-compose file to server
         run: |
-          scp -i ~/.ssh/id_rsagoodlocbck -o StrictHostKeyChecking=no docker-compose.prod.yml root@VPSHOSTIP:/GoodLoc24_backDev/
+          scp -i ~/.ssh/id_rsagoodlocbck -o StrictHostKeyChecking=no docker-compose.prod.yml root@185.97.144.183:/GoodLoc24_backDev/
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 
