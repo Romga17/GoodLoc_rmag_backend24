@@ -51,17 +51,10 @@ jobs:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: Copy docker-compose file to server
-        if: success()
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          source: "docker-compose.prod.yml"
-          target: "root@185.97.144.183:/GoodLoc24_backDev/docker-compose.prod.yml"
-          host: 185.97.144.183
-          port: 22
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          strip_components: 0
-          overwrite: true
-          debug: true
+        run: |
+          scp -i ~/.ssh/id_rsagoodlocbck -o StrictHostKeyChecking=no docker-compose.prod.yml root@VPSHOSTIP:/GoodLoc24_backDev/
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: SSH login to server and deploy
         if: success()
@@ -72,13 +65,4 @@ jobs:
           port: 22
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            mkdir -p /GoodLoc24_backDev
-            cd /GoodLoc24_backDev
-            docker --version
-            docker-compose --version
-            docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
-            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/goodloc24back:latest
-            docker-compose -f docker-compose.prod.yml down || true
-            docker-compose -f docker-compose.prod.yml up -d
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+            mkdir -p /GoodLoc24
