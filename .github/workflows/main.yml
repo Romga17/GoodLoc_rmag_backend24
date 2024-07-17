@@ -52,8 +52,8 @@ jobs:
 
       - name: Copy docker-compose file to server
         run: |
-          scp -i ~/.ssh/id_rsagoodlocbck -o StrictHostKeyChecking=no docker-compose.prod.yml root@185.97.144.183:/GoodLoc24_backDev/docker-compose.prod.yml
-          ssh -i ~/.ssh/id_rsagoodlocbck -p 22 root@185.97.144.183 "ls -l /GoodLoc24_backDev/docker-compose.prod.yml"
+          scp -i ~/.ssh/id_rsagoodlocbck -o StrictHostKeyChecking=no docker-compose.prod.yml root@185.97.144.183:/GoodLoc24_backDev/docker-compose.prod.yml/docker-compose.prod.yml
+          ssh -i ~/.ssh/id_rsagoodlocbck -p 22 root@185.97.144.183 "ls -l /GoodLoc24_backDev/docker-compose.prod.yml/docker-compose.prod.yml"
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 
@@ -66,9 +66,9 @@ jobs:
           port: 22
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            if [ -f /GoodLoc24_backDev/docker-compose.prod.yml ]; then
-              mkdir -p /GoodLoc24_backDev
-              cd /GoodLoc24_backDev
+            if [ -f /GoodLoc24_backDev/docker-compose.prod.yml/docker-compose.prod.yml ]; then
+              echo "File /GoodLoc24_backDev/docker-compose.prod.yml/docker-compose.prod.yml found!"
+              cd /GoodLoc24_backDev/docker-compose.prod.yml
               docker --version
               docker-compose --version
               docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
@@ -76,7 +76,7 @@ jobs:
               docker-compose -f docker-compose.prod.yml down || true
               docker-compose -f docker-compose.prod.yml up -d
             else
-              echo "File /GoodLoc24_backDev/docker-compose.prod.yml not found!"
+              echo "File /GoodLoc24_backDev/docker-compose.prod.yml/docker-compose.prod.yml not found!"
               exit 1
             fi
         env:
