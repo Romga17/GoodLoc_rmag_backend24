@@ -1,3 +1,4 @@
+-- Jeu de données application GoodLoc
 -- Données de notre table role:
 INSERT INTO role (nom, description, statut) VALUES ("Etudiant", "Etudiant au sein de l'institut de formation.", "Actif"), ("Intervenant", "Professionnel indépendant intervenant pour dispenser des cours." , "Actif") ,("Salarié", "Occupe une fonction au sein de l'institut." , "Actif"), ("Salarié gestionnaire","Salarié occupant une fonction technique impliqué dans l'organisation de Goodloc et sa gestion." , "Actif" ),("Direction", "Membre du comité de direction de l'institut." , "Actif");
 
