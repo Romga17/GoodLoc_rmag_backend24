@@ -67,7 +67,7 @@ class IncidentNotificationControllerTest {
         String jsonRequestSaveDecl = objectMapper.writeValueAsString(testSaveNotification);
 
         // When:
-        mockMvc.perform(MockMvcRequestBuilders.post("/incident/add")
+        mockMvc.perform(MockMvcRequestBuilders.post("/incident/save")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonRequestSaveDecl))
                 //Then:

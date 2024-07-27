@@ -10,7 +10,6 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name = "role")
 public class Role {
 
     public Role() {
@@ -21,13 +20,13 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected int id;
 
+    @Column(name = "role_name")
     protected String roleName;
 
     @Column(columnDefinition="TEXT")
     protected String roleDescription;
 
     protected String roleState;
-
 
     @ManyToMany
     @JoinTable(name = "category_role", joinColumns = @JoinColumn(name="role_id"),

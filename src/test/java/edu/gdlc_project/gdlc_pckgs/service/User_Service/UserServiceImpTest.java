@@ -70,7 +70,7 @@ class UserServiceImpTest {
         User newUser = new User();
         newUser.setUserLastname("MrTest");
         newUser.setUserFirstname("Robert");
-        newUser.setUserEmail("robert.mrtest@gmail.com");
+        newUser.setEmail("robert.mrtest@gmail.com");
         newUser.setUserAdress("du test");
         newUser.setUserAdressNumber("100");
         newUser.setUserRoadType("rue");
@@ -169,7 +169,7 @@ class UserServiceImpTest {
         // Given:
         User suscribedUser = new User();
         suscribedUser.setUserLastname("MrLeNouveau");
-        suscribedUser.setUserEmail("robert.mrtest@gmail.com");
+        suscribedUser.setEmail("robert.mrtest@gmail.com");
         suscribedUser.setUserAdress("du test");
         suscribedUser.setUserAdressNumber("100");
         suscribedUser.setUserRoadType("rue");
@@ -184,7 +184,7 @@ class UserServiceImpTest {
         role.setRoleName("Etudiant");
 
         when(roleRepositoryTest.findById(1)).thenReturn(Optional.of(role));
-        when(userRepositoryTest.existsByEmail(suscribedUser.getUserEmail())).thenReturn(false);
+        when(userRepositoryTest.existsByEmail(suscribedUser.getEmail())).thenReturn(false);
         when(userRepositoryTest.save(suscribedUser)).thenReturn(suscribedUser);
 
         // When:
@@ -194,7 +194,7 @@ class UserServiceImpTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals("Inscription réussie", response.getBody().get("message"));
         verify(userRepositoryTest, times(1)).save(suscribedUser);
-        verify(userRepositoryTest, times(1)).existsByEmail(suscribedUser.getUserEmail());
+        verify(userRepositoryTest, times(1)).existsByEmail(suscribedUser.getEmail());
         verify(roleRepositoryTest, times(1)).findById(1);
     }
 

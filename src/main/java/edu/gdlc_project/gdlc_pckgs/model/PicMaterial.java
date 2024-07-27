@@ -7,15 +7,15 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "imagemat")
+@Table(name = "picmaterial")
 public class PicMaterial {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected int id;
 
-    protected String picmaterialName;
+    protected String picMaterialName;
 
     @Column(columnDefinition="TEXT")
-    protected String picmaterialUrl;
+    protected String picMaterialUrl;
 }

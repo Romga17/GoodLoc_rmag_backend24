@@ -28,7 +28,7 @@ public class Material {
 
     protected Date materialAcquisitionDate;
 
-    protected Date MaterialGuaranteeEndDate;
+    protected Date materialGuaranteeEndDate;
 
     protected float materialAcquisitionPrice;
 
@@ -48,8 +48,8 @@ public class Material {
     protected Design designMat;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "imagemat_materiel", joinColumns = @JoinColumn(name="materiel_id"),
-            inverseJoinColumns = @JoinColumn(name="imagemat_id"))
+    @JoinTable(name = "picmaterial_material", joinColumns = @JoinColumn(name="material_id"),
+            inverseJoinColumns = @JoinColumn(name="pic_material_id"))
     protected List<PicMaterial> picMaterialList = new ArrayList<>();
 
     @ManyToOne

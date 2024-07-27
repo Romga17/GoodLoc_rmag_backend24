@@ -12,9 +12,10 @@ import java.util.Date;
 @Table(name = "incident_notification")
 public class IncidentNotification {
 
-    //@Column(name = "id_declaration_incident")
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_incident_notification")
     protected int id;
 
     @Column(columnDefinition = "DATE")

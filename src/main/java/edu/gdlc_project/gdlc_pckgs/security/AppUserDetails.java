@@ -44,7 +44,7 @@ public class AppUserDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return user.getUserEmail();
+        return user.getEmail();
     }
 
     @Override

@@ -25,10 +25,10 @@ INSERT INTO category_role (category_id, role_id) VALUES ("1","1"),("3","1"),("4"
 INSERT INTO brand (brand_name, brand_description) VALUES ("LENOVO", "Fournisseur d'équipements informatiques"), ("INOVU", "Fournisseur d'équipements vidéo et informatique") ,("SAMSUNG", "Fournisseur de nombreux équipements électroniques");
 
 -- Données de notre table declaration_incident:
-INSERT INTO incident_notification (incident_notification_date, incident_notification_description, incident_notification_date, incident_notification_type) VALUES ("2023-02-15","écran bleu avec message d'erreur", "Incident logiciel"), ("2023-05-15","écran qui ne s'allume plus", "Incident matériel"), ("2023-03-02","Téléphone chargé mais ne s'allume plus", "Incident logiciel"), ("2023-06-17","Boutons télécommande droite ne réagissent pas", "Incident matériel"),("2023-07-20","Accoudoir ne tient plus en place", "Incident matériel");
+INSERT INTO incident_notification (incident_notification_date, incident_notification_description, incident_notification_type) VALUES ("2023-02-15","écran bleu avec message d'erreur", "Incident logiciel"), ("2023-05-15","écran qui ne s'allume plus", "Incident matériel"), ("2023-03-02","Téléphone chargé mais ne s'allume plus", "Incident logiciel"), ("2023-06-17","Boutons télécommande droite ne réagissent pas", "Incident matériel"),("2023-07-20","Accoudoir ne tient plus en place", "Incident matériel");
 
 -- Données de notre table user:
-INSERT INTO user (user_lastname, user_firstname, user_email, user_road_type, user_adress, user_adress_number, user_zip_code, user_city, user_phone, user_password, user_arrival_date, user_departure_date, user_course, user_role_id)
+INSERT INTO user (user_lastname, user_firstname, email, user_road_type, user_adress, user_adress_number, user_zip_code, user_city, user_phone, user_password, user_arrival_date, user_departure_date, user_course, user_role_id)
 VALUES
     ('Nielsen', 'Leo', 'nielsen.leo@institute.com', 'Cité', 'Oberkampf', '10', '57100', 'Thionville', '+33675018342', '$2y$10$.8kRMRoiw9K9TSx79eRqBuk4AG.uzOrn7bhB20g7BYGfCSqR2PEsW', '2023-05-15', '2028-05-15', 'CDA Java', 1),
     ('Brown', 'Eva', 'brown.eva@institute.com', 'Chemin', 'de Tilsitt', '5', '57000', 'Metz', '+33675482018', '$2y$10$.8kRMRoiw9K9TSx79eRqBuk4AG.uzOrn7bhB20g7BYGfCSqR2PEsW', '2024-09-15', '2029-09-15', 'CDA Java', 2),
@@ -335,7 +335,7 @@ VALUES
     ('indisponible', 'Fauteuil de bureau type « Racing Chair » PU et Mesh - Dos et côtés en PU - Accoudoirs relevables en nylon recouverts PU - Base 5 branches en nylon avec placage chrome, roulettes souples - Densité de la mousse du dossier 35 kg/m3 - Densité de la mousse de l’assise 32kg/m3 - Mécanisme basculant centré permettant le blocage du dossier soit en position droite soit en position inclinée - Possibilité de régler l intensité du basculement et la hauteur du siège - Les accoudoirs sont fixes en hauteur mais réglables d avant en arrière - Assise : P.53 x L.49 x Ep. 7,5/9 cm - Dossier : H.71,5 x L.52 x Ep. 5,5/7 cm - Hauteur totale : 110 à 120 cm - Poids maximal : 110 kg - Coloris : Noir', '2022-08-25', '2025-08-25', 1499.95, 'MTGA-284-700-010', 5);
 
 -- Données de la table intermédiaire imagemat_materiel:
-INSERT INTO picmaterial_material (material_id,picmaterial_id)
+INSERT INTO picmaterial_material (material_id,pic_material_id)
 VALUES
     ("1","1"),("2","1"),("3","1"),("4","1"),("5","1"),("6","1"),("7","1"),("8","1"),("9","1"),("10","1"),
     ("11","1"),("12","1"),("13","1"),("14","1"),("15","1"),("16","1"),("17","1"),("18","1"),("19","1"),("20","1"),

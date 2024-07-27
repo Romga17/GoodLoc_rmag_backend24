@@ -68,6 +68,7 @@ public class SecurityConfig {
     }*/
 
     //Code d'origine de Fban fonctionnel:
+    @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
         corsConfiguration.setAllowedOrigins(List.of("*"));

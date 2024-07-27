@@ -91,7 +91,7 @@ public class UserServiceImp implements UserService {
         user.setId(id);
         user.setUserLastname(user.getUserLastname());
         user.setUserFirstname(user.getUserFirstname());
-        user.setUserEmail(user.getUserEmail());
+        user.setEmail(user.getEmail());
 
         userRepository.save(user);
 
@@ -101,10 +101,10 @@ public class UserServiceImp implements UserService {
     @Override
     public ResponseEntity<Map<String, Object>> subscription(User user) {
 
-        if (!user.getUserEmail().contains("@")) {
+        if (!user.getEmail().contains("@")) {
             throw new RuntimeException("Email non conforme");
         }
-        if (!user.getUserEmail().contains(".")) {
+        if (!user.getEmail().contains(".")) {
             throw new RuntimeException("Email non conforme");
         }
 
@@ -120,14 +120,14 @@ public class UserServiceImp implements UserService {
         // Assigner le rôle récupéré à l'utilisateur
         user.setUserRole(roleExist);
 
-        if (userRepository.existsByEmail(user.getUserEmail())) {
+        if (userRepository.existsByEmail(user.getEmail())) {
             throw new EmailAlreadyExistsException("Cet email est déjà utilisé.");
         }
 
         user.setUserPassword(getBCryptPasswordEncoder.encode(user.getUserPassword()));
 
         //emailServiceImp.sendEmail(utilisateur.getEmail(), "Confirmation inscription", "Bonjour " + utilisateur.getEmail() + " et bienvenue chez Goodloc, vous n'êtes qu'à un clic de pouvoir réserver votre matériel.");
-        emailServiceImp.sendEmail("romain.magagna@gmail.com", "Confirmation inscription", "Bonjour " + user.getUserEmail() + " et bienvenue chez Goodloc, vous n'êtes qu'à un clic de pouvoir réserver votre matériel.");
+        emailServiceImp.sendEmail("romain.magagna@gmail.com", "Confirmation inscription", "Bonjour " + user.getEmail() + " et bienvenue chez Goodloc, vous n'êtes qu'à un clic de pouvoir réserver votre matériel.");
 
         userRepository.save(user);
 
@@ -139,7 +139,7 @@ public class UserServiceImp implements UserService {
         try {
             UserDetails userDetails = (UserDetails) authenticationProvider.authenticate(
                     new UsernamePasswordAuthenticationToken(
-                            user.getUserEmail(),
+                            user.getEmail(),
                             user.getUserPassword())).getPrincipal();
 
 

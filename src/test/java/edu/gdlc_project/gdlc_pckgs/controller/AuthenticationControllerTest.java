@@ -35,8 +35,8 @@ class AuthenticationControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    /*@Autowired
-    private EntityManager entityManager;*/
+    @Autowired
+    private EntityManager entityManager;
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -65,7 +65,7 @@ class AuthenticationControllerTest {
         testUser.setId(98);
         testUser.setUserLastname("MrTest");
         testUser.setUserFirstname("Robert");
-        testUser.setUserEmail("robert.mrtest@gmail.com");
+        testUser.setEmail("robert.mrtest@gmail.com");
         testUser.setUserAdress("du test");
         testUser.setUserAdressNumber("100");
         testUser.setUserRoadType("rue");
@@ -78,13 +78,13 @@ class AuthenticationControllerTest {
         String jsonRequest = objectMapper.writeValueAsString(testUser);
 
         //When:
-        mockMvc.perform(post("/inscription")
+        mockMvc.perform(post("/register")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonRequest))
                 .andExpect(status().isOk());
 
         //Then:
-        Assertions.assertEquals(userRepositoryTest.findByEmail("robert.mrtest@gmail.com").get().getUserEmail(), "robert.mrtest@gmail.com");
+        Assertions.assertEquals(userRepositoryTest.findByEmail("robert.mrtest@gmail.com").get().getEmail(), "robert.mrtest@gmail.com");
     }
 
     /*@Test

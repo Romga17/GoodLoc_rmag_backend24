@@ -18,6 +18,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @Entity
+@Table(name="user")
 public class User {
 
     @Id
@@ -41,7 +42,7 @@ public class User {
     @NotBlank(message="Renseigner l'email est obligatoire")
     @Pattern(regexp = "^[a-zA-Z@ ._-]+$")
     @Column(unique=true)
-    protected String userEmail;
+    protected String email;
 
     @NotBlank(message="Renseigner le type de voie est obligatoire")
     @Pattern(regexp = "^[a-zA-Z -]+$")
@@ -113,11 +114,11 @@ public class User {
         User user = (User) o;
         return getUserLastname().equals(user.getUserLastname()) &&
                 getUserFirstname().equals(user.getUserFirstname()) &&
-                getUserEmail().equals(user.getUserEmail());
+                getEmail().equals(user.getEmail());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getUserLastname(), getUserFirstname(), getUserEmail());
+        return Objects.hash(getUserLastname(), getUserFirstname(), getEmail());
     }
 }

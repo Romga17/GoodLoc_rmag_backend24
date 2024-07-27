@@ -70,7 +70,7 @@ public class BookingRequestServiceImp implements BookingRequestService {
             bookingRequestRepository.save(bookingRequestToAgree);
 
             //emailServiceImp.sendEmail(user.getUserEmail(), "Confirmation inscription", "Bonjour " + user.getUserEmail() + " et bienvenue chez Goodloc, vous n'êtes qu'à un clic de pouvoir réserver votre matériel.");
-            emailServiceImp.sendEmail(bookingRequestToAgree.getBookingRequestRequester().getUserEmail(), "Confirmation réservation", "Bonjour " + bookingRequestToAgree.getBookingRequestRequester().getUserEmail() + " votre demande de réservation n° " + bookingRequestToAgree.getId() + " a bien été validée. Vous recevrez très prochainement les informations pour récupérer le matériel.");
+            emailServiceImp.sendEmail(bookingRequestToAgree.getBookingRequestRequester().getEmail(), "Confirmation réservation", "Bonjour " + bookingRequestToAgree.getBookingRequestRequester().getEmail() + " votre demande de réservation n° " + bookingRequestToAgree.getId() + " a bien été validée. Vous recevrez très prochainement les informations pour récupérer le matériel.");
             return new ResponseEntity<>(bookingRequestToAgree, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -92,7 +92,7 @@ public class BookingRequestServiceImp implements BookingRequestService {
 
         bookingRequestRepository.save(reservation);
 
-        emailServiceImp.sendEmail(reservation.getBookingRequestRequester().getUserEmail(), "Information demande de réservation", "Bonjour " + reservation.getBookingRequestRequester().getUserEmail() + " votre demande de réservation n° " + reservation.getId()  + " a été refusée pour le motif suivant: " + reservation.getBookingRequestdenialReason() );
+        emailServiceImp.sendEmail(reservation.getBookingRequestRequester().getEmail(), "Information demande de réservation", "Bonjour " + reservation.getBookingRequestRequester().getEmail() + " votre demande de réservation n° " + reservation.getId()  + " a été refusée pour le motif suivant: " + reservation.getBookingRequestdenialReason() );
 
         return new ResponseEntity<>(resaOptional.get(), HttpStatus.OK);
 

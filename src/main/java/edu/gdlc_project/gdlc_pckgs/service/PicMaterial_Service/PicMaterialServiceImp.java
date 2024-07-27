@@ -30,6 +30,6 @@ public class PicMaterialServiceImp implements PicMaterialService {
 
     @Override
     public String getItemImage(int id) {
-        return materialRepository.findById(id).get().getPicMaterialList().get(id).getPicmaterialUrl();
+        return materialRepository.findById(id).get().getPicMaterialList().get(id).getPicMaterialName();
     }
 }

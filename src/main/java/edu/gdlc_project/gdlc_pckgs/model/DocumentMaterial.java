@@ -16,14 +16,14 @@ public class DocumentMaterial {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected int id;
 
-    protected String documentName;
+    protected String documentMaterialName;
 
     @Column(columnDefinition="TEXT")
-    protected String documentUrl;
+    protected String documentMaterialUrl;
 
-    protected Date documentDate;
+    protected Date documentMaterialDate;
 
-    protected String documentDescription;
+    protected String documentMaterialDescription;
 
     @ManyToOne
     protected Design designGuide;
