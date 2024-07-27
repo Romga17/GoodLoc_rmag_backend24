@@ -1,5 +1,6 @@
 package edu.gdlc_project.gdlc_pckgs.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
 import edu.gdlc_project.gdlc_pckgs.view.UtilisateurView;
 import jakarta.annotation.Nullable;
@@ -27,6 +28,7 @@ public class User {
     protected int id;
 
     @JsonView(UtilisateurView.class)
+    @JsonProperty("userLastname")
     @NotBlank(message="Renseigner le nom est obligatoire")
     @Size(min = 2)
     @Pattern(regexp = "^[a-zA-Z -]+$")
@@ -36,54 +38,66 @@ public class User {
     @NotBlank(message="Renseigner le prenom est obligatoire")
     @Size(min = 2)
     @Pattern(regexp = "^[a-zA-Z -]+$")
+    @JsonProperty("userFirstname")
     protected String userFirstname;
 
     @JsonView(UtilisateurView.class)
     @NotBlank(message="Renseigner l'email est obligatoire")
     @Pattern(regexp = "^[a-zA-Z@ ._-]+$")
     @Column(unique=true)
+
     protected String email;
 
     @NotBlank(message="Renseigner le type de voie est obligatoire")
     @Pattern(regexp = "^[a-zA-Z -]+$")
+    @JsonProperty("userRoadType")
     protected String userRoadType;
 
     @NotBlank(message="Renseigner l'adresse est obligatoire")
     @Pattern(regexp = "^[a-zA-Z -]+$")
+    @JsonProperty("userAdress")
     protected String userAdress;
 
     @NotBlank(message="Renseigner le numéro d'adresse est obligatoire")
     @Pattern(regexp = "^[0-9a-zA-Z .-]+$")
+    @JsonProperty("userAdressNumber")
     protected String userAdressNumber;
 
     @NotBlank(message="Renseigner le code postal est obligatoire")
     @Pattern(regexp = "^[0-9 .-]+$")
     @Size(min = 5)
+    @JsonProperty("userZipCode")
     protected String userZipCode;
 
     @NotBlank(message="Renseigner le code postal est obligatoire")
     @Pattern(regexp = "^[a-zA-Z- ]+$")
+    @JsonProperty("userCity")
     protected String userCity;
 
     @NotBlank(message="Renseigner un numéro de téléphone est obligatoire")
     @Pattern(regexp = "^[0-9a-zA-Z +-]+$")
     @Size(min = 10)
+    @JsonProperty("userPhone")
     protected String userPhone;
 
 
     @NotBlank(message="Renseigner le mot de passe est obligatoire")
     @Pattern(regexp = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[#?!@$%^&*-]).{8,}$")
+    @JsonProperty("userPassword")
     protected String userPassword;
 
     @DateTimeFormat
+    @JsonProperty("userArrivalDate")
     protected LocalDate userArrivalDate;
 
     @DateTimeFormat
+    @JsonProperty("userDepartureDate")
     protected LocalDate userDepartureDate;
 
     @JsonView(UtilisateurView.class)
     @NotBlank(message="Renseigner votre cursus est obligatoire")
     @Pattern(regexp = "^[0-9a-zA-Z _#-]+$")
+    @JsonProperty("userCourse")
     protected String userCourse;
 
     @ManyToMany(fetch = FetchType.EAGER)

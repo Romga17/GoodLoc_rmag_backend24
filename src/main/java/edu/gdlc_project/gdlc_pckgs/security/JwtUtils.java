@@ -46,13 +46,15 @@ public class JwtUtils {
 
     public String getSubjectFromJwt(String jwt) {
 
-        /*return parser()
+        return parser()
                 .setSigningKey(secret)
                 .parseClaimsJws(jwt)
                 .getBody()
                 .getSubject();
-    }*/
-        Key key = Keys.hmacShaKeyFor(secret.getBytes());
+    }
+
+    //Méthode alternative mais clé de signature différente.
+        /*Key key = Keys.hmacShaKeyFor(secret.getBytes());
 
         Claims claims = Jwts.parserBuilder()
                 .setSigningKey(key)
@@ -60,6 +62,6 @@ public class JwtUtils {
                 .parseClaimsJws(jwt)
                 .getBody();
 
-        return claims.getSubject();
-    }
+        return claims.getSubject();*/
+
 }

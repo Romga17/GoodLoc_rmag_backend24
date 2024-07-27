@@ -21,7 +21,7 @@ public class DocumentMaterialController {
         return "Le document technique du matériel à bien été ajouté.";
     }
 
-    @GetMapping("/materieldocument/liste")
+    @GetMapping("/list")
     public List<DocumentMaterial> getAllMaterialsDocument(){
         return documentMaterialServiceImp.getAllMaterialsDocuments();
     }
