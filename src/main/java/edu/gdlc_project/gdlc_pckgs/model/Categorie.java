@@ -18,3 +18,6 @@ public class Categorie {
 
     protected String description;
 }
+
+
+// modification temporaire pour push.
