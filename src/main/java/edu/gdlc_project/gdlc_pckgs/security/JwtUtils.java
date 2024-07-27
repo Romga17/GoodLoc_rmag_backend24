@@ -46,20 +46,11 @@ public class JwtUtils {
 
     public String getSubjectFromJwt(String jwt) {
 
-        /*return parser()
+        return parser()
                 .setSigningKey(secret)
-                .parseClaimsJws(jwt)
-                .getBody()
-                .getSubject();
-    }*/
-        Key key = Keys.hmacShaKeyFor(secret.getBytes());
-
-        Claims claims = Jwts.parserBuilder()
-                .setSigningKey(key)
                 .build()
-                .parseClaimsJws(jwt)
-                .getBody();
-
-        return claims.getSubject();
+                .parseSignedClaims(jwt)
+                .getPayload()
+                .getSubject();
     }
 }
