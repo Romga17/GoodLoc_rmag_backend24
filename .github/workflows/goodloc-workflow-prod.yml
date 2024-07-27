@@ -1,4 +1,4 @@
-name: goodloc24-CI/CD
+name: goodloc-workflow-prod-CI/CD
 
 on:
   push:
