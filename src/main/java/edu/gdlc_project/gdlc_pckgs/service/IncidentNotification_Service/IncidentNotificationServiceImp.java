@@ -27,36 +27,36 @@ public class IncidentNotificationServiceImp implements IncidentNotificationServi
     private MaterialRepository materialRepository;
 
     @Override
-    public ResponseEntity<IncidentNotification> saveDeclarationIncident(IncidentNotification incidentNotification) {
+    public ResponseEntity<IncidentNotification> saveIncidentNotification(IncidentNotification incidentNotification) {
         incidentNotificationRepository.save(incidentNotification);
         return new ResponseEntity<>(incidentNotification, HttpStatus.OK);
     }
 
     @Override
-    public List<IncidentNotification> getAllDeclarationIncident() {
+    public List<IncidentNotification> getAllIncidentsNotifications() {
         return incidentNotificationRepository.findAll();
     }
 
     @Override
-    public List<IncidentNotification> getDeclarationIncidentByID(int id) {
-        List<IncidentNotification> userIncidents = incidentNotificationRepository.findDeclarationIncidentsById(id);
+    public List<IncidentNotification> getIncidentsNotificationsByID(int id) {
+        List<IncidentNotification> userIncidents = incidentNotificationRepository.findIncidentsNotificationsById(id);
         return userIncidents;
     }
 
     @Override
-    public ResponseEntity<IncidentNotification> addUserDeclarationIncident(int idMat, IncidentNotification incidentNotification, int idUtil) {
-        Optional<User> utilisateurOptional = userRepository.findById(idUtil);
-        Optional<Material> materielOptional = materialRepository.findById(idMat);
+    public ResponseEntity<IncidentNotification> addUserIncidentNotification(int idMat, IncidentNotification notifiedIncident, int idUtil) {
+        Optional<User> userOptional = userRepository.findById(idUtil);
+        Optional<Material> materialOptional = materialRepository.findById(idMat);
 
-        if (utilisateurOptional.isPresent() && materielOptional.isPresent()) {
-            User user = utilisateurOptional.get();
-            Material material = materielOptional.get();
+        if (userOptional.isPresent() && materialOptional.isPresent()) {
+            User user = userOptional.get();
+            Material material = materialOptional.get();
 
-            material.setDeclarationMat(incidentNotification);
+            material.setNotifiedMaterial(notifiedIncident);
 
-            user.getUserIncidentNotification().add(incidentNotification);
+            user.getUserIncidentNotification().add(notifiedIncident);
 
-            IncidentNotification savedIncident = incidentNotificationRepository.save(incidentNotification);
+            IncidentNotification savedIncident = incidentNotificationRepository.save(notifiedIncident);
 
             return new ResponseEntity<>(savedIncident, HttpStatus.OK);
         } else {

@@ -2,12 +2,13 @@ package edu.gdlc_project.gdlc_pckgs.service.User_Service;
 
 import edu.gdlc_project.gdlc_pckgs.model.User;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
 
 public interface UserService {
-    public ResponseEntity<User> saveUtilisateur(User user);
+    public ResponseEntity<User> saveUser(User user);
 
     public List<User> getAllUsers();
 

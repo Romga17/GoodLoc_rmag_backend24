@@ -2,26 +2,27 @@ package edu.gdlc_project.gdlc_pckgs.controller;
 
 import edu.gdlc_project.gdlc_pckgs.model.Category;
 import edu.gdlc_project.gdlc_pckgs.service.Category_Service.CategoryService;
+import edu.gdlc_project.gdlc_pckgs.service.Category_Service.CategoryServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/categorie")
+@RequestMapping("/category")
 public class CategoryController {
 
     @Autowired
-    protected CategoryService categoryService;
+    protected CategoryServiceImp categoryServiceImp;
 
-    @PostMapping("/categorie")
-    public String addCategorie(@RequestBody Category category){
-        categoryService.saveCategory(category);
+    @PostMapping("/add")
+    public String addCategory(@RequestBody Category category){
+        categoryServiceImp.saveCategory(category);
         return "La nouvelle catégorie à été ajoutée.";
     }
 
-    @GetMapping("/categorie/liste")
-    public List<Category> getAllCategories(){
-        return getAllCategories();
+    @GetMapping("/list")
+    public List<Category> getCategoriesList(){
+        return categoryServiceImp.getAllCategories();
     }
 }

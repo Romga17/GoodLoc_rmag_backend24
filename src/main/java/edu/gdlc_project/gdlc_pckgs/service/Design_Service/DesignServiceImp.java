@@ -14,11 +14,11 @@ public class DesignServiceImp implements DesignService {
     private DesignRepository designRepository;
 
     @Override
-    public Design saveModele(Design design) {
-        return null;
+    public Design saveModel(Design design) {
+        return designRepository.save(design);
     }
     @Override
-    public List<Design> getAllModele() {
+    public List<Design> getAllModels() {
         return designRepository.findAll();
     }
 }

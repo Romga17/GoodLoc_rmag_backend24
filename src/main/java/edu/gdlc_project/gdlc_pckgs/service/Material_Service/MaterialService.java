@@ -6,16 +6,15 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
 public interface MaterialService {
-    public ResponseEntity<Material> saveMateriel(Material material);
+    public ResponseEntity<Material> saveMaterial(Material material);
 
-    public List<Material> getAllMateriel();
+    public List<Material> getAllMaterials();
 
-    public Material getMaterielById(int id);
+    public Material getMaterialById(int id);
 
-    public ResponseEntity<Material> deleteMaterielById(int id);
+    public ResponseEntity<Material> deleteMaterialById(int id);
 
-    public ResponseEntity<Material> modificationMateriel(int id, Material material);
+    public ResponseEntity<Material> materialModification(int id, Material material);
 
 }

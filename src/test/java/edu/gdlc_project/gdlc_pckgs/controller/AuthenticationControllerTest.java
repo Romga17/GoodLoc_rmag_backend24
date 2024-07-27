@@ -35,8 +35,8 @@ class AuthenticationControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    @Autowired
-    private EntityManager entityManager;
+    /*@Autowired
+    private EntityManager entityManager;*/
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -56,24 +56,24 @@ class AuthenticationControllerTest {
 
     //OK
     @Test
-    public void testInscription_doitRetrouverUtilisateur() throws Exception {
+    public void registerTest_shouldReceiveNewUserCreated() throws Exception {
 
 
         //Given:
         User testUser = new User();
 
         testUser.setId(98);
-        testUser.setNom("MrTest");
-        testUser.setPrenom("Robert");
-        testUser.setEmail("robert.mrtest@gmail.com");
-        testUser.setAdresse("du test");
-        testUser.setNumeroAdresse("100");
-        testUser.setTypeVoie("rue");
-        testUser.setVille("Testville");
-        testUser.setCodePostal("57860");
-        testUser.setCursus("CDA Java");
-        testUser.setTelephone("+336744552");
-        testUser.setMotDePasse("rooT17goodloc!");
+        testUser.setUserLastname("MrTest");
+        testUser.setUserFirstname("Robert");
+        testUser.setUserEmail("robert.mrtest@gmail.com");
+        testUser.setUserAdress("du test");
+        testUser.setUserAdressNumber("100");
+        testUser.setUserRoadType("rue");
+        testUser.setUserCity("Testville");
+        testUser.setUserZipCode("57860");
+        testUser.setUserCourse("CDA Java");
+        testUser.setUserPhone("+336744552");
+        testUser.setUserPassword("rooT17goodloc!");
 
         String jsonRequest = objectMapper.writeValueAsString(testUser);
 
@@ -84,7 +84,7 @@ class AuthenticationControllerTest {
                 .andExpect(status().isOk());
 
         //Then:
-        Assertions.assertEquals(userRepositoryTest.findByEmail("robert.mrtest@gmail.com").get().getEmail(), "robert.mrtest@gmail.com");
+        Assertions.assertEquals(userRepositoryTest.findByEmail("robert.mrtest@gmail.com").get().getUserEmail(), "robert.mrtest@gmail.com");
     }
 
     /*@Test

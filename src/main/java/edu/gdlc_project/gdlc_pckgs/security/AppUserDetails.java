@@ -12,11 +12,11 @@ public class AppUserDetails implements UserDetails {
 
     protected User user;
 
-    public User getUtilisateur() {
+    public User getUser() {
         return user;
     }
 
-    public void setUtilisateur(User user) {
+    public void setUser(User user) {
         this.user = user;
     }
 
@@ -32,19 +32,19 @@ public class AppUserDetails implements UserDetails {
         //}
         ArrayList<SimpleGrantedAuthority> listeAuthority = new ArrayList<>();
 
-       listeAuthority.add(new SimpleGrantedAuthority(this.user.getUserRole().getNom()));
+       listeAuthority.add(new SimpleGrantedAuthority(this.user.getUserRole().getRoleName()));
 
        return listeAuthority;
     }
 
     @Override
     public String getPassword() {
-        return user.getMotDePasse();
+        return user.getUserPassword();
     }
 
     @Override
     public String getUsername() {
-        return user.getEmail();
+        return user.getUserEmail();
     }
 
     @Override

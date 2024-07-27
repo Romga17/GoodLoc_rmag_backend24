@@ -367,7 +367,7 @@ VALUES
 (4, 91),(2, 92),(3, 93),(1, 94),(4, 95);
 
 -- Données de notre table demande_reservation:
-INSERT INTO booking_request (booking_request_date, booking_request_agreement_date, booking_request_start_date, booking_request_end_date, booking_object_material_id, booking_request_validation, booking_request_validator_id, booking_request_requester_id, booking_request_user_message)
+INSERT INTO booking_request (booking_request_date, booking_request_agreement_date, booking_request_start_date, booking_request_end_date, booking_object_material_id, booking_request_valid, booking_request_validator_id, booking_request_requester_id, booking_request_user_message)
 VALUES
     ('2023-02-15', '2023-02-17', '2023-02-22', '2024-02-22', 99, 1, 4, 1, 'Merci pour ce prêt !'),
     ('2023-09-17', '2023-09-19','2023-09-23', '2024-09-23', 167, 1, 4, 2, null),

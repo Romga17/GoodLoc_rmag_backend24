@@ -44,28 +44,28 @@ class MaterialControllerTest {
 
     //Tests de la bonne réception des endpoints de MaterielController:
     @Test
-    public void testReceptionListeMaterielController_devraitRetrournerHttpStatusOk() throws Exception {
-        mockMvc.perform(get("/materiel/obtenir/liste"))
+    public void testReceptionMaterialControllerList_shouldReturnHttpStatusOk() throws Exception {
+        mockMvc.perform(get("/material/list"))
                 .andExpect(status().isOk());
     }
 
     @Test
-    public void testReceptionRecupererUnMaterielController_devraitRetrournerHttpStatusOk() throws Exception {
-        int idMaterielTest = 1;
+    public void testReceptiongetMaterialByIdController_shouldReturnHttpStatusOk() throws Exception {
+        int idMaterialTest = 1;
 
-        mockMvc.perform(get("/materiel/" + idMaterielTest))
+        mockMvc.perform(get("/material/get/" + idMaterialTest))
                 .andExpect(status().isOk());
     }
 
     @Test
-    public void testReceptionAjoutMateriel_devraitRetrournerHttpStatusOk() throws Exception {
+    public void testReceptionAddMaterial_shouldReturnHttpStatusOk() throws Exception {
         // Given:
         Material materialTest = new Material();
 
         String jsonRequestMatAdd = objectMapper.writeValueAsString(materialTest);
 
         // When:
-        mockMvc.perform(MockMvcRequestBuilders.post("/materiel/add")
+        mockMvc.perform(MockMvcRequestBuilders.post("/material/add")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonRequestMatAdd))
                 .andExpect(status().isOk());
@@ -74,12 +74,12 @@ class MaterialControllerTest {
     }
 
     @Test
-    void supprimerMateriel() throws Exception {
+    void testDeleteMaterialById_shouldReturnHttpStatusOk() throws Exception {
         // Given:
         int idMatToDel = 100;
 
         // When:
-        mockMvc.perform(MockMvcRequestBuilders.delete("/materiel/supprimer/"+idMatToDel))
+        mockMvc.perform(MockMvcRequestBuilders.delete("/material/delete/"+idMatToDel))
                 //Then:
                 .andExpect(status().isOk());
     }

@@ -29,14 +29,8 @@ class BookingRequestControllerTest {
     @Autowired
     private WebApplicationContext context;
 
-    @MockBean
-    private BookingRequestServiceImp demandeReservationServiceImpTest;
-
     @Autowired
     private ObjectMapper objectMapper;
-
-    @MockBean
-    private BookingRequestRepository bookingRequestRepositoryTest;
 
     @Autowired
     protected MockMvc mockMvc;
@@ -52,41 +46,41 @@ class BookingRequestControllerTest {
     //Tests de la bonne réception des endpoints de DemandeReservationController:
 
     @Test
-    public void testReceptionGetAllDemandeReservation_devraitRetrournerHttpStatusOk() throws Exception {
+    public void testGetAllBookings_shouldReturnHttpStatusOk() throws Exception {
         //When:
-        mockMvc.perform(get("/reservation/obtenir/liste"))
+        mockMvc.perform(get("/booking/list"))
                 //Then:
                 .andExpect(status().isOk());
     }
 
     @Test
-    public void testReceptionGetAllNotValid_devraitRetrournerHttpStatusOk() throws Exception {
+    public void testReceptionGetAllNotValid_shouldReturnHttpStatusOk() throws Exception {
         //When:
-        mockMvc.perform(get("/reservation/obtenir/waitingList"))
+        mockMvc.perform(get("/booking/get/unchecked"))
                 //Then:
                 .andExpect(status().isOk());
     }
 
     @Test
-    public void testReceptionGetUserAuthReservation_devraitRetrournerHttpStatusOk() throws Exception {
+    public void testReceptionGetUserBookings_shouldReturnHttpStatusOk() throws Exception {
         // Given:
-        int idDemandeReservationTest= 1;
+        int idBookingRequestTest= 1;
 
         //When:
-        mockMvc.perform(get("/reservation/obtenir/"+idDemandeReservationTest))
+        mockMvc.perform(get("/booking/get/"+idBookingRequestTest))
                 //Then:
                 .andExpect(status().isOk());
     }
 
     @Test
-    public void testReceptionAddRent_devraitRetrournerHttpStatusOk() throws Exception {
+    public void testReceptionAddBooking_shouldReturnHttpStatusOk() throws Exception {
         // Given:
         BookingRequest testBookingRequest = new BookingRequest();
 
         String jsonRequestBookingAdd = objectMapper.writeValueAsString(testBookingRequest);
 
         // When:
-        mockMvc.perform(MockMvcRequestBuilders.post("/reservation/ajouter")
+        mockMvc.perform(MockMvcRequestBuilders.post("/booking/add")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonRequestBookingAdd))
                 //Then:
@@ -94,14 +88,14 @@ class BookingRequestControllerTest {
     }
 
     @Test
-    public void testReceptionvalidateBookingRequest_devraitRetrournerHttpStatusOk() throws Exception {
+    public void testReceptionBookingRequestValidation_shouldReturnHttpStatusOk() throws Exception {
         // Given:
         BookingRequest testBookingRequestToModify = new BookingRequest();
 
         String jsonRequestBookingValidation = objectMapper.writeValueAsString(testBookingRequestToModify);
 
         // When:
-        mockMvc.perform(MockMvcRequestBuilders.put("/reservation/validate")
+        mockMvc.perform(MockMvcRequestBuilders.put("/booking/validate")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonRequestBookingValidation))
                 //Then:
@@ -109,16 +103,16 @@ class BookingRequestControllerTest {
     }
 
     @Test
-    public void testReceptionDenyBookingRequest_devraitRetrournerHttpStatusOk() throws Exception {
+    public void testReceptionDenyBookingRequest_shouldReturnHttpStatusOk() throws Exception {
         // Given:
-        int idValidateur = 17;
+        int bookingRequestValidatorId = 17;
 
         BookingRequest testBookingRequestToDeny = new BookingRequest();
 
         String jsonRequestBookingDeny = objectMapper.writeValueAsString(testBookingRequestToDeny);
 
         // When:
-        mockMvc.perform(MockMvcRequestBuilders.put("/reservation/deny/"+idValidateur)
+        mockMvc.perform(MockMvcRequestBuilders.put("/booking/deny/"+ bookingRequestValidatorId)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonRequestBookingDeny))
                 //Then:
@@ -128,10 +122,10 @@ class BookingRequestControllerTest {
     @Test
     void testReceptionDeleteReservationAsk_devraitRetrournerHttpStatusOk() throws Exception {
         // Given:
-        int idBookingToDelete = 1;
+        int BookingToDeleteId = 1;
 
         // When:
-        mockMvc.perform(MockMvcRequestBuilders.delete("/reservation/supprimer/"+idBookingToDelete))
+        mockMvc.perform(MockMvcRequestBuilders.delete("/booking/delete/"+ BookingToDeleteId))
                 // Then:
                 .andExpect(status().isOk());
     }

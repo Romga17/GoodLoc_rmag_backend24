@@ -10,30 +10,30 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/materiel")
+@RequestMapping("/material")
 public class MaterialController {
 
     @Autowired
     protected MaterialServiceImp materielServiceImp;
 
-    @GetMapping("/obtenir/liste")
-    public List<Material> getAllMateriel(){
-        return materielServiceImp.getAllMateriel();
+    @GetMapping("/list")
+    public List<Material> getMaterialsList(){
+        return materielServiceImp.getAllMaterials();
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Material> add(@RequestBody Material material){
-        return materielServiceImp.saveMateriel(material);
+    public ResponseEntity<Material> addMaterial(@RequestBody Material material){
+        return materielServiceImp.saveMaterial(material);
     }
 
-    @GetMapping("/{id}")
-    public Material obtenir (@PathVariable int id){
+    @GetMapping("/get/{id}")
+    public Material getMaterialWithId (@PathVariable int id){
 
-        return materielServiceImp.getMaterielById(id);
+        return materielServiceImp.getMaterialById(id);
     }
 
-    @DeleteMapping("/supprimer/{id}")
-    public ResponseEntity<Material> supprimerMateriel(@PathVariable int id) {
-        return materielServiceImp.deleteMaterielById(id);
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Material> deleteMaterial(@PathVariable int id) {
+        return materielServiceImp.deleteMaterialById(id);
     }
 }

@@ -9,43 +9,43 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/utilisateur")
+@RequestMapping("/user")
 public class UserController {
 
     @Autowired
-    private UserServiceImp utilisateurServiceImp;
+    private UserServiceImp userServiceImp;
 
-    @GetMapping("/obtenir/{id}")
+    @GetMapping("/get/{id}")
     public ResponseEntity<User> getSingleUser(@PathVariable int id) {
         try {
-            User user = utilisateurServiceImp.getUserById(id);
+            User user = userServiceImp.getUserById(id);
             return ResponseEntity.ok(user);
         } catch (NotFoundException e) {
-            return ResponseEntity.status(404).body(null);  // ou une réponse JSON avec un message d'erreur
+            return ResponseEntity.status(404).body(null);
         }
 
     }
 
-    @GetMapping("/obtenir/liste")
-    public List<User> usersList(){
-        return utilisateurServiceImp.getAllUsers();
+    @GetMapping("/list")
+    public List<User> getUsersList(){
+        return userServiceImp.getAllUsers();
     }
 
 
-    @PostMapping("/ajouter")
+    @PostMapping("/add")
     public ResponseEntity<User> addUser(@RequestBody User user){
-        return utilisateurServiceImp.saveUtilisateur(user);
+        return userServiceImp.saveUser(user);
     }
 
-    @PutMapping("/modifier/{id}")
-    public ResponseEntity<User>  modifyUser(@PathVariable int id, @RequestBody User user){
-        return utilisateurServiceImp.userModification(id, user);
+    @PutMapping("/modify/{id}")
+    public ResponseEntity<User> modifyUser(@PathVariable int id, @RequestBody User user){
+        return userServiceImp.userModification(id, user);
     }
 
-    @DeleteMapping("/supprimer/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteUser(@PathVariable int id){
         //modif du retour ResponseEntity<Utilisateur> pour le type String
-        return utilisateurServiceImp.deleteUserById(id);
+        return userServiceImp.deleteUserById(id);
     }
 }
 

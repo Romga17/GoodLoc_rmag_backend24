@@ -6,11 +6,11 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 public interface IncidentNotificationService {
-    public ResponseEntity<IncidentNotification> saveDeclarationIncident(IncidentNotification incidentNotification);
+    public ResponseEntity<IncidentNotification> saveIncidentNotification(IncidentNotification incidentNotification);
 
-    public List<IncidentNotification> getAllDeclarationIncident();
+    public List<IncidentNotification> getAllIncidentsNotifications();
 
-    public List<IncidentNotification> getDeclarationIncidentByID(int id);
+    public List<IncidentNotification> getIncidentsNotificationsByID(int id);
 
-    public ResponseEntity<IncidentNotification> addUserDeclarationIncident(int idMat, IncidentNotification incidentNotification, int idUtil );
+    public ResponseEntity<IncidentNotification> addUserIncidentNotification(int idMaterial, IncidentNotification incidentNotification, int idUser );
 }

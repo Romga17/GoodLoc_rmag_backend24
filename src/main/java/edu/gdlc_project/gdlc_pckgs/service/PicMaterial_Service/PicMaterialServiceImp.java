@@ -19,17 +19,17 @@ public class PicMaterialServiceImp implements PicMaterialService {
     }
 
     @Override
-    public PicMaterial saveMaterielImage(PicMaterial picMaterial) {
-        return null;
+    public PicMaterial saveMaterialPic(PicMaterial picMaterial) {
+        return picMaterialRepository.save(picMaterial);
     }
 
     @Override
-    public List<PicMaterial> getAllMaterielImage() {
+    public List<PicMaterial> getAllMaterialsPics() {
         return picMaterialRepository.findAll();
     }
 
     @Override
-    public String getArticleImage(int id) {
-        return materialRepository.findById(id).get().getPicMaterialList().get(id).getUrl();
+    public String getItemImage(int id) {
+        return materialRepository.findById(id).get().getPicMaterialList().get(id).getPicmaterialUrl();
     }
 }

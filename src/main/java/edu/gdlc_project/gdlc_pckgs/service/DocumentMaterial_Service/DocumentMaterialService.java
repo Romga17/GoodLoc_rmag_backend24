@@ -8,7 +8,7 @@ import java.util.List;
 @Service
 public interface DocumentMaterialService {
 
-    public DocumentMaterial saveMaterielDocument(DocumentMaterial documentMaterial);
+    DocumentMaterial saveMaterialDocument(DocumentMaterial documentMaterial);
 
-    public List<DocumentMaterial> getAllMaterielDocument();
+   List<DocumentMaterial> getAllMaterialsDocuments();
 }

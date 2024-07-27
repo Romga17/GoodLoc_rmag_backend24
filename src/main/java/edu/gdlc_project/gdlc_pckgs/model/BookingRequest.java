@@ -15,7 +15,7 @@ import java.sql.Date;
 public class BookingRequest {
 
     public BookingRequest() {
-        this.bookingRequestValidation = false;
+        this.bookingRequestValid= false;
     }
 
     @Id
@@ -23,7 +23,7 @@ public class BookingRequest {
     @JsonView(User.class)
     protected int id;
 
-    protected boolean bookingRequestValidation;
+    protected boolean bookingRequestValid;
 
     protected Date bookingRequestStartDate;
 
@@ -64,7 +64,7 @@ public class BookingRequest {
                 ", messageUser='" + bookingRequestUserMessage + '\'' +
                 ", motifRefus='" + bookingRequestdenialReason + '\'' +
                 ", validateur=" + bookingRequestValidator +
-                ", validation=" + bookingRequestValidation +
+                ", validation=" + bookingRequestValid +
                 '}';
     }
 }

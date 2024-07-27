@@ -35,9 +35,6 @@ class UserControllerTest {
     @MockBean
     private UserServiceImp utilisateurServiceImpTest;
 
-    @MockBean
-    private UserRepository userRepositoryTest;
-
     @Autowired
     private ObjectMapper objectMapper;
 
@@ -55,26 +52,26 @@ class UserControllerTest {
     //Tests de la bonne réception des requêtes de la part des endpoints de UtilisateurController:
 
     @Test
-    public void testReceptionGetSingleUser_devraitRetrournerHttpStatusOk() throws Exception {
+    public void testReceptionGetSingleUser_shouldReturnHttpStatusOk() throws Exception {
         // Given:
         int idUtilisateurTest= 1;
 
         // When:
-        mockMvc.perform(get("/utilisateur/obtenir/"+idUtilisateurTest))
+        mockMvc.perform(get("/user/get/"+idUtilisateurTest))
                 // Then:
                 .andExpect(status().isOk());
     }
 
     @Test
-    public void testReceptionUserList_devraitRetrournerHttpStatusOk() throws Exception {
+    public void testReceptionUserList_shouldReturnHttpStatusOk() throws Exception {
         // When:
-        mockMvc.perform(get("/utilisateur/obtenir/liste"))
+        mockMvc.perform(get("/user/list"))
                 // Then:
                 .andExpect(status().isOk());
     }
 
     @Test
-    public void testReceptionModifyUser_devraitRetrournerHttpStatusOk() throws Exception {
+    public void testReceptionModifyUser_shouldReturnHttpStatusOk() throws Exception {
         // Given:
         User testUserModify = new User();
 
@@ -83,7 +80,7 @@ class UserControllerTest {
         String jsonRequest = objectMapper.writeValueAsString(testUserModify);
 
         // When:
-        mockMvc.perform(MockMvcRequestBuilders.put("/utilisateur/modifier/"+idTestUtilisateurToModify)
+        mockMvc.perform(MockMvcRequestBuilders.put("/user/modify/"+idTestUtilisateurToModify)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonRequest))
                 // Then:
@@ -91,14 +88,14 @@ class UserControllerTest {
     }
 
     @Test
-    public void testReceptionAddUser_devraitRetrournerHttpStatusOk() throws Exception {
+    public void testReceptionAddUser_shouldReturnHttpStatusOk() throws Exception {
         // Given:
         User testUserAdd = new User();
 
         String jsonRequestMatAdd = objectMapper.writeValueAsString(testUserAdd);
 
         // When:
-        mockMvc.perform(MockMvcRequestBuilders.post("/utilisateur/ajouter")
+        mockMvc.perform(MockMvcRequestBuilders.post("/user/add")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonRequestMatAdd))
                 //Then:
@@ -106,27 +103,27 @@ class UserControllerTest {
     }
 
     @Test
-    void testReceptionDeleteUser_devraitRetrournerHttpStatusOk() throws Exception {
+    void testReceptionDeleteUser_shouldReturnHttpStatusOk() throws Exception {
         // Given:
-        int idUserToDel = 7;
+        int idUserToDelete = 7;
 
         // When:
-        mockMvc.perform(MockMvcRequestBuilders.delete("/utilisateur/supprimer/"+idUserToDel))
+        mockMvc.perform(MockMvcRequestBuilders.delete("/user/delete/"+idUserToDelete))
                 // Then:
                 .andExpect(status().isOk());
 
     }
 
     @Test
-    public void retrouverUtilisateurInexistant_devraitRetourner404() throws Exception {
+    public void retrouverUtilisateurInexistant_shouldReturn404() throws Exception {
         // Given
-        int idUtilisateurInexistant = 999;
+        int idNonExistingUser = 999;
 
         // Stubbing du service pour lancer une exception
-        when(utilisateurServiceImpTest.getUserById(idUtilisateurInexistant)).thenThrow(new NotFoundException("Utilisateur non trouvé avec l'ID : " + idUtilisateurInexistant));
+        when(utilisateurServiceImpTest.getUserById(idNonExistingUser)).thenThrow(new NotFoundException("Utilisateur non trouvé avec l'ID : " + idNonExistingUser));
 
         // When
-        mockMvc.perform(get("/utilisateurs/obtenir/{id}", idUtilisateurInexistant)
+        mockMvc.perform(get("/user/get/{id}", idNonExistingUser)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());  // Attend un statut HTTP 404 Not Found
     }

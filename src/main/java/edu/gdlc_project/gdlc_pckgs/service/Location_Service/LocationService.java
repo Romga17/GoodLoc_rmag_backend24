@@ -6,8 +6,8 @@ import java.util.List;
 
 public interface LocationService {
 
-    public Location saveEtablissement(Location location);
+    public Location saveLocation(Location location);
 
-    public List<Location> getAllEtablissement();
+    public List<Location> getAllLocations();
 
 }

@@ -43,7 +43,7 @@ public class UserServiceImp implements UserService {
     @Autowired
     private EmailServiceImp emailServiceImp;
 
-    public ResponseEntity<User> saveUtilisateur(User user){
+    public ResponseEntity<User> saveUser(User user){
         userRepository.save(user);
 
         return new ResponseEntity<>(user, HttpStatus.OK);
@@ -56,9 +56,9 @@ public class UserServiceImp implements UserService {
 
     @Override
     public User getUserById(int id) {
-        Optional<User> utilisateurOptional = userRepository.findById(id);
-        if (utilisateurOptional.isPresent()) {
-            return utilisateurOptional.get();
+        Optional<User> userOptional = userRepository.findById(id);
+        if (userOptional.isPresent()) {
+            return userOptional.get();
         } else {
             // Gérer le cas où aucun utilisateur n'est trouvé, par exemple :
             throw new NotFoundException("Utilisateur non trouvé avec l'ID : " + id);
@@ -68,9 +68,9 @@ public class UserServiceImp implements UserService {
 
     @Override
     public ResponseEntity<String> deleteUserById(int id) {
-        Optional<User> utilisateurOptional = userRepository.findById(id);
+        Optional<User> userOptional = userRepository.findById(id);
 
-        if(utilisateurOptional.isEmpty()) {
+        if(userOptional.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
@@ -81,36 +81,36 @@ public class UserServiceImp implements UserService {
 
     @Override
     public ResponseEntity<User> userModification(int id, User user) {
-        Optional<User> utilisateurOptional = userRepository.findById(user.getId());
+        Optional<User> userOptional = userRepository.findById(user.getId());
 
-        if(utilisateurOptional.isEmpty()) {
+        if(userOptional.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
         //Etait placé avant optional avant/ A corriger si erreur
         user.setId(id);
-        user.setNom(user.getNom());
-        user.setPrenom(user.getPrenom());
-        user.setEmail(user.getEmail());
+        user.setUserLastname(user.getUserLastname());
+        user.setUserFirstname(user.getUserFirstname());
+        user.setUserEmail(user.getUserEmail());
 
         userRepository.save(user);
 
-            return new ResponseEntity<>(utilisateurOptional.get(), HttpStatus.OK);
+            return new ResponseEntity<>(userOptional.get(), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Map<String, Object>> subscription(User user) {
 
-        if (!user.getEmail().contains("@")) {
+        if (!user.getUserEmail().contains("@")) {
             throw new RuntimeException("Email non conforme");
         }
-        if (!user.getEmail().contains(".")) {
+        if (!user.getUserEmail().contains(".")) {
             throw new RuntimeException("Email non conforme");
         }
 
-        Role roleUtilisateur = new Role(); // par exemple, en utilisant l'identifiant du rôle
+        Role userRole = new Role(); // par exemple, en utilisant l'identifiant du rôle
         // Rechercher le rôle dans la base de données pour s'assurer qu'il existe
-       Role roleExist = roleRepository.findById(roleUtilisateur.getId()).orElse(null);
+       Role roleExist = roleRepository.findById(userRole.getId()).orElse(null);
 
         if (roleExist == null) {
             // Gérer le cas où le rôle n'est pas trouvé
@@ -120,14 +120,14 @@ public class UserServiceImp implements UserService {
         // Assigner le rôle récupéré à l'utilisateur
         user.setUserRole(roleExist);
 
-        if (userRepository.existsByEmail(user.getEmail())) {
+        if (userRepository.existsByEmail(user.getUserEmail())) {
             throw new EmailAlreadyExistsException("Cet email est déjà utilisé.");
         }
 
-        user.setMotDePasse(getBCryptPasswordEncoder.encode(user.getMotDePasse()));
+        user.setUserPassword(getBCryptPasswordEncoder.encode(user.getUserPassword()));
 
         //emailServiceImp.sendEmail(utilisateur.getEmail(), "Confirmation inscription", "Bonjour " + utilisateur.getEmail() + " et bienvenue chez Goodloc, vous n'êtes qu'à un clic de pouvoir réserver votre matériel.");
-        emailServiceImp.sendEmail("romain.magagna@gmail.com", "Confirmation inscription", "Bonjour " + user.getEmail() + " et bienvenue chez Goodloc, vous n'êtes qu'à un clic de pouvoir réserver votre matériel.");
+        emailServiceImp.sendEmail("romain.magagna@gmail.com", "Confirmation inscription", "Bonjour " + user.getUserEmail() + " et bienvenue chez Goodloc, vous n'êtes qu'à un clic de pouvoir réserver votre matériel.");
 
         userRepository.save(user);
 
@@ -139,8 +139,8 @@ public class UserServiceImp implements UserService {
         try {
             UserDetails userDetails = (UserDetails) authenticationProvider.authenticate(
                     new UsernamePasswordAuthenticationToken(
-                            user.getEmail(),
-                            user.getMotDePasse())).getPrincipal();
+                            user.getUserEmail(),
+                            user.getUserPassword())).getPrincipal();
 
 
             return new ResponseEntity<>(Map.of("jwt",jwtUtils.generateToken(userDetails)), HttpStatus.OK);

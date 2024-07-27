@@ -2,26 +2,27 @@ package edu.gdlc_project.gdlc_pckgs.controller;
 
 import edu.gdlc_project.gdlc_pckgs.model.DocumentMaterial;
 import edu.gdlc_project.gdlc_pckgs.service.DocumentMaterial_Service.DocumentMaterialService;
+import edu.gdlc_project.gdlc_pckgs.service.DocumentMaterial_Service.DocumentMaterialServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/materieldocument")
+@RequestMapping("/document")
 
 public class DocumentMaterialController {
     @Autowired
-    protected DocumentMaterialService documentMaterialService;
+    protected DocumentMaterialServiceImp documentMaterialServiceImp;
 
-    @PostMapping("/materieldocument")
-    public String add(@RequestBody DocumentMaterial documentMaterial){
-        documentMaterialService.saveMaterielDocument(documentMaterial);
+    @PostMapping("/add")
+    public String addMaterielDocument(@RequestBody DocumentMaterial documentMaterial){
+        documentMaterialServiceImp.saveMaterialDocument(documentMaterial);
         return "Le document technique du matériel à bien été ajouté.";
     }
 
     @GetMapping("/materieldocument/liste")
-    public List<DocumentMaterial> getAllMaterielDocument(){
-        return getAllMaterielDocument();
+    public List<DocumentMaterial> getAllMaterialsDocument(){
+        return documentMaterialServiceImp.getAllMaterialsDocuments();
     }
 }

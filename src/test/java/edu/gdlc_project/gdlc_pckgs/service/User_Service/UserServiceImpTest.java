@@ -37,16 +37,13 @@ class UserServiceImpTest {
     private WebApplicationContext context;
 
     @Autowired
-    private UserServiceImp utilisateurServiceImpTest;
+    private UserServiceImp userServiceImpTest;
 
     @MockBean
     private UserRepository userRepositoryTest;
 
     @MockBean
     private RoleRepository roleRepositoryTest;
-
-    @Autowired
-    private ObjectMapper objectMapper;
 
     @Autowired
     protected MockMvc mockMvc;
@@ -68,77 +65,59 @@ class UserServiceImpTest {
     }
 
     @Test
-    public void testRetourSaveUtilisateur_doitRetournerUnUtilisateur() throws Exception {
+    public void testSavedUserReturn_shouldReturnNewUser() throws Exception {
         // Given
         User newUser = new User();
-        newUser.setNom("MrTest");
-        newUser.setPrenom("Robert");
-        newUser.setEmail("robert.mrtest@gmail.com");
-        newUser.setAdresse("du test");
-        newUser.setNumeroAdresse("100");
-        newUser.setTypeVoie("rue");
-        newUser.setVille("Testville");
-        newUser.setCodePostal("57860");
-        newUser.setCursus("CDA Java");
-        newUser.setTelephone("+336744552");
-        newUser.setMotDePasse("rooT17goodloc!");
+        newUser.setUserLastname("MrTest");
+        newUser.setUserFirstname("Robert");
+        newUser.setUserEmail("robert.mrtest@gmail.com");
+        newUser.setUserAdress("du test");
+        newUser.setUserAdressNumber("100");
+        newUser.setUserRoadType("rue");
+        newUser.setUserCity("Testville");
+        newUser.setUserZipCode("57860");
+        newUser.setUserCourse("CDA Java");
+        newUser.setUserPhone("+336744552");
+        newUser.setUserPassword("rooT17goodloc!");
 
         // When
         when(userRepositoryTest.save(newUser)).thenReturn(newUser);
-        ResponseEntity<User> savedUtilisateur = utilisateurServiceImpTest.saveUtilisateur(newUser);
+        ResponseEntity<User> savedUser = userServiceImpTest.saveUser(newUser);
 
         // Then
-        assertEquals(newUser, savedUtilisateur.getBody());
+        assertEquals(newUser, savedUser.getBody());
         verify(userRepositoryTest, times(1)).save(newUser);
     }
 
     @Test
-    public void testRetourgetAllUsers_doitRetournerListeUtilisateurs() throws Exception {
+    public void testGetAllUsersReturn_shouldReturnUsersList() throws Exception {
         // Given:
-        List<User> utilisateursListTest = new ArrayList<>();
+        List<User> usersListTest = new ArrayList<>();
 
         User newUser = new User();
-        newUser.setNom("MrTest");
-        newUser.setPrenom("Robert");
-        /*newUtilisateur.setEmail("robert.mrtest@gmail.com");
-        newUtilisateur.setAdresse("du test");
-        newUtilisateur.setNumeroAdresse("100");
-        newUtilisateur.setTypeVoie("rue");
-        newUtilisateur.setVille("Testville");
-        newUtilisateur.setCodePostal("57860");
-        newUtilisateur.setCursus("CDA Java");
-        newUtilisateur.setTelephone("+336744552");
-        newUtilisateur.setMotDePasse("rooT17moodloc!");*/
+        newUser.setUserLastname("MrTest");
+        newUser.setUserFirstname("Robert");
 
         User newUtilisatrice = new User();
-        newUser.setNom("MmeTest");
-        newUser.setPrenom("Roberte");
-        /*newUtilisateur.setEmail("roberte.mmetest@gmail.com");
-        newUtilisateur.setAdresse("du test");
-        newUtilisateur.setNumeroAdresse("100");
-        newUtilisateur.setTypeVoie("rue");
-        newUtilisateur.setVille("Testville");
-        newUtilisateur.setCodePostal("57860");
-        newUtilisateur.setCursus("CDA Java");
-        newUtilisateur.setTelephone("+336744553");
-        newUtilisateur.setMotDePasse("rooT17floodloc!");*/
+        newUser.setUserLastname("MmeTest");
+        newUser.setUserFirstname("Roberte");
 
-        utilisateursListTest.add(newUser);
-        utilisateursListTest.add(newUtilisatrice);
+        usersListTest.add(newUser);
+        usersListTest.add(newUtilisatrice);
 
         // When:
-        when(userRepositoryTest.findAll()).thenReturn(utilisateursListTest);
+        when(userRepositoryTest.findAll()).thenReturn(usersListTest);
 
         // Then:
-        assertEquals(utilisateursListTest, utilisateurServiceImpTest.getAllUsers());
+        assertEquals(usersListTest, userServiceImpTest.getAllUsers());
     }
 
     @Test
-    void testRetourGetUserById_doitRetournerUtilisateur() {
+    void testGetUserByIdReturn_shouldReturnTargetedUser() {
         // Given:
         User newUser = new User();
         newUser.setId(100);
-        newUser.setNom("MrTest");
+        newUser.setUserLastname("MrTest");
 
         Optional<User> lookForUser = Optional.of(newUser);
 
@@ -146,7 +125,7 @@ class UserServiceImpTest {
         when(userRepositoryTest.findById(100)).thenReturn(lookForUser);
 
         // Then
-        assertEquals(newUser, utilisateurServiceImpTest.getUserById(100));
+        assertEquals(newUser, userServiceImpTest.getUserById(100));
     }
 
     @Test
@@ -154,7 +133,7 @@ class UserServiceImpTest {
         // Given:
         User newUser = new User();
         newUser.setId(100);
-        newUser.setNom("MrTest");
+        newUser.setUserLastname("MrTest");
 
         Optional<User> lookForUser = Optional.of(newUser);
 
@@ -162,19 +141,19 @@ class UserServiceImpTest {
         when(userRepositoryTest.findById(100)).thenReturn(lookForUser);
 
         // Then
-        assertEquals(HttpStatus.OK, utilisateurServiceImpTest.deleteUserById(100).getStatusCode());
+        assertEquals(HttpStatus.OK, userServiceImpTest.deleteUserById(100).getStatusCode());
     }
 
     @Test
-    void testRetourUserModification_doitRetournerUtilisateur() {
+    void testUserModificationReturn_shouldReturnModifiedUser() {
         // Given:
         User newUser = new User();
         newUser.setId(100);
-        newUser.setNom("MrTest");
+        newUser.setUserLastname("MrTest");
 
         User modifiedUser = new User();
         modifiedUser.setId(100);
-        modifiedUser.setNom("MrTestReussi");
+        modifiedUser.setUserLastname("MrTestReussi");
 
         Optional <User> monRetourAttendu = Optional.of(modifiedUser);
 
@@ -182,40 +161,40 @@ class UserServiceImpTest {
         when(userRepositoryTest.findById(100)).thenReturn(monRetourAttendu);
 
         // Then
-        assertEquals(monRetourAttendu.get(), utilisateurServiceImpTest.userModification(100, modifiedUser).getBody());
+        assertEquals(monRetourAttendu.get(), userServiceImpTest.userModification(100, modifiedUser).getBody());
     }
 
     @Test
     void testRetourSubscription_doitRetournerUtilisateurInscrit() {
         // Given:
         User suscribedUser = new User();
-        suscribedUser.setNom("MrLeNouveau");
-        suscribedUser.setEmail("robert.mrtest@gmail.com");
-        suscribedUser.setAdresse("du test");
-        suscribedUser.setNumeroAdresse("100");
-        suscribedUser.setTypeVoie("rue");
-        suscribedUser.setVille("Testville");
-        suscribedUser.setCodePostal("57860");
-        suscribedUser.setCursus("CDA Java");
-        suscribedUser.setTelephone("+336744552");
-        suscribedUser.setMotDePasse("rooT17moodloc!");
+        suscribedUser.setUserLastname("MrLeNouveau");
+        suscribedUser.setUserEmail("robert.mrtest@gmail.com");
+        suscribedUser.setUserAdress("du test");
+        suscribedUser.setUserAdressNumber("100");
+        suscribedUser.setUserRoadType("rue");
+        suscribedUser.setUserCity("Testville");
+        suscribedUser.setUserZipCode("57860");
+        suscribedUser.setUserCourse("CDA Java");
+        suscribedUser.setUserPhone("+336744552");
+        suscribedUser.setUserPassword("rooT17moodloc!");
 
         Role role = new Role();
         role.setId(1);
-        role.setNom("Etudiant");
+        role.setRoleName("Etudiant");
 
         when(roleRepositoryTest.findById(1)).thenReturn(Optional.of(role));
-        when(userRepositoryTest.existsByEmail(suscribedUser.getEmail())).thenReturn(false);
+        when(userRepositoryTest.existsByEmail(suscribedUser.getUserEmail())).thenReturn(false);
         when(userRepositoryTest.save(suscribedUser)).thenReturn(suscribedUser);
 
         // When:
-        ResponseEntity<Map<String, Object>> response = utilisateurServiceImpTest.subscription(suscribedUser);
+        ResponseEntity<Map<String, Object>> response = userServiceImpTest.subscription(suscribedUser);
 
         // Then:
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals("Inscription réussie", response.getBody().get("message"));
         verify(userRepositoryTest, times(1)).save(suscribedUser);
-        verify(userRepositoryTest, times(1)).existsByEmail(suscribedUser.getEmail());
+        verify(userRepositoryTest, times(1)).existsByEmail(suscribedUser.getUserEmail());
         verify(roleRepositoryTest, times(1)).findById(1);
     }
 

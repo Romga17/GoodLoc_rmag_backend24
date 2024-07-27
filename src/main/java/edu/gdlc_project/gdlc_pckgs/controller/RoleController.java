@@ -2,6 +2,7 @@ package edu.gdlc_project.gdlc_pckgs.controller;
 
 import edu.gdlc_project.gdlc_pckgs.model.Role;
 import edu.gdlc_project.gdlc_pckgs.service.Role_Service.RoleService;
+import edu.gdlc_project.gdlc_pckgs.service.Role_Service.RoleServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,16 +15,16 @@ public class RoleController {
 
 
     @Autowired
-    protected RoleService roleService;
+    protected RoleServiceImp roleServiceImp;
 
-    @PostMapping("/role")
-    public String add(@RequestBody Role role){
-        roleService.saveRole(role);
+    @PostMapping("/add")
+    public String addRole(@RequestBody Role role){
+        roleServiceImp.saveRole(role);
         return "Le nouveau rôle à été ajouté.";
     }
 
-    @GetMapping("/role/liste")
-    public List<Role> getAllRole(){
-        return roleService.getAllRole();
+    @GetMapping("/list")
+    public List<Role> getAllRoles(){
+        return roleServiceImp.getAllRoles();
     }
 }

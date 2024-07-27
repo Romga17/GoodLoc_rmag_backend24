@@ -7,7 +7,8 @@ import java.util.List;
 
 @Service
 public interface DesignService {
-    public Design saveModele(Design design);
 
-    public List<Design> getAllModele();
+    Design saveModel(Design design);
+
+    List<Design> getAllModels();
 }

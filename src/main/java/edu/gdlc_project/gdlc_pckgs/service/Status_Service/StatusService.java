@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface StatusService {
 
-    public Status saveEtat(Status status);
+    public Status saveStatus(Status status);
 
-    public List<Status> getAllEtat();
+    public List<Status> getAllStatuses();
 }

@@ -7,7 +7,7 @@ import java.util.List;
 
 @Service
 public interface BrandService {
-    public Brand saveMarque(Brand brand);
+    public Brand saveBrand(Brand brand);
 
-    public List<Brand> getAllMarques();
+    public List<Brand> getAllBrands();
 }

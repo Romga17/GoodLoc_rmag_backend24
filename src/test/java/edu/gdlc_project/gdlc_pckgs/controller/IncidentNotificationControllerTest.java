@@ -28,9 +28,6 @@ class IncidentNotificationControllerTest {
     @Autowired
     private WebApplicationContext context;
 
-    @MockBean
-    private IncidentNotificationServiceImp declarationIncidentServiceImp;
-
     @Autowired
     private ObjectMapper objectMapper;
 
@@ -46,17 +43,17 @@ class IncidentNotificationControllerTest {
     }
 
     @Test
-    public void testReceptionAddIncident_devraitRetrournerHttpStatusOk() throws Exception {
+    public void testReceptionAddIncident_shouldReturnHttpStatusOk() throws Exception {
         // Given:
-        int idDeclarant = 1;
-        int idMaterielIncident = 1;
+        int notificatorId = 1;
+        int notificatedMaterialId = 1;
 
         IncidentNotification testDeclaration= new IncidentNotification();
 
         String jsonRequestMatAdd = objectMapper.writeValueAsString(testDeclaration);
 
         // When:
-        mockMvc.perform(MockMvcRequestBuilders.post("/incident/ajouter/"+idMaterielIncident+"/"+idDeclarant)
+        mockMvc.perform(MockMvcRequestBuilders.post("/incident/add/"+notificatedMaterialId+"/"+notificatorId)
                         .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonRequestMatAdd))
                 //Then:
@@ -64,13 +61,13 @@ class IncidentNotificationControllerTest {
     }
 
     @Test
-    public void testReceptionSaveIncident_devraitRetrournerHttpStatusOk() throws Exception {
-        IncidentNotification testSaveDeclaration= new IncidentNotification();
+    public void testReceptionSaveIncident_shouldReturnHttpStatusOk() throws Exception {
+        IncidentNotification testSaveNotification= new IncidentNotification();
 
-        String jsonRequestSaveDecl = objectMapper.writeValueAsString(testSaveDeclaration);
+        String jsonRequestSaveDecl = objectMapper.writeValueAsString(testSaveNotification);
 
         // When:
-        mockMvc.perform(MockMvcRequestBuilders.post("/incident/ajouter")
+        mockMvc.perform(MockMvcRequestBuilders.post("/incident/add")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonRequestSaveDecl))
                 //Then:
@@ -78,18 +75,18 @@ class IncidentNotificationControllerTest {
     }
 
     @Test
-    public void testReceptionGetAllTypeIncident_devraitRetrournerHttpStatusOk() throws Exception {
+    public void testReceptionGetAllTypesOfIncident_shouldReturnHttpStatusOk() throws Exception {
         mockMvc.perform(get("/incident/list"))
                 .andExpect(status().isOk());
     }
 
     @Test
-    public void testReceptionGetUserIncidents_devraitRetrournerHttpStatusOk() throws Exception {
+    public void testReceptionGetUserIncidents_shouldReturnHttpStatusOk() throws Exception {
         // Given:
-        int idUtilisateurTestIncidents= 1;
+        int idUserTest= 1;
 
         // When:
-        mockMvc.perform(get("/incident/obtenir/"+idUtilisateurTestIncidents))
+        mockMvc.perform(get("/incident/get/"+idUserTest))
                 // Then:
                 .andExpect(status().isOk());
     }

@@ -11,48 +11,48 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/reservation")
+@RequestMapping("/booking")
 public class BookingRequestController {
 
     @Autowired
-    protected BookingRequestServiceImp demandeReservationServiceImp;
+    protected BookingRequestServiceImp bookingRequestServiceImp;
 
     @Autowired
     protected BookingRequestRepository bookingRequestRepository;
 
-    @GetMapping("/obtenir/liste")
-    public List<BookingRequest> getAllDemandeReservation(){
-        return demandeReservationServiceImp.getAllDemandeReservation();
+    @GetMapping("/list")
+    public List<BookingRequest> getBookingLists(){
+        return bookingRequestServiceImp.getAllBookingRequest();
     }
 
-    @GetMapping("/obtenir/waitingList")
+    @GetMapping("/get/unchecked")
     public List<BookingRequest> getAllNotValid(){
-        return demandeReservationServiceImp.getAllUnchecked();
+        return bookingRequestServiceImp.getAllUnchecked();
     }
 
-    @GetMapping("/obtenir/{id}")
-    public List<BookingRequest> getUserAuthReservation(@PathVariable int id){
+    @GetMapping("/get/{id}")
+    public List<BookingRequest> getUserBookings(@PathVariable int id){
 
-        return demandeReservationServiceImp.getUserReservations(id);
+        return bookingRequestServiceImp.getUserBookings(id);
     }
 
-    @PostMapping("/ajouter")
+    @PostMapping("/add")
     public ResponseEntity<BookingRequest> addRent(@RequestBody BookingRequest bookingRequest){
-        return demandeReservationServiceImp.addUserReservation(bookingRequest);
+        return bookingRequestServiceImp.addUserBooking(bookingRequest);
     }
 
     @PutMapping("/validate")
     public ResponseEntity<BookingRequest> validateBookingRequest(@RequestBody BookingRequest bookingRequest){
-        return demandeReservationServiceImp.validateRecord(bookingRequest.getId(), bookingRequest.isValidation());
+        return bookingRequestServiceImp.validateRecord(bookingRequest.getId(), bookingRequest.isBookingRequestValid());
     }
 
     @PutMapping("/deny/{id}")
-    public ResponseEntity<BookingRequest> denyBookingRequest(@PathVariable int id, @RequestBody BookingRequest resaToDeny){
-        return demandeReservationServiceImp.denyRecord(id, resaToDeny);
+    public ResponseEntity<BookingRequest> denyBookingRequest(@PathVariable int id, @RequestBody BookingRequest bookingToDeny){
+        return bookingRequestServiceImp.denyRecord(id, bookingToDeny);
     }
 
-    @DeleteMapping("/supprimer/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<BookingRequest> deleteReservationAsk(@PathVariable int id){
-        return demandeReservationServiceImp.deleteBookingRequest(id);
+        return bookingRequestServiceImp.deleteBookingRequest(id);
     }
 }

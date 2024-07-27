@@ -1,30 +1,27 @@
 package edu.gdlc_project.gdlc_pckgs.controller;
 
 import edu.gdlc_project.gdlc_pckgs.model.Brand;
-import edu.gdlc_project.gdlc_pckgs.service.Brand_Service.BrandService;
+import edu.gdlc_project.gdlc_pckgs.service.Brand_Service.BrandServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/marque")
+@RequestMapping("/brand")
 public class BrandController {
 
     @Autowired
-    protected BrandService brandService;
+    protected BrandServiceImp brandServiceImp;
 
-    @PostMapping("/marque")
+    @PostMapping("/add")
     public String add(@RequestBody Brand brand){
-        brandService.saveMarque(brand);
+        brandServiceImp.saveBrand(brand);
         return "La nouvelle marque à été ajoutée.";
     }
 
-    @GetMapping("/marque/liste")
-    public List<Brand> getAllMarque(){
-        return getAllMarque();
+    @GetMapping("/list")
+    public List<Brand> getBrandsList(){
+        return brandServiceImp.getAllBrands();
     }
-
-
-
 }

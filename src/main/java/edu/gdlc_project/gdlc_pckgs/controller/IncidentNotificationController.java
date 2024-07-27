@@ -13,26 +13,25 @@ import java.util.List;
 public class IncidentNotificationController {
 
     @Autowired
-    protected IncidentNotificationServiceImp declarationIncidentServiceImp;
+    protected IncidentNotificationServiceImp incidentNotificationServiceImp;
 
-    @PostMapping("/ajouter/{idMat}/{idUtil}")
-    public ResponseEntity<IncidentNotification> addIncident(@PathVariable("idMat") int idMat, @PathVariable("idUtil") int idUtil, @RequestBody IncidentNotification typeIncident){
-        return declarationIncidentServiceImp.addUserDeclarationIncident(idMat, typeIncident, idUtil);
+    @PostMapping("/ajouter/{idMaterial}/{idUser}")
+    public ResponseEntity<IncidentNotification> addIncident(@PathVariable("idMaterial") int idMaterial, @PathVariable("idUser") int idUser, @RequestBody IncidentNotification incidentType){
+        return incidentNotificationServiceImp.addUserIncidentNotification(idMaterial, incidentType, idUser);
     }
 
-    @PostMapping("/ajouter")
+    @PostMapping("/save")
     public ResponseEntity<IncidentNotification> saveIncident(@RequestBody IncidentNotification incidentNotification){
-        return declarationIncidentServiceImp.saveDeclarationIncident(incidentNotification);
+        return incidentNotificationServiceImp.saveIncidentNotification(incidentNotification);
     }
 
     @GetMapping("/list")
-    public List<IncidentNotification> getAllTypeIncident(){
-        return declarationIncidentServiceImp.getAllDeclarationIncident();
+    public List<IncidentNotification> getincidentsList(){
+        return incidentNotificationServiceImp.getAllIncidentsNotifications();
     }
 
-    @GetMapping("/obtenir/{id}")
+    @GetMapping("/get/{id}")
     public List<IncidentNotification> getUserIncidents(@PathVariable int id){
-
-        return declarationIncidentServiceImp.getDeclarationIncidentByID(id);
+        return incidentNotificationServiceImp.getIncidentsNotificationsByID(id);
     }
 }

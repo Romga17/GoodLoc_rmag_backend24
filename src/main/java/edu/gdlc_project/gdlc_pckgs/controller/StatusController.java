@@ -2,25 +2,26 @@ package edu.gdlc_project.gdlc_pckgs.controller;
 
 import edu.gdlc_project.gdlc_pckgs.model.Status;
 import edu.gdlc_project.gdlc_pckgs.service.Status_Service.StatusService;
+import edu.gdlc_project.gdlc_pckgs.service.Status_Service.StatusServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/etat")
+@RequestMapping("/status")
 public class StatusController {
 
     @Autowired
-    protected StatusService statusService;
+    protected StatusServiceImp statusServiceImp;
 
-    @PostMapping("/etat")
-    public String add(@RequestBody Status status){
-        statusService.saveEtat(status);
+    @PostMapping("/add")
+    public String addStatus(@RequestBody Status status){
+        statusServiceImp.saveStatus(status);
         return "Le nouvel état à été ajouté.";
     }
 
-    @GetMapping("/etat/liste")
-    public List<Status> getAllEtat(){
-        return getAllEtat();
+    @GetMapping("/list")
+    public List<Status> getAllStatus(){
+        return statusServiceImp.getAllStatuses();
     }
 }

@@ -7,15 +7,15 @@ import java.util.List;
 
 public interface BookingRequestService {
 
-    public BookingRequest saveDemandeReservation(BookingRequest bookingRequest);
+    public BookingRequest saveBookingRequest(BookingRequest bookingRequest);
 
-    public List<BookingRequest> getAllDemandeReservation();
+    public List<BookingRequest> getAllBookingRequest();
 
     public List<BookingRequest> getAllUnchecked();
 
-    public ResponseEntity<BookingRequest> addUserReservation(BookingRequest bookingRequest);
+    public ResponseEntity<BookingRequest> addUserBooking(BookingRequest bookingRequest);
 
-    public List<BookingRequest> getUserReservations(int id);
+    public List<BookingRequest> getUserBookings(int id);
 
     public ResponseEntity<BookingRequest> validateRecord(int idVal, boolean valid);
 

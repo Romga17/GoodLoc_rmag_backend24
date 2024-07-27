@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface IncidentNotificationRepository extends JpaRepository<IncidentNotification,Integer> {
-    List<IncidentNotification> findDeclarationIncidentsById(int id);
+    List<IncidentNotification> findIncidentsNotificationsById(int id);
 }

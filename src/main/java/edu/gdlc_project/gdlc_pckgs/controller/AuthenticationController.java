@@ -22,17 +22,17 @@ public class AuthenticationController {
     BCryptPasswordEncoder bCryptPasswordEncoder;
     
     @Autowired
-    private UserServiceImp utilisateurServiceImp;
+    private UserServiceImp userServiceImp;
 
 
-    @PostMapping("/inscription")
+    @PostMapping("/register")
     public ResponseEntity<Map<String, Object>> userInscription (@Valid @RequestBody User user){
-        return utilisateurServiceImp.subscription(user);
+        return userServiceImp.subscription(user);
     }
 
-    @PostMapping("/connexion")
+    @PostMapping("/signin")
     public ResponseEntity<Map<String,Object>> userConnection(@RequestBody User user) {
-        return utilisateurServiceImp.connection(user);
+        return userServiceImp.connection(user);
     }
 
     /*@GetMapping("/profil")

@@ -17,49 +17,49 @@ public class MaterialServiceImp implements MaterialService {
     private MaterialRepository materialRepository;
 
     @Override
-    public ResponseEntity<Material> saveMateriel(Material material) {
-        materialRepository.save(material);
-        return new ResponseEntity<>(material, HttpStatus.OK);
+    public ResponseEntity<Material> saveMaterial(Material materialToSave) {
+        materialRepository.save(materialToSave);
+        return new ResponseEntity<>(materialToSave, HttpStatus.OK);
     }
 
     @Override
-    public List<Material> getAllMateriel() {
+    public List<Material> getAllMaterials() {
         return materialRepository.findAll();
     }
 
     @Override
-    public Material getMaterielById(int id) {
+    public Material getMaterialById(int id) {
         return materialRepository.findById(id).get();
     }
 
     @Override
-    public ResponseEntity<Material> deleteMaterielById(int id) {
-        Optional<Material> materielOptional = materialRepository.findById(id);
+    public ResponseEntity<Material> deleteMaterialById(int id) {
+        Optional<Material> materialOptional = materialRepository.findById(id);
 
-        if(materielOptional.isEmpty()) {
+        if(materialOptional.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
         materialRepository.deleteById(id);
 
-        return new ResponseEntity<>(materielOptional.get(),HttpStatus.OK);
+        return new ResponseEntity<>(materialOptional.get(),HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<Material> modificationMateriel(int id, Material material) {
-        material.setId(id);
-        material.setReference(material.getReference());
-        material.setDescription(material.getDescription());
-        material.setStatut(material.getStatut());
+    public ResponseEntity<Material> materialModification(int id, Material materialToModify) {
+        materialToModify.setId(id);
+        materialToModify.setMaterialReference(materialToModify.getMaterialReference());
+        materialToModify.setMaterialDescription(materialToModify.getMaterialDescription());
+        materialToModify.setMaterialStatus(materialToModify.getMaterialStatus());
 
-        Optional<Material> materielOptional = materialRepository.findById(material.getId());
+        Optional<Material> materialOptional = materialRepository.findById(materialToModify.getId());
 
-        if(materielOptional.isEmpty()) {
+        if(materialOptional.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        materialRepository.save(material);
+        materialRepository.save(materialToModify);
 
-        return new ResponseEntity<>(materielOptional.get(), HttpStatus.OK);
+        return new ResponseEntity<>(materialOptional.get(), HttpStatus.OK);
     }
 }

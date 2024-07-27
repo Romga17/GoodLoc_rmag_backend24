@@ -8,9 +8,9 @@ import java.util.List;
 @Service
 public interface PicMaterialService {
 
-    public PicMaterial saveMaterielImage(PicMaterial picMaterial);
+    public PicMaterial saveMaterialPic(PicMaterial picMaterial);
 
-    public List<PicMaterial> getAllMaterielImage();
+    public List<PicMaterial> getAllMaterialsPics();
 
-    public String getArticleImage(int id);
+    public String getItemImage(int id);
 }

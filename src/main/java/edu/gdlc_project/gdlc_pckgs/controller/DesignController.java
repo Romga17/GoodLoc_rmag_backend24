@@ -1,27 +1,27 @@
 package edu.gdlc_project.gdlc_pckgs.controller;
 
 import edu.gdlc_project.gdlc_pckgs.model.Design;
-import edu.gdlc_project.gdlc_pckgs.service.Design_Service.DesignService;
+import edu.gdlc_project.gdlc_pckgs.service.Design_Service.DesignServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/modele")
+@RequestMapping("/design")
 public class DesignController {
 
     @Autowired
-    protected DesignService designService;
+    protected DesignServiceImp designServiceImp;
 
-    @PostMapping("/modele")
-    public String add(@RequestBody Design design){
-        designService.saveModele(design);
+    @PostMapping("/add")
+    public String addModel(@RequestBody Design design){
+        designServiceImp.saveModel(design);
         return "Le nouveau modèle à été ajouté.";
     }
 
-    @GetMapping("/obtenir/liste")
-    public List<Design> getAllModele(){
-        return designService.getAllModele();
+    @GetMapping("/list")
+    public List<Design> getModelsList(){
+        return designServiceImp.getAllModels();
     }
 }
