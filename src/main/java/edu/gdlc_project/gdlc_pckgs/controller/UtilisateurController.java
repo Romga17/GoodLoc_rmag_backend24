@@ -49,6 +49,7 @@ public class UtilisateurController {
     }
 }
 
+// commentaire push
     /*@GetMapping("/profil")
     @IsUser
     public ResponseEntity<?> getUserProfile() {
