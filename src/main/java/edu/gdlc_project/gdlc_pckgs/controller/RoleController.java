@@ -1,7 +1,7 @@
 package edu.gdlc_project.gdlc_pckgs.controller;
 
 import edu.gdlc_project.gdlc_pckgs.model.Role;
-import edu.gdlc_project.gdlc_pckgs.service.Service_Role.RoleService;
+import edu.gdlc_project.gdlc_pckgs.service.Role_Service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

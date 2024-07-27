@@ -1,10 +1,10 @@
 package edu.gdlc_project.gdlc_pckgs.repository;
 
-import edu.gdlc_project.gdlc_pckgs.model.Role;
+import edu.gdlc_project.gdlc_pckgs.model.Location;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface RoleRepository extends JpaRepository<Role,Integer> {
-    //Optional<RoleRepository> findById(int id);
+public interface LocationRepository extends JpaRepository<Location,Integer> {
+
 }
