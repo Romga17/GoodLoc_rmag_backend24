@@ -15,8 +15,8 @@ public class IncidentNotificationController {
     @Autowired
     protected IncidentNotificationServiceImp incidentNotificationServiceImp;
 
-    @PostMapping("/add/{idMaterial}/{idUser}")
-    public ResponseEntity<IncidentNotification> addIncident(@PathVariable("idMaterial") int idMaterial, @PathVariable("idUser") int idUser, @RequestBody IncidentNotification incidentType){
+    @PostMapping("/add/{NotifiedMaterialId}/{incidentNotifierId}")
+    public ResponseEntity<IncidentNotification> addIncident(@PathVariable("NotifiedMaterialId") int idMaterial, @PathVariable("incidentNotifierId") int idUser, @RequestBody IncidentNotification incidentType){
         return incidentNotificationServiceImp.addUserIncidentNotification(idMaterial, incidentType, idUser);
     }
 

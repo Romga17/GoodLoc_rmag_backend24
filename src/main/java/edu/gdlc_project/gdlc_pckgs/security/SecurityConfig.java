@@ -54,7 +54,7 @@ public class SecurityConfig {
                                 "category/add", "category/list",
                                 "design/add", "design/list",
                                 "document/add", "document/list",
-                                "incident/add/{idMaterial}/{idUser}","incident/save","incident/list","incident/get/{id}",
+                                "incident/add/{NotifiedMaterialId}/{incidentNotifierId}","incident/save","incident/list","incident/get/{id}",
                                 "location/add","location/list",
                                 "material/list","material/add","material/get/{id}","material/delete/{id}",
                                 "image/add","image/list",
