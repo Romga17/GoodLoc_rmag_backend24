@@ -28,7 +28,7 @@ INSERT INTO brand (brand_name, brand_description) VALUES ("LENOVO", "Fournisseur
 INSERT INTO incident_notification (incident_notification_date, incident_notification_description, incident_notification_type) VALUES ("2023-02-15","écran bleu avec message d'erreur", "Incident logiciel"), ("2023-05-15","écran qui ne s'allume plus", "Incident matériel"), ("2023-03-02","Téléphone chargé mais ne s'allume plus", "Incident logiciel"), ("2023-06-17","Boutons télécommande droite ne réagissent pas", "Incident matériel"),("2023-07-20","Accoudoir ne tient plus en place", "Incident matériel");
 
 -- Données de notre table user:
-INSERT INTO user (user_lastname, user_firstname, email, user_road_type, user_adress, user_adress_number, user_zip_code, user_city, user_phone, user_password, user_arrival_date, user_departure_date, user_course, user_role_id)
+INSERT INTO user (user_lastname, user_firstname, email, user_road_type, user_address, user_address_number, user_zip_code, user_city, user_phone, user_password, user_arrival_date, user_departure_date, user_course, user_role_id)
 VALUES
     ('Nielsen', 'Leo', 'nielsen.leo@institute.com', 'Cité', 'Oberkampf', '10', '57100', 'Thionville', '+33675018342', '$2y$10$.8kRMRoiw9K9TSx79eRqBuk4AG.uzOrn7bhB20g7BYGfCSqR2PEsW', '2023-05-15', '2028-05-15', 'CDA Java', 1),
     ('Brown', 'Eva', 'brown.eva@institute.com', 'Chemin', 'de Tilsitt', '5', '57000', 'Metz', '+33675482018', '$2y$10$.8kRMRoiw9K9TSx79eRqBuk4AG.uzOrn7bhB20g7BYGfCSqR2PEsW', '2024-09-15', '2029-09-15', 'CDA Java', 2),
@@ -135,7 +135,7 @@ INSERT INTO role_utilisateur (role_id, utilisateur_id)
 VALUES
     (1,1),(2, 2),(3, 3),(4, 4),(5, 5);*/
 
-INSERT INTO material (material_status, material_description, material_acquisition_date, material_guarantee_end_date, material_acquisition_price, material_reference, notified_material_id_incident_notification)
+INSERT INTO material (material_status, material_description, material_acquisition_date, material_warranty_end_date, material_acquisition_price, material_reference, notified_material_id_incident_notification)
 VALUES
     -- Enregistrements d'une série d'ordinateur portable:
     ('disponible', '« Ordinateur portable Lenovo - Processeur AMD Ryzen 5 7520U (Quad-Core 2.8 GHz / 4.3 GHz Turbo - 8 Threads - Cache 4 Mo)- 8 Go de mémoire DDR5 (mémoire intégrée)-Écran anti-reflets de 15.6 pouces avec résolution Full HD (1920 x 1080 pixels)-Sortie HDMI, pour le raccordement à un écran HD-SSD M.2 PCIe de 512 Go-Communication sans fil Wi-Fi 6 + Bluetooth 5.1-Haut-parleurs stéréo avec technologie Dolby Audio -Module TPM 2.0 (firmware) Webcam HD 720p avec obturateur intégré-Windows 11 Famille »', '2022-10-01', '2024-10-01',499.00,'82XQCTO1WWFR1', null),

@@ -71,8 +71,8 @@ class UserServiceImpTest {
         newUser.setUserLastname("MrTest");
         newUser.setUserFirstname("Robert");
         newUser.setEmail("robert.mrtest@gmail.com");
-        newUser.setUserAdress("du test");
-        newUser.setUserAdressNumber("100");
+        newUser.setUserAddress("du test");
+        newUser.setUserAddressNumber("100");
         newUser.setUserRoadType("rue");
         newUser.setUserCity("Testville");
         newUser.setUserZipCode("57860");
@@ -170,8 +170,8 @@ class UserServiceImpTest {
         User suscribedUser = new User();
         suscribedUser.setUserLastname("MrLeNouveau");
         suscribedUser.setEmail("robert.mrtest@gmail.com");
-        suscribedUser.setUserAdress("du test");
-        suscribedUser.setUserAdressNumber("100");
+        suscribedUser.setUserAddress("du test");
+        suscribedUser.setUserAddressNumber("100");
         suscribedUser.setUserRoadType("rue");
         suscribedUser.setUserCity("Testville");
         suscribedUser.setUserZipCode("57860");

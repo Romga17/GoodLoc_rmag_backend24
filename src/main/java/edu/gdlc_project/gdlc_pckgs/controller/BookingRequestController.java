@@ -1,13 +1,20 @@
 package edu.gdlc_project.gdlc_pckgs.controller;
 
+import edu.gdlc_project.gdlc_pckgs.dto.BookingRequestDTO;
 import edu.gdlc_project.gdlc_pckgs.model.BookingRequest;
+import edu.gdlc_project.gdlc_pckgs.model.User;
 import edu.gdlc_project.gdlc_pckgs.repository.BookingRequestRepository;
+import edu.gdlc_project.gdlc_pckgs.repository.UserRepository;
 import edu.gdlc_project.gdlc_pckgs.service.BookingRequest_Service.BookingRequestServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin
@@ -19,6 +26,9 @@ public class BookingRequestController {
 
     @Autowired
     protected BookingRequestRepository bookingRequestRepository;
+
+    @Autowired
+    protected UserRepository userRepository;
 
     @GetMapping("/list")
     public List<BookingRequest> getBookingLists(){
@@ -42,8 +52,22 @@ public class BookingRequestController {
     }
 
     @PutMapping("/validate")
-    public ResponseEntity<BookingRequest> validateBookingRequest(@RequestBody BookingRequest bookingRequest){
-        return bookingRequestServiceImp.validateRecord(bookingRequest.getId(), bookingRequest.isBookingRequestValid());
+    public ResponseEntity<BookingRequest> validateBookingRequest(@RequestBody BookingRequestDTO bookingRequestDTO){
+        // Convertir la chaîne de caractères en LocalDate
+        LocalDate agreementDate = LocalDate.parse(bookingRequestDTO.getBookingRequestAgreementDate(), DateTimeFormatter.ISO_LOCAL_DATE);
+
+        Optional<User> validatorOptional = userRepository.findById(bookingRequestDTO.getBookingRequestValidator().getId());
+        if (!validatorOptional.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND); // ou une autre réponse appropriée
+        }
+        User validator = validatorOptional.get();
+
+        return bookingRequestServiceImp.validateRecord(
+                bookingRequestDTO.getId(),
+                bookingRequestDTO.isBookingRequestValid(),
+                validator,
+                agreementDate
+        );
     }
 
     @PutMapping("/deny/{id}")

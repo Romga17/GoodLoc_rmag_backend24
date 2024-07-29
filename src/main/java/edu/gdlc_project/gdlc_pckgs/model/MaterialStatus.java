@@ -14,7 +14,7 @@ import java.util.Date;
 public class MaterialStatus {
 
     @Id
-    private Long id;
+    protected Long id;
 
     protected Date  dateChangementEtat;
 

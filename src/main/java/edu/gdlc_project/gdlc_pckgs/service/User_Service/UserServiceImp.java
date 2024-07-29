@@ -8,6 +8,8 @@ import edu.gdlc_project.gdlc_pckgs.repository.RoleRepository;
 import edu.gdlc_project.gdlc_pckgs.repository.UserRepository;
 import edu.gdlc_project.gdlc_pckgs.security.JwtUtils;
 import edu.gdlc_project.gdlc_pckgs.service.EmailServiceImp;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,6 +45,8 @@ public class UserServiceImp implements UserService {
     @Autowired
     private EmailServiceImp emailServiceImp;
 
+    private static final Logger logger = LoggerFactory.getLogger(UserServiceImp.class);
+
     public ResponseEntity<User> saveUser(User user){
         userRepository.save(user);
 
@@ -67,17 +71,22 @@ public class UserServiceImp implements UserService {
 
 
     @Override
-    public ResponseEntity<String> deleteUserById(int id) {
+    public ResponseEntity<Map<String, String>> deleteUserById(int id) {
+        logger.info("Tentative de suppression de l'utilisateur avec l'ID : {}", id);
+
         Optional<User> userOptional = userRepository.findById(id);
 
-        if(userOptional.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        if (userOptional.isEmpty()) {
+            logger.warn("Utilisateur avec l'ID {} non trouvé", id);
+            return new ResponseEntity<>(Map.of("message", "Utilisateur non trouvé"), HttpStatus.NOT_FOUND);
         }
 
         userRepository.deleteById(id);
+        logger.info("Utilisateur avec l'ID {} supprimé avec succès", id);
 
-        return new ResponseEntity<>("L'utilisateur a été supprimé",HttpStatus.OK);
+        return new ResponseEntity<>(Map.of("message", "L'utilisateur a été supprimé"), HttpStatus.OK);
     }
+
 
     @Override
     public ResponseEntity<User> userModification(int id, User user) {

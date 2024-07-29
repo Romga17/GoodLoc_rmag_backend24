@@ -55,13 +55,13 @@ public class User {
 
     @NotBlank(message="Renseigner l'adresse est obligatoire")
     @Pattern(regexp = "^[a-zA-Z -]+$")
-    @JsonProperty("userAdress")
-    protected String userAdress;
+    @JsonProperty("userAddress")
+    protected String userAddress;
 
     @NotBlank(message="Renseigner le numéro d'adresse est obligatoire")
     @Pattern(regexp = "^[0-9a-zA-Z .-]+$")
-    @JsonProperty("userAdressNumber")
-    protected String userAdressNumber;
+    @JsonProperty("userAddressNumber")
+    protected String userAddressNumber;
 
     @NotBlank(message="Renseigner le code postal est obligatoire")
     @Pattern(regexp = "^[0-9 .-]+$")

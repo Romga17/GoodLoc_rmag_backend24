@@ -12,12 +12,10 @@ public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_category")
     protected int id;
 
     protected String categoryName;
 
     protected String categoryDescription;
 }
-
-
-// modification temporaire pour push.

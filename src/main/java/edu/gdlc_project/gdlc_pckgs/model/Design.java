@@ -13,6 +13,7 @@ public class Design {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_design")
     protected int id;
 
     protected String designName;

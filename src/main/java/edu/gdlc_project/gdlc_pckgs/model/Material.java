@@ -28,7 +28,7 @@ public class Material {
 
     protected Date materialAcquisitionDate;
 
-    protected Date materialGuaranteeEndDate;
+    protected Date materialWarrantyEndDate;
 
     protected float materialAcquisitionPrice;
 

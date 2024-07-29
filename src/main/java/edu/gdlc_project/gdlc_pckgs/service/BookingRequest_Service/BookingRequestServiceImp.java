@@ -5,11 +5,14 @@ import edu.gdlc_project.gdlc_pckgs.repository.BookingRequestRepository;
 import edu.gdlc_project.gdlc_pckgs.repository.MaterialRepository;
 import edu.gdlc_project.gdlc_pckgs.repository.UserRepository;
 import edu.gdlc_project.gdlc_pckgs.service.EmailServiceImp;
+import edu.gdlc_project.gdlc_pckgs.utilitary.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -61,16 +64,28 @@ public class BookingRequestServiceImp implements BookingRequestService {
     }
 
     @Override
-    public ResponseEntity<BookingRequest> validateRecord(int idValue, boolean valid) {
+    public ResponseEntity<BookingRequest> validateRecord(int idValue, boolean valid, User validator, LocalDate agreementDate) {
         Optional<BookingRequest> bookingRequestOptionalValue = bookingRequestRepository.findById(idValue);
 
         if (bookingRequestOptionalValue.isPresent()) {
             BookingRequest bookingRequestToAgree = bookingRequestOptionalValue.get();
             bookingRequestToAgree.setBookingRequestValid(valid);
+            bookingRequestToAgree.setBookingRequestValidator(validator);
+
+            // Conversion de LocalDate en java.sql.Date
+            java.sql.Date agreementDateConverted = DateUtils.convertToSqlDate(agreementDate);
+            bookingRequestToAgree.setBookingRequestAgreementDate(agreementDateConverted);
+
             bookingRequestRepository.save(bookingRequestToAgree);
 
-            //emailServiceImp.sendEmail(user.getUserEmail(), "Confirmation inscription", "Bonjour " + user.getUserEmail() + " et bienvenue chez Goodloc, vous n'êtes qu'à un clic de pouvoir réserver votre matériel.");
-            emailServiceImp.sendEmail(bookingRequestToAgree.getBookingRequestRequester().getEmail(), "Confirmation réservation", "Bonjour " + bookingRequestToAgree.getBookingRequestRequester().getEmail() + " votre demande de réservation n° " + bookingRequestToAgree.getId() + " a bien été validée. Vous recevrez très prochainement les informations pour récupérer le matériel.");
+            emailServiceImp.sendEmail(
+                    bookingRequestToAgree.getBookingRequestRequester().getEmail(),
+                    "Confirmation réservation",
+                    "Bonjour " + bookingRequestToAgree.getBookingRequestRequester().getEmail() +
+                            ", votre demande de réservation n° " + bookingRequestToAgree.getId() +
+                            " a bien été validée. Vous recevrez très prochainement les informations pour récupérer le matériel."
+            );
+
             return new ResponseEntity<>(bookingRequestToAgree, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -87,12 +102,12 @@ public class BookingRequestServiceImp implements BookingRequestService {
         }
 
         BookingRequest reservation = resaOptional.get();
-        reservation.setBookingRequestdenialReason(bookingRequestToDeny.getBookingRequestdenialReason());
+        reservation.setBookingRequestDenialReason(bookingRequestToDeny.getBookingRequestDenialReason());
         //Etait placé avant optional avant/ A corriger si erreur
 
         bookingRequestRepository.save(reservation);
 
-        emailServiceImp.sendEmail(reservation.getBookingRequestRequester().getEmail(), "Information demande de réservation", "Bonjour " + reservation.getBookingRequestRequester().getEmail() + " votre demande de réservation n° " + reservation.getId()  + " a été refusée pour le motif suivant: " + reservation.getBookingRequestdenialReason() );
+        emailServiceImp.sendEmail(reservation.getBookingRequestRequester().getEmail(), "Information demande de réservation", "Bonjour " + reservation.getBookingRequestRequester().getEmail() + " votre demande de réservation n° " + reservation.getId()  + " a été refusée pour le motif suivant: " + reservation.getBookingRequestDenialReason() );
 
         return new ResponseEntity<>(resaOptional.get(), HttpStatus.OK);
 
@@ -117,7 +132,7 @@ public class BookingRequestServiceImp implements BookingRequestService {
         List<BookingRequest> bookingRequestToCheckList = new ArrayList<>();
 
         for(BookingRequest bookingRequest : fullList) {
-            if(bookingRequest.isBookingRequestValid()== false && bookingRequest.getBookingRequestdenialReason()==null){
+            if(bookingRequest.isBookingRequestValid()== false && bookingRequest.getBookingRequestDenialReason()==null){
                 bookingRequestToCheckList.add(bookingRequest);
             }
         }

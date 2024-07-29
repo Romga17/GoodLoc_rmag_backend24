@@ -1,6 +1,8 @@
 package edu.gdlc_project.gdlc_pckgs.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import edu.gdlc_project.gdlc_pckgs.dto.BookingRequestDTO;
+import edu.gdlc_project.gdlc_pckgs.dto.UserDTO;
 import edu.gdlc_project.gdlc_pckgs.model.BookingRequest;
 import edu.gdlc_project.gdlc_pckgs.model.User;
 import edu.gdlc_project.gdlc_pckgs.service.BookingRequest_Service.BookingRequestServiceImp;
@@ -17,6 +19,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+
+import java.time.LocalDate;
 
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
@@ -105,13 +109,23 @@ class BookingRequestControllerTest {
     public void testReceptionBookingRequestValidation_shouldReturnHttpStatusOk() throws Exception {
         // Given:
         BookingRequest testBookingRequestToModify = new BookingRequest();
-        testBookingRequestToModify.setId(1); // Ajouter un ID si nécessaire
-        testBookingRequestToModify.setBookingRequestValid(true); // ou false selon le test
+        testBookingRequestToModify.setId(1);
+        testBookingRequestToModify.setBookingRequestValid(true);
 
-        String jsonRequestBookingValidation = objectMapper.writeValueAsString(testBookingRequestToModify);
+        User validator = new User();
+        validator.setId(1); // Set an appropriate ID
+        LocalDate agreementDate = LocalDate.now();
+
+        BookingRequestDTO bookingRequestDTO = new BookingRequestDTO();
+        bookingRequestDTO.setId(testBookingRequestToModify.getId());
+        bookingRequestDTO.setBookingRequestValid(testBookingRequestToModify.isBookingRequestValid());
+        bookingRequestDTO.setBookingRequestValidator(new UserDTO(validator.getId()));
+        bookingRequestDTO.setBookingRequestAgreementDate(agreementDate.toString()); // Convert LocalDate to String
+
+        String jsonRequestBookingValidation = objectMapper.writeValueAsString(bookingRequestDTO);
 
         // Simuler la réponse de la validation de la réservation
-        when(bookingRequestServiceImp.validateRecord(anyInt(), anyBoolean()))
+        when(bookingRequestServiceImp.validateRecord(anyInt(), anyBoolean(), any(User.class), any(LocalDate.class)))
                 .thenReturn(ResponseEntity.ok(testBookingRequestToModify));
 
         // When:

@@ -3,7 +3,6 @@ package edu.gdlc_project.gdlc_pckgs.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.gdlc_project.gdlc_pckgs.model.User;
 import edu.gdlc_project.gdlc_pckgs.repository.UserRepository;
-import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,14 +10,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
@@ -34,12 +31,6 @@ class AuthenticationControllerTest {
 
     @Autowired
     private ObjectMapper objectMapper;
-
-    @Autowired
-    private EntityManager entityManager;
-
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
 
     @Autowired
     UserRepository userRepositoryTest;
@@ -66,8 +57,8 @@ class AuthenticationControllerTest {
         testUser.setUserLastname("MrTest");
         testUser.setUserFirstname("Robert");
         testUser.setEmail("robert.mrtest@gmail.com");
-        testUser.setUserAdress("du test");
-        testUser.setUserAdressNumber("100");
+        testUser.setUserAddress("du test");
+        testUser.setUserAddressNumber("100");
         testUser.setUserRoadType("rue");
         testUser.setUserCity("Testville");
         testUser.setUserZipCode("57860");

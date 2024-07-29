@@ -21,6 +21,7 @@ public class BookingRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonView(User.class)
+    @Column(name = "id_booking_request")
     protected int id;
 
     protected boolean bookingRequestValid;
@@ -30,7 +31,7 @@ public class BookingRequest {
     protected Date bookingRequestEndDate;
 
     @Nullable
-    protected String bookingRequestdenialReason;
+    protected String bookingRequestDenialReason;
 
     protected Date bookingRequestDate;
 
@@ -53,18 +54,18 @@ public class BookingRequest {
 
     @Override
     public String toString() {
-        return "DemandeReservation{" +
-                "dateAccord=" + bookingRequestAgreementDate +
-                ", dateDebut=" + bookingRequestStartDate +
-                ", dateDemande=" + bookingRequestDate +
-                ", dateFin=" + bookingRequestEndDate +
-                ", demandeur=" + bookingRequestRequester +
+        return "Booking Request{" +
+                "Agreement date=" + bookingRequestAgreementDate +
+                ", Start date=" + bookingRequestStartDate +
+                ", Request date=" + bookingRequestDate +
+                ", End date=" + bookingRequestEndDate +
+                ", Requester=" + bookingRequestRequester +
                 ", id=" + id +
                 ", materiel=" + bookingObjectMaterial +
-                ", messageUser='" + bookingRequestUserMessage + '\'' +
-                ", motifRefus='" + bookingRequestdenialReason + '\'' +
-                ", validateur=" + bookingRequestValidator +
-                ", validation=" + bookingRequestValid +
+                ", user message='" + bookingRequestUserMessage + '\'' +
+                ", denial reason='" + bookingRequestDenialReason + '\'' +
+                ", validator=" + bookingRequestValidator +
+                ", Is valid =" + bookingRequestValid +
                 '}';
     }
 }

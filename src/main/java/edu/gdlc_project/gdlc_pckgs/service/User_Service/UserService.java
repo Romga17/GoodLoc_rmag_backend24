@@ -14,7 +14,7 @@ public interface UserService {
 
     public User getUserById(int id);
 
-    public ResponseEntity<String> deleteUserById(int id);
+    public ResponseEntity<Map<String, String>> deleteUserById(int id);
 
     public ResponseEntity<User> userModification(int id, User user);
 
