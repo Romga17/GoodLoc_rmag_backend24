@@ -26,5 +26,7 @@ public interface BookingRequestService {
 
     public ResponseEntity<BookingRequest> deleteBookingRequest(int idSup);
 
+    public List<BookingRequest> getUserValidatedBookings(int id);
+
 }
 

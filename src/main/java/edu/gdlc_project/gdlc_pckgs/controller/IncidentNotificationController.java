@@ -10,13 +10,14 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/incident")
+@CrossOrigin(origins = {"http://localhost:4200", "http://185.97.144.183:8082"})
 public class IncidentNotificationController {
 
     @Autowired
     protected IncidentNotificationServiceImp incidentNotificationServiceImp;
 
-    @PostMapping("/add/{NotifiedMaterialId}/{incidentNotifierId}")
-    public ResponseEntity<IncidentNotification> addIncident(@PathVariable("NotifiedMaterialId") int idMaterial, @PathVariable("incidentNotifierId") int idUser, @RequestBody IncidentNotification incidentType){
+    @PostMapping("/add/{notifiedMaterialId}/{incidentNotifierId}")
+    public ResponseEntity<IncidentNotification> addIncident(@PathVariable("notifiedMaterialId") int idMaterial, @PathVariable("incidentNotifierId") int idUser, @RequestBody IncidentNotification incidentType){
         return incidentNotificationServiceImp.addUserIncidentNotification(idMaterial, incidentType, idUser);
     }
 

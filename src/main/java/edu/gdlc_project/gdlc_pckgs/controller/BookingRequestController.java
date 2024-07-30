@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = {"http://localhost:4200", "http://185.97.144.183:8082"})
 @RequestMapping("/booking")
 public class BookingRequestController {
 
@@ -78,5 +78,11 @@ public class BookingRequestController {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<BookingRequest> deleteReservationAsk(@PathVariable int id){
         return bookingRequestServiceImp.deleteBookingRequest(id);
+    }
+
+    @GetMapping("/get/valid/{id}")
+    public List<BookingRequest> getUserUncheckedBookings(@PathVariable int id){
+
+        return bookingRequestServiceImp.getUserValidatedBookings(id);
     }
 }

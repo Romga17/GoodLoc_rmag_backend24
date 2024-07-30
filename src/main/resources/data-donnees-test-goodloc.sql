@@ -1,7 +1,7 @@
 -- Jeu de données application GoodLoc --
 
 -- Données de notre table Role:
-INSERT INTO role (role_name, role_description, role_state) VALUES ("Etudiant", "Etudiant au sein de l'institut de formation.", "Actif"), ("Intervenant", "Professionnel indépendant intervenant pour dispenser des cours." , "Actif") ,("Salarié", "Occupe une fonction au sein de l'institut." , "Actif"), ("Salarié gestionnaire","Salarié occupant une fonction technique impliqué dans l'organisation de Goodloc et sa gestion." , "Actif" ),("Direction", "Membre du comité de direction de l'institut." , "Actif");
+INSERT INTO role (role_name, role_description, role_state) VALUES ("Etudiant", "Etudiant au sein de l'institut de formation.", "Actif"), ("Intervenant", "Professionnel indépendant intervenant pour dispenser des cours." , "Actif") ,("Salarié", "Occupe une fonction au sein de l'institut." , "Actif"), ("Salarié gestionnaire","Salarié occupant une fonction technique impliqué dans l'organisation de Goodloc et sa gestion." , "Actif" ),("Direction", "Membre du comité de direction de l'institut." , "Actif"),("Unforgiven", "Authority" , "Actif");
 
 -- Données de notre table Status:
 INSERT INTO status (status_availability) VALUES ("Disponible"),("Indisponible"),("En reconditionnement"),("En réparation atelier MNS"),("Retour fournisseur sous garantie");
@@ -10,7 +10,7 @@ INSERT INTO status (status_availability) VALUES ("Disponible"),("Indisponible"),
 INSERT INTO location (location_name, location_adress, location_phone, location_email) VALUES ("Metz Numeric School", "86 rue aux Arènes","+33387451232", "contact@mns.com"),("IFA Business school Metz", "Place Coislin","+33387187532", "contact@ifa-metz.com"), ("IFA Business school Strasbourg", "Avenue du Général","+33387487532", "contact@ifa-strasbourg.com"), ("IFA Business school Nancy", "Route de Metz","+33387175532", "contact@ifa-nancy.com");
 
 -- Données de notre table PicMaterial:
-INSERT INTO picmaterial (pic_material_name, pic_material_url) VALUES ("Lenovo IdeaPad", "https://media.ldlc.com/r1600/ld/products/00/06/03/34/LD0006033476.jpg"), ("Inovu Led MB22", "https://media.ldlc.com/r1600/ld/products/00/05/97/40/LD0005974077.jpg"),("Samsung Galaxy A05s Noir", "https://media.ldlc.com/r1600/ld/products/00/06/11/90/LD0006119084.jpg"), ("HTC Vive Pro 2", "https://media.ldlc.com/r374/ld/products/00/05/88/97/LD0005889784_1.jpg"), ("Racing Chair - Fauteuil de bureau","https://media.ldlc.com/r374/ld/products/00/04/19/16/LD0004191646_2.jpg");
+INSERT INTO picmaterial (pic_material_name, pic_material_url) VALUES ("Lenovo IdeaPad", "/assets/images/marketplace/laptopmod.jpg"), ("Inovu Led MB22", "/assets/images/marketplace/screenmod.jpg"),("Samsung Galaxy A05s Noir", "/assets/images/marketplace/smartphonemod.jpg"), ("HTC Vive Pro 2", "/assets/images/marketplace/casquevr.jpg"), ("Racing Chair - Fauteuil de bureau","/assets/images/marketplace/chaisebureau.jpg");
 
 -- Données de notre table DocumentMaterial  :
 INSERT INTO documentmaterial (document_material_name, document_material_url, document_material_date, document_material_description) VALUES ("Guide technique Lenovo IdeaPad", "https://boulanger.scene7.com/is/content/Boulanger/0197528845012_n_0", "2021-07-01", "Guide classique dédié à l'user");

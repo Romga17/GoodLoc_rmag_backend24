@@ -60,7 +60,27 @@ public class BookingRequestServiceImp implements BookingRequestService {
     @Override
     public List<BookingRequest> getUserBookings(int id) {
         List<BookingRequest> userBookings = bookingRequestRepository.findByBookingRequestRequesterId((long)id);
-        return userBookings;
+        List<BookingRequest> userBookingsNotChecked = new ArrayList<>();
+
+        for(BookingRequest personalBookingUnchecked : userBookings) {
+            if(personalBookingUnchecked.isBookingRequestValid() == false && personalBookingUnchecked.getBookingRequestDenialReason()== null){
+                userBookingsNotChecked.add(personalBookingUnchecked);
+            }
+        }
+        return userBookingsNotChecked;
+    }
+
+    @Override
+    public List<BookingRequest> getUserValidatedBookings(int id) {
+        List<BookingRequest> userBookings = bookingRequestRepository.findByBookingRequestRequesterId((long)id);
+        List<BookingRequest> userBookingsValid = new ArrayList<>();
+
+        for(BookingRequest checkedRequest : userBookings) {
+            if(checkedRequest.isBookingRequestValid() == true && checkedRequest.getBookingRequestAgreementDate() != null){
+                userBookingsValid.add(checkedRequest);
+            }
+        }
+        return userBookingsValid;
     }
 
     @Override
@@ -132,7 +152,7 @@ public class BookingRequestServiceImp implements BookingRequestService {
         List<BookingRequest> bookingRequestToCheckList = new ArrayList<>();
 
         for(BookingRequest bookingRequest : fullList) {
-            if(bookingRequest.isBookingRequestValid()== false && bookingRequest.getBookingRequestDenialReason()==null){
+            if(bookingRequest.isBookingRequestValid() == false && bookingRequest.getBookingRequestDenialReason()==null){
                 bookingRequestToCheckList.add(bookingRequest);
             }
         }

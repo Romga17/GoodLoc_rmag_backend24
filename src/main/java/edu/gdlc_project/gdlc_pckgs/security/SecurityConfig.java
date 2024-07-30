@@ -49,7 +49,7 @@ public class SecurityConfig {
                 .sessionManagement(config -> config.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/signin", "/register",
-                                "booking/list", "booking/get/{id}", "booking/add", "booking/validate","booking/deny/{id}","booking/delete/{id}",
+                                "booking/list", "booking/get/{id}", "booking/add", "booking/validate","booking/deny/{id}","booking/delete/{id}", "/booking/get/valid/{id}",
                                 "brand/add","brand/list",
                                 "category/add", "category/list",
                                 "design/add", "design/list",
@@ -58,7 +58,7 @@ public class SecurityConfig {
                                 "location/add","location/list",
                                 "material/list","material/add","material/get/{id}","material/delete/{id}",
                                 "image/add","image/list",
-                                "role/add","role/list",
+                                "role/add","role/list", "role/get/{id}",
                                 "status/add","status/list",
                                 "user/get/{id}","user/list","user/add", "user/modify/{id}", "user/delete/{id}",
                                 "user/get/{id}").permitAll() // Autorise l'accès sans authentification
