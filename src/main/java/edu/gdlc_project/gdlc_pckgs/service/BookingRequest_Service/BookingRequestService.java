@@ -28,5 +28,6 @@ public interface BookingRequestService {
 
     public List<BookingRequest> getUserValidatedBookings(int id);
 
+    public List<BookingRequest> getUpToDateBookings();
 }
 

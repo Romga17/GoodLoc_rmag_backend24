@@ -85,4 +85,9 @@ public class BookingRequestController {
 
         return bookingRequestServiceImp.getUserValidatedBookings(id);
     }
+
+    @GetMapping("/get/updated")
+    public List<BookingRequest> getBookingsListUpdated(){
+        return bookingRequestServiceImp.getUpToDateBookings();
+    }
 }

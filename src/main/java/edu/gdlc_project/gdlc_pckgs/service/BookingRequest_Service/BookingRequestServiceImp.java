@@ -13,9 +13,12 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import static edu.gdlc_project.gdlc_pckgs.utilitary.DateUtils.*;
 
 @Service
 public class BookingRequestServiceImp implements BookingRequestService {
@@ -84,6 +87,35 @@ public class BookingRequestServiceImp implements BookingRequestService {
     }
 
     @Override
+    public List<BookingRequest> getUpToDateBookings() {
+        List<BookingRequest> allBookings = bookingRequestRepository.findAll();
+        List<BookingRequest> upToDateBookings = new ArrayList<>();
+
+        for (BookingRequest booking : allBookings) {
+            Date dateDepart = booking.getBookingRequestStartDate();
+            LocalDate localDateDepart = convertToLocalDate(dateDepart);
+
+            LocalDate currentDate = LocalDate.now();
+            long daysBetween = ChronoUnit.DAYS.between(currentDate, localDateDepart);
+
+            System.out.println("Booking ID: " + booking.getId() + ", Days Between: " + daysBetween);
+
+            if (daysBetween > 5) {
+                upToDateBookings.add(booking);
+            } else if (daysBetween < 5 && booking.isBookingRequestValid()==true){
+                Material material = materialRepository.findById(booking.getBookingObjectMaterial().getId()).orElse(null);
+                if (material != null && !"Indisponible".equals(material.getMaterialStatus())) {
+                    material.setMaterialStatus("Indisponible");
+                    materialRepository.save(material); // Sauvegarder le changement de statut dans la base de données
+                    System.out.println("Material ID: " + material.getId() + " set to Indisponible");
+                }
+                upToDateBookings.add(booking);
+            }
+        }
+        return upToDateBookings;
+    }
+
+    @Override
     public ResponseEntity<BookingRequest> validateRecord(int idValue, boolean valid, User validator, LocalDate agreementDate) {
         Optional<BookingRequest> bookingRequestOptionalValue = bookingRequestRepository.findById(idValue);
 
@@ -93,7 +125,7 @@ public class BookingRequestServiceImp implements BookingRequestService {
             bookingRequestToAgree.setBookingRequestValidator(validator);
 
             // Conversion de LocalDate en java.sql.Date
-            java.sql.Date agreementDateConverted = DateUtils.convertToSqlDate(agreementDate);
+            java.sql.Date agreementDateConverted = java.sql.Date.valueOf(agreementDate);
             bookingRequestToAgree.setBookingRequestAgreementDate(agreementDateConverted);
 
             bookingRequestRepository.save(bookingRequestToAgree);
@@ -112,11 +144,11 @@ public class BookingRequestServiceImp implements BookingRequestService {
         }
     }
 
+
     @Override
     public ResponseEntity<BookingRequest> denyRecord(int bookingId, BookingRequest bookingRequestToDeny) {
         Optional<BookingRequest> resaOptional = bookingRequestRepository.findById(bookingId);
 
-        System.out.println("test entrée méthode");
         if(resaOptional.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
