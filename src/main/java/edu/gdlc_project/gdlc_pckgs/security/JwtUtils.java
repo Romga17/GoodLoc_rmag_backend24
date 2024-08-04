@@ -26,22 +26,6 @@ public class JwtUtils {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
         return builder()
-                /*.signWith(SignatureAlgorithm.HS256, secret)
-                .addClaims(Map.of("id", appUserDetails.user.getId()))
-                .addClaims(Map.of("nom", appUserDetails.user.getUserLastname()))
-                .addClaims(Map.of("prenom", appUserDetails.user.getUserFirstname()))
-                .addClaims(Map.of("numeroadresse", appUserDetails.user.getUserAddressNumber()))
-                .addClaims(Map.of("typevoie", appUserDetails.user.getUserRoadType()))
-                .addClaims(Map.of("adresse", appUserDetails.user.getUserAddress()))
-                .addClaims(Map.of("codepostal", appUserDetails.user.getUserZipCode()))
-                .addClaims(Map.of("ville", appUserDetails.user.getUserCity()))
-                .addClaims(Map.of("telephone", appUserDetails.user.getUserPhone()))
-                .addClaims(Map.of("cursus", appUserDetails.user.getUserCourse()))
-                .addClaims(Map.of("dateentree", appUserDetails.user.getUserArrivalDate().format(formatter)))
-                .addClaims(Map.of("datesortie", appUserDetails.user.getUserDepartureDate().format(formatter)))
-                .addClaims(Map.of("role", appUserDetails.user.getUserRole().getId()))
-                .setSubject(userDetails.getUsername())
-                .compact();*/
 
                 .signWith(SignatureAlgorithm.HS256, secret)
                 .addClaims(Map.of("id", appUserDetails.user.getId()))

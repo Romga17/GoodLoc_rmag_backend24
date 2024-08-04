@@ -26,7 +26,7 @@ public class AuthenticationController {
 
 
     @PostMapping("/register")
-    public ResponseEntity<Map<String, Object>> userInscription (@Valid @RequestBody User user){
+    public ResponseEntity<Map<String, Object>> userSubscription (@Valid @RequestBody User user){
         return userServiceImp.subscription(user);
     }
 

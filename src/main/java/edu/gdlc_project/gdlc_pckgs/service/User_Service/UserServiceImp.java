@@ -47,7 +47,7 @@ public class UserServiceImp implements UserService {
 
     private static final Logger logger = LoggerFactory.getLogger(UserServiceImp.class);
 
-    public ResponseEntity<User> saveUser(User user){
+    public ResponseEntity<User> saveUser(User user) {
         userRepository.save(user);
 
         return new ResponseEntity<>(user, HttpStatus.OK);
@@ -78,13 +78,15 @@ public class UserServiceImp implements UserService {
 
         if (userOptional.isEmpty()) {
             logger.warn("Utilisateur avec l'ID {} non trouvé", id);
-            return new ResponseEntity<>(Map.of("message", "Utilisateur non trouvé"), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(Map.of("message", "Utilisateur non trouvé"),
+                    HttpStatus.NOT_FOUND);
         }
 
         userRepository.deleteById(id);
         logger.info("Utilisateur avec l'ID {} supprimé avec succès", id);
 
-        return new ResponseEntity<>(Map.of("message", "L'utilisateur a été supprimé"), HttpStatus.OK);
+        return new ResponseEntity<>(Map.of("message", "L'utilisateur a été supprimé"),
+                HttpStatus.OK);
     }
 
 
@@ -92,7 +94,7 @@ public class UserServiceImp implements UserService {
     public ResponseEntity<User> userModification(int id, User user) {
         Optional<User> userOptional = userRepository.findById(user.getId());
 
-        if(userOptional.isEmpty()) {
+        if (userOptional.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
@@ -104,7 +106,7 @@ public class UserServiceImp implements UserService {
 
         userRepository.save(user);
 
-            return new ResponseEntity<>(userOptional.get(), HttpStatus.OK);
+        return new ResponseEntity<>(userOptional.get(), HttpStatus.OK);
     }
 
     @Override
@@ -117,16 +119,17 @@ public class UserServiceImp implements UserService {
             throw new RuntimeException("Email non conforme");
         }
 
-        Role userRole = new Role(); // par exemple, en utilisant l'identifiant du rôle
-        // Rechercher le rôle dans la base de données pour s'assurer qu'il existe
-       Role roleExist = roleRepository.findById(userRole.getId()).orElse(null);
+        Role userRole = new Role();
+
+        Role roleExist = roleRepository.findById(userRole.getId()).orElse(null);
 
         if (roleExist == null) {
-            // Gérer le cas où le rôle n'est pas trouvé
-            return new ResponseEntity<>(Map.of("error", "Le rôle n'existe pas."), HttpStatus.BAD_REQUEST);
+
+            return new ResponseEntity<>(Map.of("error", "Le rôle n'existe pas."),
+                    HttpStatus.BAD_REQUEST);
         }
 
-        // Assigner le rôle récupéré à l'utilisateur
+
         user.setUserRole(roleExist);
 
         if (userRepository.existsByEmail(user.getEmail())) {
@@ -135,8 +138,11 @@ public class UserServiceImp implements UserService {
 
         user.setUserPassword(getBCryptPasswordEncoder.encode(user.getUserPassword()));
 
-        //emailServiceImp.sendEmail(utilisateur.getEmail(), "Confirmation inscription", "Bonjour " + utilisateur.getEmail() + " et bienvenue chez Goodloc, vous n'êtes qu'à un clic de pouvoir réserver votre matériel.");
-        emailServiceImp.sendEmail("romain.magagna@gmail.com", "Confirmation inscription", "Bonjour " + user.getEmail() + " et bienvenue chez Goodloc, vous n'êtes qu'à un clic de pouvoir réserver votre matériel.");
+        emailServiceImp.sendEmail("romain.magagna@gmail.com", "Confirmation inscription",
+                "Bonjour " + user.getEmail()
+                        + " et bienvenue chez Goodloc, vous n'êtes qu'à un clic de pouvoir " +
+                        "réserver votre" +
+                        " matériel.");
 
         userRepository.save(user);
 
@@ -145,19 +151,22 @@ public class UserServiceImp implements UserService {
 
     @Override
     public ResponseEntity<Map<String, Object>> connection(User user) {
+        if (user.getEmail() == null || user.getEmail().isEmpty() || user.getUserPassword() == null || user.getUserPassword().isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
         try {
             UserDetails userDetails = (UserDetails) authenticationProvider.authenticate(
                     new UsernamePasswordAuthenticationToken(
                             user.getEmail(),
                             user.getUserPassword())).getPrincipal();
 
-
-            return new ResponseEntity<>(Map.of("jwt",jwtUtils.generateToken(userDetails)), HttpStatus.OK);
+            String token = jwtUtils.generateToken(userDetails);
+            return new ResponseEntity<>(Map.of("jwt", token), HttpStatus.OK);
 
         } catch (AuthenticationException ex) {
-
+            logger.error("Authentication failed for user: ", user.getEmail(), ex);
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-
         }
     }
 }

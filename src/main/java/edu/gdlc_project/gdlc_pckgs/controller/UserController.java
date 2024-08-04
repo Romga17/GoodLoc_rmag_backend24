@@ -2,13 +2,11 @@ package edu.gdlc_project.gdlc_pckgs.controller;
 
 import edu.gdlc_project.gdlc_pckgs.exception.NotFoundException;
 import edu.gdlc_project.gdlc_pckgs.model.User;
-import edu.gdlc_project.gdlc_pckgs.security.IsUser;
 import edu.gdlc_project.gdlc_pckgs.service.User_Service.UserServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.Map;
 

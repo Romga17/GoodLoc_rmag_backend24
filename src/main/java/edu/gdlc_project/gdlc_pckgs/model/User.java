@@ -1,5 +1,6 @@
 package edu.gdlc_project.gdlc_pckgs.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
 import edu.gdlc_project.gdlc_pckgs.view.UtilisateurView;
@@ -83,7 +84,7 @@ public class User {
 
     @NotBlank(message="Renseigner le mot de passe est obligatoire")
     @Pattern(regexp = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[#?!@$%^&*-]).{8,}$")
-    @JsonProperty("userPassword")
+    @JsonIgnore
     protected String userPassword;
 
     @DateTimeFormat
