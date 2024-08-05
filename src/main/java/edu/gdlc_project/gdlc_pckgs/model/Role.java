@@ -32,4 +32,5 @@ public class Role {
     @JoinTable(name = "category_role", joinColumns = @JoinColumn(name="role_id"),
             inverseJoinColumns = @JoinColumn(name="category_id"))
     protected List<Category> categoryList = new ArrayList<>();
+
 }

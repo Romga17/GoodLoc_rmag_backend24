@@ -84,7 +84,6 @@ public class User {
 
     @NotBlank(message="Renseigner le mot de passe est obligatoire")
     @Pattern(regexp = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[#?!@$%^&*-]).{8,}$")
-    @JsonIgnore
     protected String userPassword;
 
     @DateTimeFormat

@@ -20,6 +20,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -112,25 +113,20 @@ public class UserServiceImp implements UserService {
     @Override
     public ResponseEntity<Map<String, Object>> subscription(User user) {
 
-        if (!user.getEmail().contains("@")) {
-            throw new RuntimeException("Email non conforme");
-        }
-        if (!user.getEmail().contains(".")) {
+        if (!isValidEmail(user.getEmail())) {
             throw new RuntimeException("Email non conforme");
         }
 
-        Role userRole = new Role();
+        Role userRole = getDefaultUserRole();
 
-        Role roleExist = roleRepository.findById(userRole.getId()).orElse(null);
+        //Role roleExist = roleRepository.findById(userRole.getId()).orElse(null);
 
-        if (roleExist == null) {
-
+        if (userRole == null) {
             return new ResponseEntity<>(Map.of("error", "Le rôle n'existe pas."),
                     HttpStatus.BAD_REQUEST);
         }
 
-
-        user.setUserRole(roleExist);
+        user.setUserRole(userRole);
 
         if (userRepository.existsByEmail(user.getEmail())) {
             throw new EmailAlreadyExistsException("Cet email est déjà utilisé.");
@@ -138,15 +134,19 @@ public class UserServiceImp implements UserService {
 
         user.setUserPassword(getBCryptPasswordEncoder.encode(user.getUserPassword()));
 
+        userRepository.save(user);
+
         emailServiceImp.sendEmail("romain.magagna@gmail.com", "Confirmation inscription",
                 "Bonjour " + user.getEmail()
                         + " et bienvenue chez Goodloc, vous n'êtes qu'à un clic de pouvoir " +
                         "réserver votre" +
                         " matériel.");
 
-        userRepository.save(user);
+        Map<String, Object> responseBody = new HashMap<>();
+        responseBody.put("message", "Inscription réussie");
+        responseBody.put("user", user);
 
-        return new ResponseEntity<>(Map.of("message", "Inscription réussie"), HttpStatus.OK);
+        return new ResponseEntity<>(responseBody, HttpStatus.CREATED);
     }
 
     @Override
@@ -168,5 +168,18 @@ public class UserServiceImp implements UserService {
             logger.error("Authentication failed for user: ", user.getEmail(), ex);
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
+    }
+
+
+    // Méthode de validation de l'email
+    private boolean isValidEmail(String email) {
+        return email != null && email.contains("@") && email.contains(".");
+    }
+
+
+    // Méthode pour obtenir le rôle utilisateur par défaut
+    private Role getDefaultUserRole() {
+        Role userRole = new Role(); // Constructeur qui attribue l'ID 2
+        return roleRepository.findById(userRole.getId()).orElse(null);
     }
 }

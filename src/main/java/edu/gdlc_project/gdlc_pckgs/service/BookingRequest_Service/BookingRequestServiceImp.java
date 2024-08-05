@@ -48,25 +48,43 @@ public class BookingRequestServiceImp implements BookingRequestService {
     @Override
     public ResponseEntity<BookingRequest> addUserBooking(BookingRequest materialToBook) {
         Optional<User> userOptional = userRepository.findById(materialToBook.getBookingRequestRequester().getId());
-        Optional<Material> materialOptional = materialRepository.findById(materialToBook.getBookingObjectMaterial().getId());
+        Optional<Material> materialOptional =
+                materialRepository.findById(materialToBook.getBookingObjectMaterial().getId());
 
         if (userOptional.isPresent() && materialOptional.isPresent()) {
+            List<BookingRequest> existingBookings =
+                    bookingRequestRepository.findByBookingObjectMaterial_Id(materialToBook.getBookingObjectMaterial().getId());
+
+            for (BookingRequest existingBooking : existingBookings) {
+                Date existingBookingStartDate = existingBooking.getBookingRequestStartDate();
+                Date existingBookingEndDate = existingBooking.getBookingRequestEndDate();
+                Date newStartDate = materialToBook.getBookingRequestStartDate();
+                Date newEndDate = materialToBook.getBookingRequestEndDate();
+
+                if ((newStartDate.after(existingBookingStartDate) && newStartDate.before(existingBookingEndDate))
+                        || (newEndDate.after(existingBookingStartDate) && newEndDate.before(existingBookingEndDate))
+                        || (newStartDate.before(existingBookingStartDate) && newEndDate.after(existingBookingEndDate))
+                        || (newStartDate.equals(existingBookingStartDate) || newEndDate.equals(existingBookingEndDate))) {
+                    throw new RuntimeException("Période de réservation non conforme, le créneau choisi empiète sur la" +
+                            " prochaine réservation.");
+                }
+            }
 
             bookingRequestRepository.save(materialToBook);
-
             return new ResponseEntity<>(materialToBook, HttpStatus.OK);
         } else {
             throw new RuntimeException("Utilisateur ou Matériel non trouvé");
         }
     }
 
+
     @Override
     public List<BookingRequest> getUserBookings(int id) {
-        List<BookingRequest> userBookings = bookingRequestRepository.findByBookingRequestRequesterId((long)id);
+        List<BookingRequest> userBookings = bookingRequestRepository.findByBookingRequestRequesterId((long) id);
         List<BookingRequest> userBookingsNotChecked = new ArrayList<>();
 
-        for(BookingRequest personalBookingUnchecked : userBookings) {
-            if(personalBookingUnchecked.isBookingRequestValid() == false && personalBookingUnchecked.getBookingRequestDenialReason()== null){
+        for (BookingRequest personalBookingUnchecked : userBookings) {
+            if (personalBookingUnchecked.isBookingRequestValid() == false && personalBookingUnchecked.getBookingRequestDenialReason() == null) {
                 userBookingsNotChecked.add(personalBookingUnchecked);
             }
         }
@@ -75,11 +93,11 @@ public class BookingRequestServiceImp implements BookingRequestService {
 
     @Override
     public List<BookingRequest> getUserValidatedBookings(int id) {
-        List<BookingRequest> userBookings = bookingRequestRepository.findByBookingRequestRequesterId((long)id);
+        List<BookingRequest> userBookings = bookingRequestRepository.findByBookingRequestRequesterId((long) id);
         List<BookingRequest> userBookingsValid = new ArrayList<>();
 
-        for(BookingRequest checkedRequest : userBookings) {
-            if(checkedRequest.isBookingRequestValid() == true && checkedRequest.getBookingRequestAgreementDate() != null){
+        for (BookingRequest checkedRequest : userBookings) {
+            if (checkedRequest.isBookingRequestValid() == true && checkedRequest.getBookingRequestAgreementDate() != null) {
                 userBookingsValid.add(checkedRequest);
             }
         }
@@ -102,8 +120,9 @@ public class BookingRequestServiceImp implements BookingRequestService {
 
             if (daysBetween > 5) {
                 upToDateBookings.add(booking);
-            } else if (daysBetween < 5 && booking.isBookingRequestValid()==true){
-                Material material = materialRepository.findById(booking.getBookingObjectMaterial().getId()).orElse(null);
+            } else if (daysBetween < 5 && booking.isBookingRequestValid() == true) {
+                Material material =
+                        materialRepository.findById(booking.getBookingObjectMaterial().getId()).orElse(null);
                 if (material != null && !"Indisponible".equals(material.getMaterialStatus())) {
                     material.setMaterialStatus("Indisponible");
                     materialRepository.save(material); // Sauvegarder le changement de statut dans la base de données
@@ -116,7 +135,8 @@ public class BookingRequestServiceImp implements BookingRequestService {
     }
 
     @Override
-    public ResponseEntity<BookingRequest> validateRecord(int idValue, boolean valid, User validator, LocalDate agreementDate) {
+    public ResponseEntity<BookingRequest> validateRecord(int idValue, boolean valid, User validator,
+                                                         LocalDate agreementDate) {
         Optional<BookingRequest> bookingRequestOptionalValue = bookingRequestRepository.findById(idValue);
 
         if (bookingRequestOptionalValue.isPresent()) {
@@ -135,7 +155,8 @@ public class BookingRequestServiceImp implements BookingRequestService {
                     "Confirmation réservation",
                     "Bonjour " + bookingRequestToAgree.getBookingRequestRequester().getEmail() +
                             ", votre demande de réservation n° " + bookingRequestToAgree.getId() +
-                            " a bien été validée. Vous recevrez très prochainement les informations pour récupérer le matériel."
+                            " a bien été validée. Vous recevrez très prochainement les informations pour récupérer le" +
+                            " matériel."
             );
 
             return new ResponseEntity<>(bookingRequestToAgree, HttpStatus.OK);
@@ -149,7 +170,7 @@ public class BookingRequestServiceImp implements BookingRequestService {
     public ResponseEntity<BookingRequest> denyRecord(int bookingId, BookingRequest bookingRequestToDeny) {
         Optional<BookingRequest> resaOptional = bookingRequestRepository.findById(bookingId);
 
-        if(resaOptional.isEmpty()) {
+        if (resaOptional.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
@@ -159,7 +180,9 @@ public class BookingRequestServiceImp implements BookingRequestService {
 
         bookingRequestRepository.save(reservation);
 
-        emailServiceImp.sendEmail(reservation.getBookingRequestRequester().getEmail(), "Information demande de réservation", "Bonjour " + reservation.getBookingRequestRequester().getEmail() + " votre demande de réservation n° " + reservation.getId()  + " a été refusée pour le motif suivant: " + reservation.getBookingRequestDenialReason() );
+        emailServiceImp.sendEmail(reservation.getBookingRequestRequester().getEmail(), "Information demande de " +
+                "réservation", "Bonjour " + reservation.getBookingRequestRequester().getEmail() + " votre demande de " +
+                "réservation n° " + reservation.getId() + " a été refusée pour le motif suivant: " + reservation.getBookingRequestDenialReason());
 
         return new ResponseEntity<>(resaOptional.get(), HttpStatus.OK);
 
@@ -169,13 +192,13 @@ public class BookingRequestServiceImp implements BookingRequestService {
     public ResponseEntity<BookingRequest> deleteBookingRequest(int idSup) {
         Optional<BookingRequest> bookingRequestOptional = bookingRequestRepository.findById(idSup);
 
-        if(bookingRequestOptional.isEmpty()) {
+        if (bookingRequestOptional.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
         bookingRequestRepository.deleteById(idSup);
 
-        return new ResponseEntity<>(bookingRequestOptional.get(),HttpStatus.OK);
+        return new ResponseEntity<>(bookingRequestOptional.get(), HttpStatus.OK);
     }
 
     @Override
@@ -183,8 +206,8 @@ public class BookingRequestServiceImp implements BookingRequestService {
         List<BookingRequest> fullList = bookingRequestRepository.findAll();
         List<BookingRequest> bookingRequestToCheckList = new ArrayList<>();
 
-        for(BookingRequest bookingRequest : fullList) {
-            if(bookingRequest.isBookingRequestValid() == false && bookingRequest.getBookingRequestDenialReason()==null){
+        for (BookingRequest bookingRequest : fullList) {
+            if (bookingRequest.isBookingRequestValid() == false && bookingRequest.getBookingRequestDenialReason() == null) {
                 bookingRequestToCheckList.add(bookingRequest);
             }
         }

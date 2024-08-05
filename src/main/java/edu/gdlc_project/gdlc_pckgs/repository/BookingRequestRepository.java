@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface BookingRequestRepository extends JpaRepository<BookingRequest,Integer> {
     List<BookingRequest> findByBookingRequestRequesterId(Long id);
+
+    List<BookingRequest> findByBookingObjectMaterial_Id(Integer id);
 }
