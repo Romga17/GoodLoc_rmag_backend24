@@ -27,9 +27,6 @@ public class AppUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        //if (utilisateur.isAdministrateur()) {
-        //    return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"));
-        //}
         ArrayList<SimpleGrantedAuthority> listeAuthority = new ArrayList<>();
 
        listeAuthority.add(new SimpleGrantedAuthority(this.user.getUserRole().getRoleName()));

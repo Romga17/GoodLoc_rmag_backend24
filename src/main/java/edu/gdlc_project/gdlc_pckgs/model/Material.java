@@ -34,13 +34,6 @@ public class Material {
 
     protected String materialReference;
 
-    /*@ManyToOne(fetch = FetchType.EAGER)
-    protected DemandeReservation demandereservationmateriel;*/
-
-    /*@ManyToMany
-    @JoinTable(name = "etat_materiel")
-    protected List<Etat> etatList = new ArrayList<>();*/
-
     @ManyToOne
     protected Category categoryMat;
 
@@ -54,11 +47,7 @@ public class Material {
 
     @ManyToOne
     @Nullable
-    //Ajout pour liaison avec DeclarationIncident
+    //Ajout pour la relation avec IncidentNotification:
     @JoinColumn(name = "notified_material_id_incident_notification", referencedColumnName = "id_incident_notification")
     protected IncidentNotification notifiedMaterial;
-
-
-
-
 }

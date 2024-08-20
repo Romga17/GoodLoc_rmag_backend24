@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -32,7 +33,8 @@ class AuthenticationControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    @Autowired
+    //@Autowired modifié pour mockbean
+    @MockBean
     UserRepository userRepositoryTest;
 
     protected MockMvc mockMvc;
@@ -48,7 +50,6 @@ class AuthenticationControllerTest {
     //OK
     @Test
     public void registerTest_shouldReceiveNewUserCreated() throws Exception {
-
 
         //Given:
         User testUser = new User();
@@ -75,7 +76,9 @@ class AuthenticationControllerTest {
                 .andExpect(status().isOk());
 
         //Then:
-        Assertions.assertEquals(userRepositoryTest.findByEmail("robert.mrtest@gmail.com").get().getEmail(), "robert.mrtest@gmail.com");
+        Assertions.assertEquals("robert.mrtest@gmail.com",
+                userRepositoryTest.findByEmail("robert.mrtest@gmail.com")
+                        .get().getEmail());
     }
 
     /*@Test

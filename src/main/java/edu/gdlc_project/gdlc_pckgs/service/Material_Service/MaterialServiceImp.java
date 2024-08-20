@@ -59,7 +59,6 @@ public class MaterialServiceImp implements MaterialService {
         }
 
         materialRepository.save(materialToModify);
-
         return new ResponseEntity<>(materialOptional.get(), HttpStatus.OK);
     }
 }

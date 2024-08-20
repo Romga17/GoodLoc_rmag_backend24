@@ -2,6 +2,7 @@ package edu.gdlc_project.gdlc_pckgs.controller;
 
 import edu.gdlc_project.gdlc_pckgs.exception.NotFoundException;
 import edu.gdlc_project.gdlc_pckgs.model.User;
+import edu.gdlc_project.gdlc_pckgs.security.IsAdmin;
 import edu.gdlc_project.gdlc_pckgs.service.User_Service.UserServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -44,20 +45,12 @@ public class UserController {
         return userServiceImp.userModification(id, user);
     }
 
+    @IsAdmin
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Map<String, String>> deleteUser(@PathVariable int id){
-        //modif du retour ResponseEntity<Utilisateur> pour le type String
         return userServiceImp.deleteUserById(id);
     }
 
-    /*@GetMapping("/profil")
-    @IsUser
-    public ResponseEntity<?> getUserProfile() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getDetails().;
-        User user = userServiceImp.;
-        return ResponseEntity.ok(user);
-    }*/
 }
 
 
