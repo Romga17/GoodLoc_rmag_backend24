@@ -9,6 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/design")
+@CrossOrigin(origins = "*")
 public class DesignController {
 
     @Autowired
