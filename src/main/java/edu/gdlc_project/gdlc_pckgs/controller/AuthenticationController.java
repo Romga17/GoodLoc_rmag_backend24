@@ -35,6 +35,7 @@ public class AuthenticationController {
         return userServiceImp.connection(user);
     }
 
+    //___________________________________________________________________________A adapter
     /*@GetMapping("/profil")
     public ResponseEntity<Utilisateur> getUserprofil(@AuthenticationPrincipal AppUserDetails userDetails){
 
