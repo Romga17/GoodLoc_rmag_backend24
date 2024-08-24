@@ -24,4 +24,6 @@ public class DesignController {
     public List<Design> getModelsList(){
         return designServiceImp.getAllModels();
     }
+
+    //modif push
 }
