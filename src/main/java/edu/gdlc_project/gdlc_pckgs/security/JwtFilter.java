@@ -26,21 +26,29 @@ public class JwtFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String authorization = request.getHeader("Authorization");
 
-        if(authorization != null) {
+        if (authorization != null && authorization.startsWith("Bearer ")) {
             String jwt = authorization.substring(7);
+            try {
+                String subject = jwtUtils.getSubjectFromJwt(jwt);
 
-            String subject = jwtUtils.getSubjectFromJwt(jwt);
+                if (subject != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+                    UserDetails userDetails = appUserDetailsService.loadUserByUsername(subject);
 
-            UserDetails userDetails = appUserDetailsService.loadUserByUsername(subject);
-
-            UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
-                    new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-            usernamePasswordAuthenticationToken
-                    .setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-            SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+                    if (jwtUtils.validateJwtToken(jwt, userDetails)) { // Assurez-vous que la validation du JWT est complète
+                        UsernamePasswordAuthenticationToken authenticationToken =
+                                new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                        authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+                    }
+                }
+            } catch (Exception e) {
+                // Log l'erreur et passer à la requête suivante, sans interrompre le traitement.
+                System.out.println("Impossible de définir l'authentification utilisateur : " + e.getMessage());
+                // Optionnel : Vous pouvez renvoyer une réponse 401 si nécessaire
+                // response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid JWT token");
+            }
         }
 
         filterChain.doFilter(request, response);
-
     }
 }

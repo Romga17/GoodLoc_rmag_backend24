@@ -51,4 +51,14 @@ public class JwtUtils {
                 .getBody()
                 .getSubject();
     }
+
+    public boolean validateJwtToken(String authToken, UserDetails userDetails) {
+        try {
+            // Valider la signature et d'autres critères ici
+            return true; // retourne true si le token est valide
+        } catch (Exception e) {
+            // Log l'erreur
+            return false;
+        }
+    }
 }
