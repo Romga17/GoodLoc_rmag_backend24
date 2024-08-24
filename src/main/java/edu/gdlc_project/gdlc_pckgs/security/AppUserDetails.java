@@ -1,6 +1,6 @@
 package edu.gdlc_project.gdlc_pckgs.security;
 
-import edu.gdlc_project.gdlc_pckgs.model.Utilisateur;
+import edu.gdlc_project.gdlc_pckgs.model.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,41 +10,38 @@ import java.util.Collection;
 
 public class AppUserDetails implements UserDetails {
 
-    protected Utilisateur utilisateur;
+    protected User user;
 
-    public Utilisateur getUtilisateur() {
-        return utilisateur;
+    public User getUser() {
+        return user;
     }
 
-    public void setUtilisateur(Utilisateur utilisateur) {
-        this.utilisateur = utilisateur;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public AppUserDetails(Utilisateur utilisateur) {
-        this.utilisateur = utilisateur;
+    public AppUserDetails(User user) {
+        this.user = user;
     }
 
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        //if (utilisateur.isAdministrateur()) {
-        //    return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"));
-        //}
         ArrayList<SimpleGrantedAuthority> listeAuthority = new ArrayList<>();
 
-       listeAuthority.add(new SimpleGrantedAuthority(this.utilisateur.getUserRole().getNom()));
+       listeAuthority.add(new SimpleGrantedAuthority(this.user.getUserRole().getRoleName()));
 
        return listeAuthority;
     }
 
     @Override
     public String getPassword() {
-        return utilisateur.getMotDePasse();
+        return user.getUserPassword();
     }
 
     @Override
     public String getUsername() {
-        return utilisateur.getEmail();
+        return user.getEmail();
     }
 
     @Override
