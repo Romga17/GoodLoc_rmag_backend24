@@ -1,7 +1,7 @@
 package edu.gdlc_project.gdlc_pckgs.security;
 
-import edu.gdlc_project.gdlc_pckgs.model.Utilisateur;
-import edu.gdlc_project.gdlc_pckgs.repository.UtilisateurRepository;
+import edu.gdlc_project.gdlc_pckgs.model.User;
+import edu.gdlc_project.gdlc_pckgs.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -14,12 +14,12 @@ import java.util.Optional;
 public class AppUserDetailsService implements UserDetailsService {
 
     @Autowired
-    UtilisateurRepository utilisateurRepository;
+    UserRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
-        Optional<Utilisateur> optionalUtilisateur = utilisateurRepository.findByEmail(email);
+        Optional<User> optionalUtilisateur = userRepository.findByEmail(email);
 
         if(optionalUtilisateur.isPresent()){
             return new AppUserDetails(optionalUtilisateur.get());

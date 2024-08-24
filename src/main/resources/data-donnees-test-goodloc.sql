@@ -1,33 +1,34 @@
--- Jeu de données application GoodLoc
--- Données de notre table role:
-INSERT INTO role (nom, description, statut) VALUES ("Etudiant", "Etudiant au sein de l'institut de formation.", "Actif"), ("Intervenant", "Professionnel indépendant intervenant pour dispenser des cours." , "Actif") ,("Salarié", "Occupe une fonction au sein de l'institut." , "Actif"), ("Salarié gestionnaire","Salarié occupant une fonction technique impliqué dans l'organisation de Goodloc et sa gestion." , "Actif" ),("Direction", "Membre du comité de direction de l'institut." , "Actif");
+-- Jeu de données application GoodLoc --
 
--- Données de notre table etat:
-INSERT INTO etat (etat) VALUES ("Disponible"),("Indisponible"),("En reconditionnement"),("En réparation atelier MNS"),("Retour fournisseur sous garantie");
+-- Données de notre table Role:
+INSERT INTO role (role_name, role_description, role_state) VALUES ("Etudiant", "Etudiant au sein de l'institut de formation.", "Actif"), ("Intervenant", "Professionnel indépendant intervenant pour dispenser des cours." , "Actif") ,("Salarié", "Occupe une fonction au sein de l'institut." , "Actif"), ("Salarié gestionnaire","Salarié occupant une fonction technique impliqué dans l'organisation de Goodloc et sa gestion." , "Actif" ),("Direction", "Membre du comité de direction de l'institut." , "Actif"),("Unforgiven", "Authority" , "Actif");
 
--- Données de notre table etablissement:
-INSERT INTO etablissement (nom, adresse, telephone, email) VALUES ("Metz Numeric School", "86 rue aux Arènes","+33387451232", "contact@mns.com"),("IFA Business school Metz", "Place Coislin","+33387187532", "contact@ifa-metz.com"), ("IFA Business school Strasbourg", "Avenue du Général","+33387487532", "contact@ifa-strasbourg.com"), ("IFA Business school Nancy", "Route de Metz","+33387175532", "contact@ifa-nancy.com");
+-- Données de notre table Status:
+INSERT INTO status (status_availability) VALUES ("Disponible"),("Indisponible"),("En reconditionnement"),("En réparation atelier MNS"),("Retour fournisseur sous garantie");
 
--- Données de notre table imagemat:
-INSERT INTO imagemat (nom, url) VALUES ("Lenovo IdeaPad", "https://media.ldlc.com/r1600/ld/products/00/06/03/34/LD0006033476.jpg"), ("Inovu Led MB22", "https://media.ldlc.com/r1600/ld/products/00/05/97/40/LD0005974077.jpg"),("Samsung Galaxy A05s Noir", "https://media.ldlc.com/r1600/ld/products/00/06/11/90/LD0006119084.jpg"), ("HTC Vive Pro 2", "https://media.ldlc.com/r374/ld/products/00/05/88/97/LD0005889784_1.jpg"), ("Racing Chair - Fauteuil de bureau","https://media.ldlc.com/r374/ld/products/00/04/19/16/LD0004191646_2.jpg");
+-- Données de notre table Location:
+INSERT INTO location (location_name, location_adress, location_phone, location_email) VALUES ("Metz Numeric School", "86 rue aux Arènes","+33387451232", "contact@mns.com"),("IFA Business school Metz", "Place Coislin","+33387187532", "contact@ifa-metz.com"), ("IFA Business school Strasbourg", "Avenue du Général","+33387487532", "contact@ifa-strasbourg.com"), ("IFA Business school Nancy", "Route de Metz","+33387175532", "contact@ifa-nancy.com");
 
--- Données de notre table documentmat  :
-INSERT INTO documentmat (nom_document, url_document, date_document, description_document) VALUES ("Guide technique Lenovo IdeaPad", "https://boulanger.scene7.com/is/content/Boulanger/0197528845012_n_0", "2021-07-01", "Guide classique dédié à l'utilisateur");
+-- Données de notre table PicMaterial:
+INSERT INTO picmaterial (pic_material_name, pic_material_url) VALUES ("Lenovo IdeaPad", "/assets/images/marketplace/laptopmod.jpg"), ("Inovu Led MB22", "/assets/images/marketplace/screenmod.jpg"),("Samsung Galaxy A05s Noir", "/assets/images/marketplace/smartphonemod.jpg"), ("HTC Vive Pro 2", "/assets/images/marketplace/casquevr.jpg"), ("Racing Chair - Fauteuil de bureau","/assets/images/marketplace/chaisebureau.jpg");
 
--- Données de notre table categorie:
-INSERT INTO categorie (nom, description) VALUES ("Informatique", "Equipement et accessoires informatiques"), ("Téléphonie", "Téléphones portables et fixes") ,("Mobilier", "Mobilier divers utile à la bureautique"), ("Outillage","Outillage type électroportatif "),("Véhicule", "Véhicules en tout genre");
+-- Données de notre table DocumentMaterial  :
+INSERT INTO documentmaterial (document_material_name, document_material_url, document_material_date, document_material_description) VALUES ("Guide technique Lenovo IdeaPad", "https://boulanger.scene7.com/is/content/Boulanger/0197528845012_n_0", "2021-07-01", "Guide classique dédié à l'user");
 
--- Données de la table intermédiaire categorie_role:
-INSERT INTO categorie_role (categorie_id, role_id) VALUES ("1","1"),("3","1"),("4","1"),("1","2"),("2","2"),("3","2"),("4","2"),("1","3"),("2","3"),("3","3"),("4","3"),("5","3"),("1","4"),("2","4"),("3","4"),("4","4"),("5","4"),("1","5"),("2","5"),("3","5"), ("4","5"),("5","5");
+-- Données de notre table Category:
+INSERT INTO category (category_name, category_description) VALUES ("Informatique", "Equipement et accessoires informatiques"), ("Téléphonie", "Téléphones portables et fixes") ,("Mobilier", "Mobilier divers utile à la bureautique"), ("Outillage","Outillage type électroportatif "),("Véhicule", "Véhicules en tout genre");
 
--- Données de notre table marque:
-INSERT INTO marque (marque, description_marque) VALUES ("LENOVO", "Fournisseur d'équipements informatiques"), ("INOVU", "Fournisseur d'équipements vidéo et informatique") ,("SAMSUNG", "Fournisseur de nombreux équipements électroniques");
+-- Données de la table croisée category_role:
+INSERT INTO category_role (category_id, role_id) VALUES ("1","1"),("3","1"),("4","1"),("1","2"),("2","2"),("3","2"),("4","2"),("1","3"),("2","3"),("3","3"),("4","3"),("5","3"),("1","4"),("2","4"),("3","4"),("4","4"),("5","4"),("1","5"),("2","5"),("3","5"), ("4","5"),("5","5");
+
+-- Données de notre table brand:
+INSERT INTO brand (brand_name, brand_description) VALUES ("LENOVO", "Fournisseur d'équipements informatiques"), ("INOVU", "Fournisseur d'équipements vidéo et informatique") ,("SAMSUNG", "Fournisseur de nombreux équipements électroniques");
 
 -- Données de notre table declaration_incident:
-INSERT INTO declaration_incident (date_declaration, description_declaration_incident, type_incident) VALUES ("2023-02-15","écran bleu avec message d'erreur", "Incident logiciel"), ("2023-05-15","écran qui ne s'allume plus", "Incident matériel"), ("2023-03-02","Téléphone chargé mais ne s'allume plus", "Incident logiciel"), ("2023-06-17","Boutons télécommande droite ne réagissent pas", "Incident matériel"),("2023-07-20","Accoudoir ne tient plus en place", "Incident matériel");
+INSERT INTO incident_notification (incident_notification_date, incident_notification_description, incident_notification_type) VALUES ("2023-02-15","écran bleu avec message d'erreur", "Incident logiciel"), ("2023-05-15","écran qui ne s'allume plus", "Incident matériel"), ("2023-03-02","Téléphone chargé mais ne s'allume plus", "Incident logiciel"), ("2023-06-17","Boutons télécommande droite ne réagissent pas", "Incident matériel"),("2023-07-20","Accoudoir ne tient plus en place", "Incident matériel");
 
--- Données de notre table utilisateur:
-INSERT INTO utilisateur (nom, prenom, email, type_voie, adresse, numero_adresse, code_postal, ville, telephone, mot_de_passe, date_entree, date_sortie, cursus, user_role_id)
+-- Données de notre table user:
+INSERT INTO user (user_lastname, user_firstname, email, user_road_type, user_address, user_address_number, user_zip_code, user_city, user_phone, user_password, user_arrival_date, user_departure_date, user_course, user_role_id)
 VALUES
     ('Nielsen', 'Leo', 'nielsen.leo@institute.com', 'Cité', 'Oberkampf', '10', '57100', 'Thionville', '+33675018342', '$2y$10$.8kRMRoiw9K9TSx79eRqBuk4AG.uzOrn7bhB20g7BYGfCSqR2PEsW', '2023-05-15', '2028-05-15', 'CDA Java', 1),
     ('Brown', 'Eva', 'brown.eva@institute.com', 'Chemin', 'de Tilsitt', '5', '57000', 'Metz', '+33675482018', '$2y$10$.8kRMRoiw9K9TSx79eRqBuk4AG.uzOrn7bhB20g7BYGfCSqR2PEsW', '2024-09-15', '2029-09-15', 'CDA Java', 2),
@@ -125,8 +126,8 @@ VALUES
     ('Møller', 'Eva', 'moller.eva@institute.com', 'Rue', 'de Tilsitt', '5', '57000', 'Metz', '+33675192837', '$2y$10$7iMmq55HaOZi1QIFTzmUKOEX/ku2CRWSll/q7dblu1v6UJHfemyE2', '2024-09-15', '2029-09-15', 'DFS groupe 1', 1),
     ('Ryan', 'Oliver', 'ryan.oliver@institute.com', 'Avenue', 'Saint-Honoré', '18', '54800', 'Jarny', '+33675417392', '$2y$10$7iMmq55HaOZi1QIFTzmUKOEX/ku2CRWSll/q7dblu1v6UJHfemyE2', '2024-03-15', '2029-03-15', 'DFS groupe 1', 1);
 
--- Données de notre table modele:
-INSERT INTO modele (descriptionmodele, modele, brand_id)
+-- Données de notre table design:
+INSERT INTO design (design_name, design_description, brand_id)
 VALUES ('Lenovo Ideapad slim 3', 'Ordinateur portable lenovo', 1 );
 
 /*--Données de notre role_utilisateur:--
@@ -134,7 +135,7 @@ INSERT INTO role_utilisateur (role_id, utilisateur_id)
 VALUES
     (1,1),(2, 2),(3, 3),(4, 4),(5, 5);*/
 
-INSERT INTO materiel (statut, description, date_achat, date_fingarantie, prix_achat, reference, declaration_mat_id_declaration_incident)
+INSERT INTO material (material_status, material_description, material_acquisition_date, material_warranty_end_date, material_acquisition_price, material_reference, notified_material_id_incident_notification)
 VALUES
     -- Enregistrements d'une série d'ordinateur portable:
     ('disponible', '« Ordinateur portable Lenovo - Processeur AMD Ryzen 5 7520U (Quad-Core 2.8 GHz / 4.3 GHz Turbo - 8 Threads - Cache 4 Mo)- 8 Go de mémoire DDR5 (mémoire intégrée)-Écran anti-reflets de 15.6 pouces avec résolution Full HD (1920 x 1080 pixels)-Sortie HDMI, pour le raccordement à un écran HD-SSD M.2 PCIe de 512 Go-Communication sans fil Wi-Fi 6 + Bluetooth 5.1-Haut-parleurs stéréo avec technologie Dolby Audio -Module TPM 2.0 (firmware) Webcam HD 720p avec obturateur intégré-Windows 11 Famille »', '2022-10-01', '2024-10-01',499.00,'82XQCTO1WWFR1', null),
@@ -334,7 +335,7 @@ VALUES
     ('indisponible', 'Fauteuil de bureau type « Racing Chair » PU et Mesh - Dos et côtés en PU - Accoudoirs relevables en nylon recouverts PU - Base 5 branches en nylon avec placage chrome, roulettes souples - Densité de la mousse du dossier 35 kg/m3 - Densité de la mousse de l’assise 32kg/m3 - Mécanisme basculant centré permettant le blocage du dossier soit en position droite soit en position inclinée - Possibilité de régler l intensité du basculement et la hauteur du siège - Les accoudoirs sont fixes en hauteur mais réglables d avant en arrière - Assise : P.53 x L.49 x Ep. 7,5/9 cm - Dossier : H.71,5 x L.52 x Ep. 5,5/7 cm - Hauteur totale : 110 à 120 cm - Poids maximal : 110 kg - Coloris : Noir', '2022-08-25', '2025-08-25', 1499.95, 'MTGA-284-700-010', 5);
 
 -- Données de la table intermédiaire imagemat_materiel:
-INSERT INTO imagemat_materiel (materiel_id,imagemat_id)
+INSERT INTO picmaterial_material (material_id,pic_material_id)
 VALUES
     ("1","1"),("2","1"),("3","1"),("4","1"),("5","1"),("6","1"),("7","1"),("8","1"),("9","1"),("10","1"),
     ("11","1"),("12","1"),("13","1"),("14","1"),("15","1"),("16","1"),("17","1"),("18","1"),("19","1"),("20","1"),
@@ -353,8 +354,8 @@ VALUES
     ("158","3"),("159","3"),("160","3"),("161","3"),("162","3"),("163","3"),("164","3"),("165","3"),("166","3"),("167","3"),("168","4"),("169","4"),("170","4"),("171","4"),("172","4"),("173","4"),("174","4"),("175","4"),("176","4"),("177","4"),("178","5"),("179","5"),("180","5"),("181","5"),("182","5"),("183","5"),("184","5"),("185","5"),("186","5"),("187","5");
 
 
--- Données de notre table categorie:
-INSERT INTO etablissement_utilisateur (etablissement_id, utilisateur_id)
+-- Données de notre table category:
+INSERT INTO location_user (location_id, user_id)
 VALUES
 (1,1),(1, 2),(4, 3),(2, 4),(3, 5),(1, 6),(4, 7),(2, 8),(3, 9),(1, 10),(4, 11),(2, 12),(3, 13),(1, 14),(4, 15),(2, 16),(3, 17),(1, 18),(4, 19),(2, 20),(3, 21),(1, 22),
 (4, 23),(2, 24),(3, 25),(1, 26),(4, 27),(2, 28),(3, 29),(1, 30),(4, 31),(2, 32),(3, 33),(1, 34),
@@ -366,7 +367,7 @@ VALUES
 (4, 91),(2, 92),(3, 93),(1, 94),(4, 95);
 
 -- Données de notre table demande_reservation:
-INSERT INTO demande_reservation (date_demande, date_accord, date_debut, date_fin, materiel_reserv_id, validation, validateur_id, demandeur_id, message_user)
+INSERT INTO booking_request (booking_request_date, booking_request_agreement_date, booking_request_start_date, booking_request_end_date, booking_object_material_id, booking_request_valid, booking_request_validator_id, booking_request_requester_id, booking_request_user_message)
 VALUES
     ('2023-02-15', '2023-02-17', '2023-02-22', '2024-02-22', 99, 1, 4, 1, 'Merci pour ce prêt !'),
     ('2023-09-17', '2023-09-19','2023-09-23', '2024-09-23', 167, 1, 4, 2, null),
@@ -378,11 +379,11 @@ VALUES
     ('2024-06-01', null ,'2024-12-24', '2025-12-24', 2, 0, null, 14, null);
 
 -- Données de notre table croisée Déclaration_incident_utilisateur:
-INSERT INTO declaration_incident_utilisateur (id_declaration_incident, utilisateur_id)
+INSERT INTO incident_notification_user (id_incident_notification, user_id)
 VALUES
     (1,1),(3, 2),(2, 6),(4, 7),(5, 8);
 
 -- Données de notre table croisée Materiel_utilisateur:
-INSERT INTO materiel_utilisateur (materiel_id, utilisateur_id)
+INSERT INTO material_user (material_id, user_id)
 VALUES
     (99,1),(167, 2),(147, 6),(177, 7),(187, 8);
