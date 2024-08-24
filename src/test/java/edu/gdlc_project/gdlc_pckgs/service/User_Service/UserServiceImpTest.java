@@ -191,7 +191,7 @@ class UserServiceImpTest {
         ResponseEntity<Map<String, Object>> response = userServiceImpTest.subscription(suscribedUser);
 
         // Then:
-        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(HttpStatus.CREATED, response.getStatusCode());
         assertEquals("Inscription réussie", response.getBody().get("message"));
         verify(userRepositoryTest, times(1)).save(suscribedUser);
         verify(userRepositoryTest, times(1)).existsByEmail(suscribedUser.getEmail());

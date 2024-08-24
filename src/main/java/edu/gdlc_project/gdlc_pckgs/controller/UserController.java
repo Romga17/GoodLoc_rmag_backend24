@@ -45,7 +45,7 @@ public class UserController {
         return userServiceImp.userModification(id, user);
     }
 
-    @IsAdmin
+
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Map<String, String>> deleteUser(@PathVariable int id){
         return userServiceImp.deleteUserById(id);
