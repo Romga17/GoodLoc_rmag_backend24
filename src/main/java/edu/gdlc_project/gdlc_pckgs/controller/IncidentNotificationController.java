@@ -10,7 +10,7 @@ import java.util.List;
 
 //@CrossOrigin(origins = {"http://localhost:4200", "http://185.97.144.183:8082"})
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = "*")
 @RequestMapping("/incident")
 public class IncidentNotificationController {
 
