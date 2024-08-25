@@ -51,4 +51,15 @@ public class JwtUtils {
                 .getBody()
                 .getSubject();
     }
+
+    public boolean validateJwtToken(String authToken, UserDetails userDetails) {
+        try {
+            String username = getSubjectFromJwt(authToken);
+            return (username.equals(userDetails.getUsername()));
+        } catch (Exception e) {
+            // Log l'erreur
+            return false;
+        }
+    }
+
 }
