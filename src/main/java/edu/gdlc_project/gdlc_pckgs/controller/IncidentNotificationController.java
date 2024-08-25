@@ -8,9 +8,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+//@CrossOrigin(origins = {"http://localhost:4200", "http://185.97.144.183:8082"})
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/incident")
-@CrossOrigin(origins = {"http://localhost:4200", "http://185.97.144.183:8082"})
 public class IncidentNotificationController {
 
     @Autowired
