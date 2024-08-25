@@ -9,7 +9,7 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/goodlocdb?serverTimezone=UTC&createDatabaseIfNotExist=true&requireSSL=false
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: Rmag17@Dev
-      secret.jwt: Rmag17Rmag17Rmag17Rmag17Rmag17Rmag17Rmag17
+      secret.jwt: Rmag17Rmag17Rmag17Rmag17Rmag17Rmag17Rmag17Rmag17Rmag17Rmag17
     ports:
       - "8080:8080"
     depends_on:
