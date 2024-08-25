@@ -15,7 +15,7 @@ import static io.jsonwebtoken.Jwts.*;
 @Service
 public class JwtUtils {
 
-    @Value("${secret.jwt}")
+    @Value("${SECRET_JWT}")
     private String secret;
 
     public String generateToken(UserDetails userDetails) {
