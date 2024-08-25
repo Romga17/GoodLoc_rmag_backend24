@@ -11,7 +11,6 @@ import java.util.List;
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/document")
-
 public class DocumentMaterialController {
     @Autowired
     protected DocumentMaterialServiceImp documentMaterialServiceImp;
