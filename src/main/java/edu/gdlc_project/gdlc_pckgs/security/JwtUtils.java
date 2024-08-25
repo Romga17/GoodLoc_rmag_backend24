@@ -15,6 +15,8 @@ import static io.jsonwebtoken.Jwts.*;
 @Service
 public class JwtUtils {
 
+    //réévaluation secret:
+
     @Value("${secret.jwt}")
     private String secret;
 
