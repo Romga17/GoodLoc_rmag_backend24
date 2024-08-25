@@ -15,7 +15,7 @@ import static io.jsonwebtoken.Jwts.*;
 @Service
 public class JwtUtils {
 
-    @Value("azerty")
+    @Value("${secret.jwt}")
     private String secret;
 
     public String generateToken(UserDetails userDetails) {
@@ -54,8 +54,8 @@ public class JwtUtils {
 
     public boolean validateJwtToken(String authToken, UserDetails userDetails) {
         try {
-            // Valider la signature et d'autres critères ici
-            return true; // retourne true si le token est valide
+            String username = getSubjectFromJwt(authToken);
+            return (username.equals(userDetails.getUsername()));
         } catch (Exception e) {
             // Log l'erreur
             return false;

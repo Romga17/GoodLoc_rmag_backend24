@@ -25,28 +25,35 @@ public class JwtFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String authorization = request.getHeader("Authorization");
+        System.out.println("Authorization Header: " + authorization); // Log du header Authorization
 
         if (authorization != null && authorization.startsWith("Bearer ")) {
             String jwt = authorization.substring(7);
+            System.out.println("JWT Token: " + jwt); // Log du token JWT
+
             try {
                 String subject = jwtUtils.getSubjectFromJwt(jwt);
+                System.out.println("Subject from JWT: " + subject); // Log du sujet extrait du JWT
 
                 if (subject != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                     UserDetails userDetails = appUserDetailsService.loadUserByUsername(subject);
+                    System.out.println("UserDetails loaded: " + userDetails.getUsername()); // Log de l'utilisateur chargé
 
-                    if (jwtUtils.validateJwtToken(jwt, userDetails)) { // Assurez-vous que la validation du JWT est complète
+                    if (jwtUtils.validateJwtToken(jwt, userDetails)) {
                         UsernamePasswordAuthenticationToken authenticationToken =
                                 new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                         authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+                        System.out.println("Authentication successful for user: " + userDetails.getUsername()); // Log de l'authentification réussie
+                    } else {
+                        System.out.println("JWT Token validation failed"); // Log en cas d'échec de la validation du JWT
                     }
                 }
             } catch (Exception e) {
-                // Log l'erreur et passer à la requête suivante, sans interrompre le traitement.
-                System.out.println("Impossible de définir l'authentification utilisateur : " + e.getMessage());
-                // Optionnel : Vous pouvez renvoyer une réponse 401 si nécessaire
-                // response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid JWT token");
+                System.out.println("Exception during JWT processing: " + e.getMessage()); // Log de l'exception
             }
+        } else {
+            System.out.println("Authorization header is missing or does not start with Bearer"); // Log si le header Authorization est absent ou incorrect
         }
 
         filterChain.doFilter(request, response);
