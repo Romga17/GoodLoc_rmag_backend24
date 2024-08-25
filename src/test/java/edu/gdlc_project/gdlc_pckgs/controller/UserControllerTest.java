@@ -19,6 +19,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 
 import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -105,7 +106,7 @@ class UserControllerTest {
     @Test
     void testReceptionDeleteUser_shouldReturnHttpStatusOk() throws Exception {
         // Given:
-        int idUserToDelete = 7;
+        int idUserToDelete = 34;
 
         // When:
         mockMvc.perform(MockMvcRequestBuilders.delete("/user/delete/"+idUserToDelete))

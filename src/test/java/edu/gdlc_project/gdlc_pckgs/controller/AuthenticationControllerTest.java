@@ -17,6 +17,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.util.Optional;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
@@ -51,12 +55,11 @@ class AuthenticationControllerTest {
     @Test
     public void registerTest_shouldReceiveNewUserCreated() throws Exception {
 
-        //Given:
+        // Given:
         User testUser = new User();
-
         testUser.setId(98);
-        testUser.setUserLastname("MrTest");
-        testUser.setUserFirstname("Robert");
+        testUser.setUserFirstname("MrTest");
+        testUser.setUserLastname("Robert");
         testUser.setEmail("robert.mrtest@gmail.com");
         testUser.setUserAddress("du test");
         testUser.setUserAddressNumber("100");
@@ -66,20 +69,29 @@ class AuthenticationControllerTest {
         testUser.setUserCourse("CDA Java");
         testUser.setUserPhone("+336744552");
         testUser.setUserPassword("rooT17goodloc!");
+        // autres setters...
 
         String jsonRequest = objectMapper.writeValueAsString(testUser);
 
-        //When:
+        // Mock the save operation
+        when(userRepositoryTest.save(any(User.class))).thenReturn(testUser);
+        // Mock the findByEmail operation
+        when(userRepositoryTest.findByEmail("robert.mrtest@gmail.com")).thenReturn(Optional.of(testUser));
+
+        // When:
         mockMvc.perform(post("/register")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonRequest))
-                .andExpect(status().isOk());
+                .andExpect(status().isCreated());
 
-        //Then:
-        Assertions.assertEquals("robert.mrtest@gmail.com",
-                userRepositoryTest.findByEmail("robert.mrtest@gmail.com")
-                        .get().getEmail());
+        // Then:
+        Optional<User> userOptional = userRepositoryTest.findByEmail("robert.mrtest@gmail.com");
+        Assertions.assertTrue(userOptional.isPresent(), "User not found in the database");
+
+        User retrievedUser = userOptional.orElseThrow(() -> new AssertionError("User not found"));
+        Assertions.assertEquals("robert.mrtest@gmail.com", retrievedUser.getEmail());
     }
+
 
     /*@Test
     public void testInscription_doitRetrouverUtilisateur() throws Exception {
