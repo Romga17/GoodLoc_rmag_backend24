@@ -11,8 +11,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
+//@CrossOrigin(origins = {"http://localhost:4200", "http://185.97.144.183:8082"})
 @RestController
-@CrossOrigin(origins = {"http://localhost:4200", "http://185.97.144.183:8082"})
+@CrossOrigin(origins = "*")
 public class AuthenticationController {
 
     @Autowired
