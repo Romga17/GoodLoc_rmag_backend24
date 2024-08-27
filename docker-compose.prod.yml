@@ -12,6 +12,7 @@ services:
       secret.jwt: Rmag17Rmag17Rmag17Rmag17Rmag17Rmag17Rmag17Rmag17Rmag17Rmag17
     ports:
       - "8080:8080"
+    command: ["java", "-jar", "app.jar", "--server.servlet.context-path=/api"]
     depends_on:
       - db
     networks:
