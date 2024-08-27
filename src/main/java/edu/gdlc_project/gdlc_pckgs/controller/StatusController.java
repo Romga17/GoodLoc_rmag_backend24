@@ -25,4 +25,6 @@ public class StatusController {
         statusServiceImp.saveStatus(status);
         return "Le nouvel état à été ajouté.";
     }
+
+    // status
 }
