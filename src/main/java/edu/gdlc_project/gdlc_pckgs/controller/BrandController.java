@@ -15,14 +15,14 @@ public class BrandController {
     @Autowired
     protected BrandServiceImp brandServiceImp;
 
+    @GetMapping("/list")
+    public List<Brand> getBrandsList(){
+        return brandServiceImp.getAllBrands();
+    }
+
     @PostMapping("/add")
     public String add(@RequestBody Brand brand){
         brandServiceImp.saveBrand(brand);
         return "La nouvelle marque à été ajoutée.";
-    }
-
-    @GetMapping("/list")
-    public List<Brand> getBrandsList(){
-        return brandServiceImp.getAllBrands();
     }
 }

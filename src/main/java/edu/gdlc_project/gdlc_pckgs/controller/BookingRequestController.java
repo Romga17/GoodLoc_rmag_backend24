@@ -36,6 +36,11 @@ public class BookingRequestController {
         return bookingRequestServiceImp.getAllBookingRequest();
     }
 
+    @GetMapping("/get/updated")
+    public List<BookingRequest> getBookingsListUpdated(){
+        return bookingRequestServiceImp.getUpToDateBookings();
+    }
+
     @GetMapping("/get/unchecked")
     public List<BookingRequest> getAllNotValid(){
         return bookingRequestServiceImp.getAllUnchecked();
@@ -45,6 +50,12 @@ public class BookingRequestController {
     public List<BookingRequest> getUserBookings(@PathVariable int id){
 
         return bookingRequestServiceImp.getUserBookings(id);
+    }
+
+    @GetMapping("/get/valid/{id}")
+    public List<BookingRequest> getUserUncheckedBookings(@PathVariable int id){
+
+        return bookingRequestServiceImp.getUserValidatedBookings(id);
     }
 
     @PostMapping("/add")
@@ -79,16 +90,5 @@ public class BookingRequestController {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<BookingRequest> deleteReservationAsk(@PathVariable int id){
         return bookingRequestServiceImp.deleteBookingRequest(id);
-    }
-
-    @GetMapping("/get/valid/{id}")
-    public List<BookingRequest> getUserUncheckedBookings(@PathVariable int id){
-
-        return bookingRequestServiceImp.getUserValidatedBookings(id);
-    }
-
-    @GetMapping("/get/updated")
-    public List<BookingRequest> getBookingsListUpdated(){
-        return bookingRequestServiceImp.getUpToDateBookings();
     }
 }

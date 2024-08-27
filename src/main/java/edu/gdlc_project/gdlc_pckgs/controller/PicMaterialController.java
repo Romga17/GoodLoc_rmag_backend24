@@ -16,14 +16,16 @@ public class PicMaterialController {
     @Autowired
     protected PicMaterialServiceImp picMaterialServiceImp;
 
+    @GetMapping("/list")
+    public List<PicMaterial> getPicsList(){
+        return picMaterialServiceImp.getAllMaterialsPics();
+    }
+
     @PostMapping("/add")
     public String add(@RequestBody PicMaterial picMaterial){
      picMaterialServiceImp.saveMaterialPic(picMaterial);
         return "L'image du matériel à bien été ajoutée.";
     }
 
-    @GetMapping("/list")
-    public List<PicMaterial> getPicsList(){
-        return picMaterialServiceImp.getAllMaterialsPics();
-    }
+
 }

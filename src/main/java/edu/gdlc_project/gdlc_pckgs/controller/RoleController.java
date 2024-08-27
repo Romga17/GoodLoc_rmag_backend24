@@ -23,12 +23,6 @@ public class RoleController {
     @Autowired
     private RoleRepository roleRepository;
 
-    @PostMapping("/add")
-    public String addRole(@RequestBody Role role) {
-        roleServiceImp.saveRole(role);
-        return "Le nouveau rôle à été ajouté.";
-    }
-
     @GetMapping("/list")
     public List<Role> getAllRoles() {
         return roleServiceImp.getAllRoles();
@@ -44,6 +38,13 @@ public class RoleController {
             return ResponseEntity.status(404).body(null);
         }
     }
+
+    @PostMapping("/add")
+    public String addRole(@RequestBody Role role) {
+        roleServiceImp.saveRole(role);
+        return "Le nouveau rôle à été ajouté.";
+    }
+
 }
 
 

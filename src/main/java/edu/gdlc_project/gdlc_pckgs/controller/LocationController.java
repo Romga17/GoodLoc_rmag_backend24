@@ -16,14 +16,14 @@ public class LocationController {
     @Autowired
     protected LocationServiceImp locationServiceImp;
 
+    @GetMapping("/list")
+    public List<Location> getLocationsList(){
+        return locationServiceImp.getAllLocations();
+    }
+
     @PostMapping("/add")
     public String add(@RequestBody Location location){
         locationServiceImp.saveLocation(location);
         return "Le nouvel établissement à été ajouté.";
-    }
-
-    @GetMapping("/list")
-    public List<Location> getLocationsList(){
-        return locationServiceImp.getAllLocations();
     }
 }

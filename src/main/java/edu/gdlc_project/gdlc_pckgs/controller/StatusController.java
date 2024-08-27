@@ -15,14 +15,14 @@ public class StatusController {
     @Autowired
     protected StatusServiceImp statusServiceImp;
 
+    @GetMapping("/list")
+    public List<Status> getAllStatus(){
+        return statusServiceImp.getAllStatuses();
+    }
+
     @PostMapping("/add")
     public String addStatus(@RequestBody Status status){
         statusServiceImp.saveStatus(status);
         return "Le nouvel état à été ajouté.";
-    }
-
-    @GetMapping("/list")
-    public List<Status> getAllStatus(){
-        return statusServiceImp.getAllStatuses();
     }
 }

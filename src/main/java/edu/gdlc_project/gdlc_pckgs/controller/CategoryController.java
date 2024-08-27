@@ -16,14 +16,14 @@ public class CategoryController {
     @Autowired
     protected CategoryServiceImp categoryServiceImp;
 
+    @GetMapping("/list")
+    public List<Category> getCategoriesList(){
+        return categoryServiceImp.getAllCategories();
+    }
+
     @PostMapping("/add")
     public String addCategory(@RequestBody Category category){
         categoryServiceImp.saveCategory(category);
         return "La nouvelle catégorie à été ajoutée.";
-    }
-
-    @GetMapping("/list")
-    public List<Category> getCategoriesList(){
-        return categoryServiceImp.getAllCategories();
     }
 }

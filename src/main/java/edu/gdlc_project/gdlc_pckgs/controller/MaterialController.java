@@ -22,15 +22,15 @@ public class MaterialController {
         return materielServiceImp.getAllMaterials();
     }
 
-    @PostMapping("/add")
-    public ResponseEntity<Material> addMaterial(@RequestBody Material material){
-        return materielServiceImp.saveMaterial(material);
-    }
-
     @GetMapping("/get/{id}")
     public Material getMaterialWithId (@PathVariable int id){
 
         return materielServiceImp.getMaterialById(id);
+    }
+
+    @PostMapping("/add")
+    public ResponseEntity<Material> addMaterial(@RequestBody Material material){
+        return materielServiceImp.saveMaterial(material);
     }
 
     @DeleteMapping("/delete/{id}")

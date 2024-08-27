@@ -15,14 +15,14 @@ public class DocumentMaterialController {
     @Autowired
     protected DocumentMaterialServiceImp documentMaterialServiceImp;
 
+    @GetMapping("/list")
+    public List<DocumentMaterial> getAllMaterialsDocument(){
+        return documentMaterialServiceImp.getAllMaterialsDocuments();
+    }
+
     @PostMapping("/add")
     public String addMaterielDocument(@RequestBody DocumentMaterial documentMaterial){
         documentMaterialServiceImp.saveMaterialDocument(documentMaterial);
         return "Le document technique du matériel à bien été ajouté.";
-    }
-
-    @GetMapping("/list")
-    public List<DocumentMaterial> getAllMaterialsDocument(){
-        return documentMaterialServiceImp.getAllMaterialsDocuments();
     }
 }

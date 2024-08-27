@@ -19,6 +19,11 @@ public class UserController {
     @Autowired
     private UserServiceImp userServiceImp;
 
+    @GetMapping("/list")
+    public List<User> getUsersList(){
+        return userServiceImp.getAllUsers();
+    }
+
     @GetMapping("/get/{id}")
     public ResponseEntity<User> getSingleUser(@PathVariable int id) {
         try {
@@ -30,12 +35,6 @@ public class UserController {
 
     }
 
-    @GetMapping("/list")
-    public List<User> getUsersList(){
-        return userServiceImp.getAllUsers();
-    }
-
-
     @PostMapping("/add")
     public ResponseEntity<User> addUser(@RequestBody User user){
         return userServiceImp.saveUser(user);
@@ -46,12 +45,10 @@ public class UserController {
         return userServiceImp.userModification(id, user);
     }
 
-
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Map<String, String>> deleteUser(@PathVariable int id){
         return userServiceImp.deleteUserById(id);
     }
-
 }
 
 
