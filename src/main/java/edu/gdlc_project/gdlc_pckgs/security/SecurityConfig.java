@@ -24,6 +24,7 @@ import java.util.List;
 @Configuration
 @EnableMethodSecurity
 public class SecurityConfig {
+
     @Autowired
     AppUserDetailsService appUserDetailsService;
 
@@ -49,9 +50,7 @@ public class SecurityConfig {
                 .sessionManagement(config -> config.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/signin", "/register",
-                                "/booking/list", "/booking/get/{id}", "/booking/add", "/booking/validate","/booking" +
-                                        "/deny" +
-                                        "/{id}","/booking/delete/{id}", "/booking/get/valid/{id}", "/booking/get/updated",
+                                "/booking/list", "/booking/get/{id}", "/booking/add", "/booking/validate","/booking/deny/{id}","/booking/delete/{id}", "/booking/get/valid/{id}", "/booking/get/updated",
                                 "/brand/add","/brand/list",
                                 "/category/add", "/category/list",
                                 "/design/add", "/design/list",
@@ -63,7 +62,10 @@ public class SecurityConfig {
                                 "/role/add","/role/list", "/role/get/{id}",
                                 "/status/add","/status/list",
                                 "/user/get/{id}","/user/list","/user/add", "/user/modify/{id}", "/user/delete/{id}",
-                                "/user/get/{id}").permitAll() // Autorise l'accès sans authentification
+                                "/user/get/{id}",
+                                // Autorisation des endpoints Actuator
+                                "/actuator/**" // Autorise l'accès à tous les endpoints d'Actuator
+                        ).permitAll() // Autorise l'accès sans authentification
                         .anyRequest().authenticated() // Toutes les autres requêtes nécessitent une authentification
                 )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
@@ -91,7 +93,6 @@ public class SecurityConfig {
 
         return source;
     }
-
 
     @Bean
     public CorsFilter corsFilter() {
