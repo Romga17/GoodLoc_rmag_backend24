@@ -31,17 +31,9 @@ services:
     networks:
       - goodloc-network
 
-  angular:
-    image: rmag17/angular-app-goodloc:latest
-    container_name: angular_goodlocapp
-    ports:
-      - "8082:80"
-    networks:
-      - goodloc-network
+networks:
+  goodloc-network:
+    external: true
 
 volumes:
   dbdata:
-
-networks:
-  goodloc-network:
-    driver: bridge
