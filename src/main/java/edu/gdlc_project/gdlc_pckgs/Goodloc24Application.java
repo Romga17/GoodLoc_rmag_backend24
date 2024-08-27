@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"edu.gdlc_project.gdlc_pckgs", "edu.gdlc_project.gdlc_pckgs.controller"})
 public class Goodloc24Application {
 
 	public static void main(String[] args) {
