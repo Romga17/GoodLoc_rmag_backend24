@@ -75,15 +75,25 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.setAllowedOrigins(List.of("http://localhost:4200", "http://185.97.144.183:8082"));
+
+        // Ajoutez toutes les origines Angular qui doivent être autorisées
+        corsConfiguration.setAllowedOrigins(List.of(
+                "http://localhost:4200",            // Pour le développement local
+                "http://185.97.144.183:8083"        // Adresse de production pour Angular
+        ));
+
         corsConfiguration.setAllowedMethods(List.of("GET", "POST", "DELETE", "PUT"));
         corsConfiguration.setAllowedHeaders(List.of("*"));
         corsConfiguration.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+
+        // Cette ligne permet à CORS de s'appliquer à toutes les routes, y compris celles avec le préfixe /api
         source.registerCorsConfiguration("/**", corsConfiguration);
+
         return source;
     }
+
 
     @Bean
     public CorsFilter corsFilter() {
