@@ -27,16 +27,29 @@ jobs:
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/goodloc24back:latest
           no-cache: true
 
-      - name: Scan Docker image with Trivy
-        id: trivy_scan
-        uses: aquasecurity/trivy-action@v0.11.1
+      - name: Run Trivy vulnerability scanner on Docker image
+        uses: aquasecurity/trivy-action@0.20.0
         with:
+          scan-type: 'image'
           image-ref: ${{ secrets.DOCKERHUB_USERNAME }}/goodloc24back:latest
-          format: 'table'
-          output: trivy_report.txt  # Sauvegarde le rapport dans un fichier
           ignore-unfixed: true
-          vuln-type: 'os,library'
-        continue-on-error: true
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+          severity: 'CRITICAL'
+
+      - name: Upload Trivy scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: 'trivy-results.sarif'
+
+      - name: Push Docker image
+        if: success()  # Push only if no critical vulnerabilities are found
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/goodloc24back:latest
+          no-cache: true
 
       - name: Push Docker image
         uses: docker/build-push-action@v2
