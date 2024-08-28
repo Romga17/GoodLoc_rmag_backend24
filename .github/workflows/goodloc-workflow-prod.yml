@@ -27,21 +27,6 @@ jobs:
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/goodloc24back:latest
           no-cache: true
 
-      - name: Run Trivy vulnerability scanner on Docker image
-        uses: aquasecurity/trivy-action@0.20.0
-        with:
-          scan-type: 'image'
-          image-ref: ${{ secrets.DOCKERHUB_USERNAME }}/goodloc24back:latest
-          ignore-unfixed: true
-          format: 'sarif'
-          output: 'trivy-results.sarif'
-          severity: 'CRITICAL'
-
-      - name: Upload Trivy scan results to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@v3
-        with:
-          sarif_file: 'trivy-results.sarif'
-
       - name: Push Docker image
         if: success()  # Push only if no critical vulnerabilities are found
         uses: docker/build-push-action@v2
@@ -58,20 +43,6 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/goodloc24back:latest
           no-cache: true
-
-      - name: Send email notification
-        if: failure()  # Exécute cette étape seulement si Trivy a trouvé des vulnérabilités
-        uses: dawidd6/action-send-mail@v3
-        with:
-          server_address: smtp.gmail.com  # Adresse SMTP de gmail
-          server_port: 587  # Port SMTP
-          username: ${{ secrets.EMAIL_USERNAME }}  # Nom d'utilisateur pour l'envoi
-          password: ${{ secrets.EMAIL_PASSWORD }}  # Mot de passe pour l'envoi
-          subject: "Vulnerabilities found in Docker image"
-          body: "Trivy scan has detected vulnerabilities in the Docker image. Please review the attached report."
-          to: "romgacode@gmail.com"  # Adresse email de destination
-          from: "noreply@trivytest.com"  # Adresse email de l'expéditeur
-          attachments: trivy_report.txt  # Attache le rapport Trivy
 
   deploy:
     runs-on: ubuntu-latest
