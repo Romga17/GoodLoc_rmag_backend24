@@ -17,3 +17,5 @@ public class Status {
     protected String statusAvailability;
 
 }
+
+//status ajout control
