@@ -65,7 +65,9 @@ public class SecurityConfig {
 
         // Ajoutez toutes les origines Angular qui doivent être autorisées
         corsConfiguration.setAllowedOrigins(List.of(
-                "http://localhost:4200",            // Pour le développement local
+                "http://localhost:4200",
+                "http://localhost:8080",
+                // Pour le développement local
                 "http://185.97.144.183:8083"        // Adresse de production pour Angular
         ));
 
