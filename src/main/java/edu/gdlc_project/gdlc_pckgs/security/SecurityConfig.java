@@ -3,6 +3,7 @@ package edu.gdlc_project.gdlc_pckgs.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -49,23 +50,9 @@ public class SecurityConfig {
                 .cors(config -> config.configurationSource(corsConfigurationSource()))
                 .sessionManagement(config -> config.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/signin", "/register",
-                                "/booking/list", "/booking/get/{id}", "/booking/add", "/booking/validate","/booking/deny/{id}","/booking/delete/{id}", "/booking/get/valid/{id}", "/booking/get/updated",
-                                "/brand/add","/brand/list",
-                                "/category/add", "/category/list",
-                                "/design/add", "/design/list",
-                                "/document/add", "/document/list",
-                                "/incident/add/{NotifiedMaterialId}/{incidentNotifierId}","/incident/save","/incident/list","/incident/get/{id}",
-                                "/location/add","/location/list",
-                                "/material/list","/material/add","/material/get/{id}","/material/delete/{id}",
-                                "/image/add","/image/list",
-                                "/role/add","/role/list", "/role/get/{id}",
-                                "/status/add","/status/list",
-                                "/user/get/{id}","/user/list","/user/add", "/user/modify/{id}", "/user/delete/{id}",
-                                "/user/get/{id}",
-                                // Autorisation des endpoints Actuator
-                                "/actuator/**" // Autorise l'accès à tous les endpoints d'Actuator
-                        ).permitAll() // Autorise l'accès sans authentification
+                                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                                .requestMatchers("/api/signin", "/api/register","api/user/get/","api/user/add","/api" +
+                                        "/user/delete/","/api/user/list","/api/booking/").permitAll()
                         .anyRequest().authenticated() // Toutes les autres requêtes nécessitent une authentification
                 )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)

@@ -66,7 +66,7 @@ class UserControllerTest {
     @Test
     public void testReceptionUserList_shouldReturnHttpStatusOk() throws Exception {
         // When:
-        mockMvc.perform(get("/user/list"))
+        mockMvc.perform(get("api/user/list"))
                 // Then:
                 .andExpect(status().isOk());
     }
