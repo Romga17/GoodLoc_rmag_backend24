@@ -52,7 +52,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                                 .requestMatchers("/api/signin", "/api/register","api/user/get/","api/user/add","/api" +
-                                        "/user/delete/","/api/user/list","/api/booking/").permitAll()
+                                        "/user/delete/","/api/user/list","/api/booking/","/api/booking/list", "/api/booking/get/unchecked", "/api/booking/get/", "api/material/list", "api/design/list", "api/incident/list").permitAll()
                         .anyRequest().authenticated() // Toutes les autres requêtes nécessitent une authentification
                 )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
