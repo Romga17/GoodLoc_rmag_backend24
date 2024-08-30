@@ -118,9 +118,9 @@ public class BookingRequestServiceImp implements BookingRequestService {
 
             System.out.println("Booking ID: " + booking.getId() + ", Days Between: " + daysBetween);
 
-            if (daysBetween > 5) {
+            if (daysBetween > 3) {
                 upToDateBookings.add(booking);
-            } else if (daysBetween < 5 && booking.isBookingRequestValid() == true) {
+            } else if (daysBetween < 3 && booking.isBookingRequestValid() == true) {
                 Material material =
                         materialRepository.findById(booking.getBookingObjectMaterial().getId()).orElse(null);
                 if (material != null && !"Indisponible".equals(material.getMaterialStatus())) {

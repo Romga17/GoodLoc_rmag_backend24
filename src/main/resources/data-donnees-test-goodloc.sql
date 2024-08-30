@@ -1,34 +1,34 @@
 -- Jeu de données application GoodLoc --
 
 -- Données de notre table Role:
-INSERT INTO role (role_name, role_description, role_state) VALUES ("Etudiant", "Etudiant au sein de l'institut de formation.", "Actif"), ("Intervenant", "Professionnel indépendant intervenant pour dispenser des cours." , "Actif") ,("Salarié", "Occupe une fonction au sein de l'institut." , "Actif"), ("Salarié gestionnaire","Salarié occupant une fonction technique impliqué dans l'organisation de Goodloc et sa gestion." , "Actif" ),("Direction", "Membre du comité de direction de l'institut." , "Actif"),("Unforgiven", "Authority" , "Actif");
+INSERT INTO role (role_name, role_description, role_state) VALUES ('Etudiant', 'Etudiant au sein de l institut de formation.', 'Actif'), ('Intervenant', 'Professionnel indépendant intervenant pour dispenser des cours.' , 'Actif') ,('Salarié', 'Occupe une fonction au sein de l\'institut.' , 'Actif'), ('Salarié gestionnaire','Salarié occupant une fonction technique impliqué dans l organisation de Goodloc et sa gestion.' , 'Actif' ),('Direction', 'Membre du comité de direction de l\'institut.' , 'Actif'),('Unforgiven', 'Authority' , 'Actif');
 
 -- Données de notre table Status:
-INSERT INTO status (status_availability) VALUES ("Disponible"),("Indisponible"),("En reconditionnement"),("En réparation atelier MNS"),("Retour fournisseur sous garantie");
+INSERT INTO status (status_availability) VALUES ('Disponible'),('Indisponible'),('En reconditionnement'),('En réparation atelier MNS'),('Retour fournisseur sous garantie');
 
 -- Données de notre table Location:
-INSERT INTO location (location_name, location_adress, location_phone, location_email) VALUES ("Metz Numeric School", "86 rue aux Arènes","+33387451232", "contact@mns.com"),("IFA Business school Metz", "Place Coislin","+33387187532", "contact@ifa-metz.com"), ("IFA Business school Strasbourg", "Avenue du Général","+33387487532", "contact@ifa-strasbourg.com"), ("IFA Business school Nancy", "Route de Metz","+33387175532", "contact@ifa-nancy.com");
+INSERT INTO location (location_name, location_adress, location_phone, location_email) VALUES ('Metz Numeric School', '86 rue aux Arènes','+33387451232', 'contact@mns.com'),('IFA Business school Metz', 'Place Coislin','+33387187532', 'contact@ifa-metz.com'), ('IFA Business school Strasbourg', 'Avenue du Général','+33387487532', 'contact@ifa-strasbourg.com'), ('IFA Business school Nancy', 'Route de Metz','+33387175532', 'contact@ifa-nancy.com');
 
 -- Données de notre table PicMaterial:
-INSERT INTO picmaterial (pic_material_name, pic_material_url) VALUES ("Lenovo IdeaPad", "/assets/images/marketplace/laptopmod.jpg"), ("Inovu Led MB22", "/assets/images/marketplace/screenmod.jpg"),("Samsung Galaxy A05s Noir", "/assets/images/marketplace/smartphonemod.jpg"), ("HTC Vive Pro 2", "/assets/images/marketplace/casquevr.jpg"), ("Racing Chair - Fauteuil de bureau","/assets/images/marketplace/chaisebureau.jpg");
+INSERT INTO picmaterial (pic_material_name, pic_material_url) VALUES ('Lenovo IdeaPad', '/assets/images/marketplace/laptopmod.jpg'), ('Inovu Led MB22', '/assets/images/marketplace/screenmod.jpg'),('Samsung Galaxy A05s Noir', '/assets/images/marketplace/smartphonemod.jpg'), ('HTC Vive Pro 2', '/assets/images/marketplace/casquevr.jpg'), ('Racing Chair - Fauteuil de bureau','/assets/images/marketplace/chaisebureau.jpg');
 
 -- Données de notre table DocumentMaterial  :
-INSERT INTO documentmaterial (document_material_name, document_material_url, document_material_date, document_material_description) VALUES ("Guide technique Lenovo IdeaPad", "https://boulanger.scene7.com/is/content/Boulanger/0197528845012_n_0", "2021-07-01", "Guide classique dédié à l'user");
+INSERT INTO documentmaterial (document_material_name, document_material_url, document_material_date, document_material_description) VALUES ('Guide technique Lenovo IdeaPad', 'https://boulanger.scene7.com/is/content/Boulanger/0197528845012_n_0', '2021-07-01', 'Guide classique dédié à l\'user');
 
 -- Données de notre table Category:
-INSERT INTO category (category_name, category_description) VALUES ("Informatique", "Equipement et accessoires informatiques"), ("Téléphonie", "Téléphones portables et fixes") ,("Mobilier", "Mobilier divers utile à la bureautique"), ("Outillage","Outillage type électroportatif "),("Véhicule", "Véhicules en tout genre");
+INSERT INTO category (category_name, category_description) VALUES ('Informatique', 'Equipement et accessoires informatiques'), ('Téléphonie', 'Téléphones portables et fixes') ,('Mobilier', 'Mobilier divers utile à la bureautique'), ('Outillage','Outillage type électroportatif '),('Véhicule', 'Véhicules en tout genre');
 
 -- Données de la table croisée category_role:
-INSERT INTO category_role (category_id, role_id) VALUES ("1","1"),("3","1"),("4","1"),("1","2"),("2","2"),("3","2"),("4","2"),("1","3"),("2","3"),("3","3"),("4","3"),("5","3"),("1","4"),("2","4"),("3","4"),("4","4"),("5","4"),("1","5"),("2","5"),("3","5"), ("4","5"),("5","5");
+INSERT INTO category_role (category_id, role_id) VALUES ('1','1'),('3','1'),('4','1'),('1','2'),('2','2'),('3','2'),('4','2'),('1','3'),('2','3'),('3','3'),('4','3'),('5','3'),('1','4'),('2','4'),('3','4'),('4','4'),('5','4'),('1','5'),('2','5'),('3','5'), ('4','5'),('5','5');
 
 -- Données de notre table brand:
-INSERT INTO brand (brand_name, brand_description) VALUES ("LENOVO", "Fournisseur d'équipements informatiques"), ("INOVU", "Fournisseur d'équipements vidéo et informatique") ,("SAMSUNG", "Fournisseur de nombreux équipements électroniques");
+INSERT INTO brand (brand_name, brand_description) VALUES ('LENOVO', 'Fournisseur d\'équipements informatiques'), ('INOVU', 'Fournisseur d\'équipements vidéo et informatique') ,('SAMSUNG', 'Fournisseur de nombreux équipements électroniques');
 
 -- Données de notre table declaration_incident:
-INSERT INTO incident_notification (incident_notification_date, incident_notification_description, incident_notification_type) VALUES ("2023-02-15","écran bleu avec message d'erreur", "Incident logiciel"), ("2023-05-15","écran qui ne s'allume plus", "Incident matériel"), ("2023-03-02","Téléphone chargé mais ne s'allume plus", "Incident logiciel"), ("2023-06-17","Boutons télécommande droite ne réagissent pas", "Incident matériel"),("2023-07-20","Accoudoir ne tient plus en place", "Incident matériel");
+INSERT INTO incident_notification (incident_notification_date, incident_notification_description, incident_notification_type) VALUES ('2023-02-15','écran bleu avec message d\'erreur', 'Incident logiciel'), ('2023-05-15','écran qui ne s\'allume plus', 'Incident matériel'), ('2023-03-02','Téléphone chargé mais ne s\'allume plus', 'Incident logiciel'), ('2023-06-17','Boutons télécommande droite ne réagissent pas', 'Incident matériel'),('2023-07-20','Accoudoir ne tient plus en place', 'Incident matériel');
 
 -- Données de notre table user:
-INSERT INTO user (user_lastname, user_firstname, email, user_road_type, user_address, user_address_number, user_zip_code, user_city, user_phone, user_password, user_arrival_date, user_departure_date, user_course, user_role_id)
+INSERT INTO user (user_firstname, user_lastname, email, user_road_type, user_address, user_address_number, user_zip_code, user_city, user_phone, user_password, user_arrival_date, user_departure_date, user_course, user_role_id)
 VALUES
     ('Nielsen', 'Leo', 'nielsen.leo@institute.com', 'Cité', 'Oberkampf', '10', '57100', 'Thionville', '+33675018342', '$2y$10$.8kRMRoiw9K9TSx79eRqBuk4AG.uzOrn7bhB20g7BYGfCSqR2PEsW', '2023-05-15', '2028-05-15', 'CDA Java', 1),
     ('Brown', 'Eva', 'brown.eva@institute.com', 'Chemin', 'de Tilsitt', '5', '57000', 'Metz', '+33675482018', '$2y$10$.8kRMRoiw9K9TSx79eRqBuk4AG.uzOrn7bhB20g7BYGfCSqR2PEsW', '2024-09-15', '2029-09-15', 'CDA Java', 2),
@@ -235,7 +235,7 @@ VALUES
     ('disponible', '« Ordinateur portable Lenovo - Processeur AMD Ryzen 5 7520U (Quad-Core 2.8 GHz / 4.3 GHz Turbo - 8 Threads - Cache 4 Mo)- 8 Go de mémoire DDR5 (mémoire intégrée)-Écran anti-reflets de 15.6 pouces avec résolution Full HD (1920 x 1080 pixels)-Sortie HDMI, pour le raccordement à un écran HD-SSD M.2 PCIe de 512 Go-Communication sans fil Wi-Fi 6 + Bluetooth 5.1-Haut-parleurs stéréo avec technologie Dolby Audio -Module TPM 2.0 (firmware) Webcam HD 720p avec obturateur intégré-Windows 11 Famille »', '2022-10-01', '2024-10-01', 499.00, '82XQCTO1WWFR96', null),
     ('disponible', '« Ordinateur portable Lenovo - Processeur AMD Ryzen 5 7520U (Quad-Core 2.8 GHz / 4.3 GHz Turbo - 8 Threads - Cache 4 Mo)- 8 Go de mémoire DDR5 (mémoire intégrée)-Écran anti-reflets de 15.6 pouces avec résolution Full HD (1920 x 1080 pixels)-Sortie HDMI, pour le raccordement à un écran HD-SSD M.2 PCIe de 512 Go-Communication sans fil Wi-Fi 6 + Bluetooth 5.1-Haut-parleurs stéréo avec technologie Dolby Audio -Module TPM 2.0 (firmware) Webcam HD 720p avec obturateur intégré-Windows 11 Famille »', '2022-10-01', '2024-10-01', 499.00, '82XQCTO1WWFR97', null),
     ('disponible', '« Ordinateur portable Lenovo - Processeur AMD Ryzen 5 7520U (Quad-Core 2.8 GHz / 4.3 GHz Turbo - 8 Threads - Cache 4 Mo)- 8 Go de mémoire DDR5 (mémoire intégrée)-Écran anti-reflets de 15.6 pouces avec résolution Full HD (1920 x 1080 pixels)-Sortie HDMI, pour le raccordement à un écran HD-SSD M.2 PCIe de 512 Go-Communication sans fil Wi-Fi 6 + Bluetooth 5.1-Haut-parleurs stéréo avec technologie Dolby Audio -Module TPM 2.0 (firmware) Webcam HD 720p avec obturateur intégré-Windows 11 Famille »', '2022-10-01', '2024-10-01', 499.00, '82XQCTO1WWFR98', null),
-    ('en réparation', '« Ordinateur portable Lenovo - Processeur AMD Ryzen 5 7520U (Quad-Core 2.8 GHz / 4.3 GHz Turbo - 8 Threads - Cache 4 Mo)- 8 Go de mémoire DDR5 (mémoire intégrée)-Écran anti-reflets de 15.6" avec résolution Full HD (1920 x 1080 pixels)-Sortie HDMI, pour le raccordement à un écran HD-SSD M.2 PCIe de 512 Go-Communication sans fil Wi-Fi 6 + Bluetooth 5.1-Haut-parleurs stéréo avec technologie Dolby Audio -Module TPM 2.0 (firmware) Webcam HD 720p avec obturateur intégré-Windows 11 Famille »', '2022-10-01', '2024-10-01', 499.00, '82XQCTO1WWFR99', null),
+    ('en réparation', '« Ordinateur portable Lenovo - Processeur AMD Ryzen 5 7520U (Quad-Core 2.8 GHz / 4.3 GHz Turbo - 8 Threads - Cache 4 Mo)- 8 Go de mémoire DDR5 (mémoire intégrée)-Écran anti-reflets de 15.6 pouces avec résolution Full HD (1920 x 1080 pixels)-Sortie HDMI, pour le raccordement à un écran HD-SSD M.2 PCIe de 512 Go-Communication sans fil Wi-Fi 6 + Bluetooth 5.1-Haut-parleurs stéréo avec technologie Dolby Audio -Module TPM 2.0 (firmware) Webcam HD 720p avec obturateur intégré-Windows 11 Famille »', '2022-10-01', '2024-10-01', 499.00, '82XQCTO1WWFR99', null),
     ('indisponible', '« Ordinateur portable Lenovo - Processeur AMD Ryzen 5 7520U (Quad-Core 2.8 GHz / 4.3 GHz Turbo - 8 Threads - Cache 4 Mo)- 8 Go de mémoire DDR5 (mémoire intégrée)-Écran anti-reflets de 15.6 pouces avec résolution Full HD (1920 x 1080 pixels)-Sortie HDMI, pour le raccordement à un écran HD-SSD M.2 PCIe de 512 Go-Communication sans fil Wi-Fi 6 + Bluetooth 5.1-Haut-parleurs stéréo avec technologie Dolby Audio -Module TPM 2.0 (firmware) Webcam HD 720p avec obturateur intégré-Windows 11 Famille »', '2022-10-01', '2024-10-01', 499.00, '82XQCTO1WWFRA100', 1),
 
     -- Enregistrements d'une série d'écrans
@@ -337,21 +337,21 @@ VALUES
 -- Données de la table intermédiaire imagemat_materiel:
 INSERT INTO picmaterial_material (material_id,pic_material_id)
 VALUES
-    ("1","1"),("2","1"),("3","1"),("4","1"),("5","1"),("6","1"),("7","1"),("8","1"),("9","1"),("10","1"),
-    ("11","1"),("12","1"),("13","1"),("14","1"),("15","1"),("16","1"),("17","1"),("18","1"),("19","1"),("20","1"),
-    ("21","1"),("22","1"),("23","1"),("24","1"),("25","1"),("26","1"),("27","1"),("28","1"),("29","1"),("30","1"),
-    ("31","1"),("32","1"),("33","1"),("34","1"),("35","1"),("36","1"),("37","1"),("38","1"),("39","1"),("40","1"),
-    ("41","1"),("42","1"),("43","1"),("44","1"),("45","1"),("46","1"),("47","1"),("48","1"),("49","1"),("50","1"),
-    ("51","1"),("52","1"),("53","1"),("54","1"),("55","1"),("56","1"),("57","1"),("58","1"),("59","1"),("60","1"),
-    ("61","1"),("62","1"),("63","1"),("64","1"),("65","1"),("66","1"),("67","1"),("68","1"),("69","1"),("70","1"),
-    ("71","1"),("72","1"),("73","1"),("74","1"),("75","1"),("76","1"),("77","1"),("78","1"),("79","1"),("80","1"),
-    ("81","1"),("82","1"),("83","1"),("84","1"),("85","1"),("86","1"),("87","1"),("88","1"),("89","1"),("90","1"),
-    ("91","1"),("92","1"),("93","1"),("94","1"),("95","1"),("96","1"),("97","1"),("98","1"),("99","1"),("100","2"),("101","2"),("102","2"),("103","2"),("104","2"),("105","2"),("106","2"),("107","2"),("108","2"),("109","2"),
-    ("110","2"),("111","2"),("112","2"),("113","2"),("114","2"),("115","2"),("116","2"),("117","2"),("118","2"),("119","2"),
-    ("120","2"),("121","2"),("122","2"),("123","2"),("124","2"),("125","2"),("126","2"),("127","2"),("128","2"),("129","2"),
-    ("130","2"),("131","2"),("132","2"),("133","2"),("134","2"),("135","2"),("136","2"),("137","2"),("138","2"),("139","2"),
-    ("140","2"),("141","2"),("142","2"),("143","2"),("144","2"),("145","2"),("146","2"),("147","2"),("148","3"),("149","3"),("150","3"),("151","3"),("152","3"),("153","3"),("154","3"),("155","3"),("156","3"),("157","3"),
-    ("158","3"),("159","3"),("160","3"),("161","3"),("162","3"),("163","3"),("164","3"),("165","3"),("166","3"),("167","3"),("168","4"),("169","4"),("170","4"),("171","4"),("172","4"),("173","4"),("174","4"),("175","4"),("176","4"),("177","4"),("178","5"),("179","5"),("180","5"),("181","5"),("182","5"),("183","5"),("184","5"),("185","5"),("186","5"),("187","5");
+    ('1','1'),('2','1'),('3','1'),('4','1'),('5','1'),('6','1'),('7','1'),('8','1'),('9','1'),('10','1'),
+    ('11','1'),('12','1'),('13','1'),('14','1'),('15','1'),('16','1'),('17','1'),('18','1'),('19','1'),('20','1'),
+    ('21','1'),('22','1'),('23','1'),('24','1'),('25','1'),('26','1'),('27','1'),('28','1'),('29','1'),('30','1'),
+    ('31','1'),('32','1'),('33','1'),('34','1'),('35','1'),('36','1'),('37','1'),('38','1'),('39','1'),('40','1'),
+    ('41','1'),('42','1'),('43','1'),('44','1'),('45','1'),('46','1'),('47','1'),('48','1'),('49','1'),('50','1'),
+    ('51','1'),('52','1'),('53','1'),('54','1'),('55','1'),('56','1'),('57','1'),('58','1'),('59','1'),('60','1'),
+    ('61','1'),('62','1'),('63','1'),('64','1'),('65','1'),('66','1'),('67','1'),('68','1'),('69','1'),('70','1'),
+    ('71','1'),('72','1'),('73','1'),('74','1'),('75','1'),('76','1'),('77','1'),('78','1'),('79','1'),('80','1'),
+    ('81','1'),('82','1'),('83','1'),('84','1'),('85','1'),('86','1'),('87','1'),('88','1'),('89','1'),('90','1'),
+    ('91','1'),('92','1'),('93','1'),('94','1'),('95','1'),('96','1'),('97','1'),('98','1'),('99','1'),('100','2'),('101','2'),('102','2'),('103','2'),('104','2'),('105','2'),('106','2'),('107','2'),('108','2'),('109','2'),
+    ('110','2'),('111','2'),('112','2'),('113','2'),('114','2'),('115','2'),('116','2'),('117','2'),('118','2'),('119','2'),
+    ('120','2'),('121','2'),('122','2'),('123','2'),('124','2'),('125','2'),('126','2'),('127','2'),('128','2'),('129','2'),
+    ('130','2'),('131','2'),('132','2'),('133','2'),('134','2'),('135','2'),('136','2'),('137','2'),('138','2'),('139','2'),
+    ('140','2'),('141','2'),('142','2'),('143','2'),('144','2'),('145','2'),('146','2'),('147','2'),('148','3'),('149','3'),('150','3'),('151','3'),('152','3'),('153','3'),('154','3'),('155','3'),('156','3'),('157','3'),
+    ('158','3'),('159','3'),('160','3'),('161','3'),('162','3'),('163','3'),('164','3'),('165','3'),('166','3'),('167','3'),('168','4'),('169','4'),('170','4'),('171','4'),('172','4'),('173','4'),('174','4'),('175','4'),('176','4'),('177','4'),('178','5'),('179','5'),('180','5'),('181','5'),('182','5'),('183','5'),('184','5'),('185','5'),('186','5'),('187','5');
 
 
 -- Données de notre table category:

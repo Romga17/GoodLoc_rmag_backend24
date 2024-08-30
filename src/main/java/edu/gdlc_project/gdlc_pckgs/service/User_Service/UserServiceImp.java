@@ -136,7 +136,7 @@ public class UserServiceImp implements UserService {
 
         userRepository.save(user);
 
-        emailServiceImp.sendEmail("romain.magagna@gmail.com", "Confirmation inscription",
+        emailServiceImp.sendEmail("romain.magagna@stagiairesmns.fr", "Confirmation inscription",
                 "Bonjour " + user.getEmail()
                         + " et bienvenue chez Goodloc, vous n'êtes qu'à un clic de pouvoir " +
                         "réserver votre" +
