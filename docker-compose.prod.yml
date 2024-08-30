@@ -4,7 +4,7 @@ services:
     container_name: spring_goodlocapp
     environment:
       SPRING_PROFILES_ACTIVE: prod
-      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/goodlocdb?serverTimezone=UTC&createDatabaseIfNotExist=true&requireSSL=false
+      SPRING_DATASOURCE_URL: jdbc:mysql://db/goodlocdb?serverTimezone=UTC&createDatabaseIfNotExist=true&requireSSL=false
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: Rmag17@Dev
       secret.jwt: Rmag17Rmag17Rmag17Rmag17Rmag17Rmag17Rmag17Rmag17Rmag17Rmag17
@@ -22,8 +22,6 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: Rmag17@Dev
       MYSQL_DATABASE: goodlocdb
-    ports:
-      - "3306:3306"
     volumes:
       - dbdata:/var/lib/mysql
       - ./src/main/resources/data-donnees-test-goodloc.sql:/docker-entrypoint-initdb.d/data-donnees-test-goodloc.sql
