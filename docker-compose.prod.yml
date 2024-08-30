@@ -3,7 +3,6 @@ services:
     image: rmag17/goodloc24back:latest
     container_name: spring_goodlocapp
     environment:
-      SPRING_PROFILES_ACTIVE: prod
       SPRING_DATASOURCE_URL: jdbc:mysql://db/goodlocdb?serverTimezone=UTC&createDatabaseIfNotExist=true&requireSSL=false
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: Rmag17@Dev
