@@ -213,5 +213,4 @@ public class BookingRequestServiceImp implements BookingRequestService {
         }
         return bookingRequestToCheckList;
     }
-
 }

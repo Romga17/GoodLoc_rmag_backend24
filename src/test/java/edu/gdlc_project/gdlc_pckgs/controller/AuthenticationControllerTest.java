@@ -73,7 +73,7 @@ class AuthenticationControllerTest {
         mockMvc.perform(post("/register")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonRequest))
-                .andExpect(status().isOk());
+                .andExpect(status().isCreated());
 
         //Then:
         Assertions.assertEquals("robert.mrtest@gmail.com",
