@@ -49,12 +49,16 @@ public class SecurityConfig {
                 .sessionManagement(config -> config.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/signin", "/register",
-                                "/booking/list", "/booking/get/{id}", "/booking/add", "/booking/validate","/booking/deny/{id}","/booking/delete/{id}", "/booking/get/valid/{id}", "booking/get/updated",
+                                "/booking/list", "/booking/get/{id}", "/booking/add", "/booking/validate","/booking" +
+                                        "/deny" +
+                                        "/{id}","/booking/delete/{id}", "/booking/get/valid/{id}", "/booking/get" +
+                                        "/updated",
                                 "/brand/add","/brand/list",
                                 "/category/add", "/category/list",
                                 "/design/add", "/design/list",
                                 "/document/add", "/document/list",
-                                "/incident/add/{NotifiedMaterialId}/{incidentNotifierId}","/incident/save","/incident/list","/incident/get/{id}",
+                                "/incident/add/{NotifiedMaterialId}/{incidentNotifierId}","/incident/save","/incident" +
+                                        "/list","/incident/get/{id}",
                                 "/location/add","/location/list",
                                 "/material/list","/material/add","/material/get/{id}","/material/delete/{id}",
                                 "/image/add","/image/list",
